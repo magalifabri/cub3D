@@ -2,7 +2,5 @@
 cub3d
 *.png
 /objects
-/mlx
-/maps
 /images
 *.pdf
