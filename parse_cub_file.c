@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void ft_r(t_cub3d *t, char *file, int *index)
+static void get_resolution(t_cub3d *t, char *file, int *index)
 {
     int i;
 
@@ -19,7 +19,7 @@ static void ft_r(t_cub3d *t, char *file, int *index)
     printf("win_w = %d, win_h = %d\n", t->win_w, t->win_h);
 }
 
-static char *ft_copy_tex_path(char *file, int *index)
+static char *get_texture_path(char *file, int *index)
 {
     int i;
     char *tex_path;
@@ -44,7 +44,7 @@ static char *ft_copy_tex_path(char *file, int *index)
     return (tex_path);
 }
 
-static int ft_get_color(char *file, int *index)
+static int get_colour(char *file, int *index)
 {
     int r;
     int g;
@@ -80,36 +80,36 @@ static void ft_function(t_cub3d *t, char *file)
     while (file[i])
     {
         if (file[i] == 'R')
-            ft_r(t, file + (i + 1), &i);
+            get_resolution(t, file + (i + 1), &i);
         else if (file[i] == 'N' && file[i + 1] == 'O')
-            t->tex_path[0] = ft_copy_tex_path(file + (i + 2), &i);
+            t->tex_path[0] = get_texture_path(file + (i + 2), &i);
         else if (file[i] == 'E' && file[i + 1] == 'A')
-            t->tex_path[1] = ft_copy_tex_path(file + (i + 2), &i);
+            t->tex_path[1] = get_texture_path(file + (i + 2), &i);
         else if (file[i] == 'S' && file[i + 1] == 'O')
-            t->tex_path[2] = ft_copy_tex_path(file + (i + 2), &i);
+            t->tex_path[2] = get_texture_path(file + (i + 2), &i);
         else if (file[i] == 'W' && file[i + 1] == 'E')
-            t->tex_path[3] = ft_copy_tex_path(file + (i + 2), &i);
+            t->tex_path[3] = get_texture_path(file + (i + 2), &i);
         else if (file[i] == 'S')
-            t->tex_path[4] = ft_copy_tex_path(file + (i + 1), &i);
+            t->tex_path[4] = get_texture_path(file + (i + 1), &i);
         else if (file[i] == 'F')
-            t->colors[0] = ft_get_color(file + (i + 1), &i);
+            t->colors[0] = get_colour(file + (i + 1), &i);
         else if (file[i] == 'C')
-            t->colors[1] = ft_get_color(file + (i + 1), &i);
+            t->colors[1] = get_colour(file + (i + 1), &i);
         else if (file[i] == ' ' || file[i] == '1')
         {
-            ft_map_parser(t, file + i);
+            parse_map(t, file + i);
             return ;
         }
         (file[i]) && (i++);
     }
 }
 
-void ft_cub_file_parser(t_cub3d *t)
+void parse_cub_file(t_cub3d *t)
 {
     char *file;
     int fd;
 
     fd = open("./maps/cubfile_dark.cub", O_RDONLY);
-    file = ft_copy_file(fd);
+    file = copy_file(fd);
     ft_function(t, file);
 }

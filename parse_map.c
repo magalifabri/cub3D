@@ -1,23 +1,23 @@
 #include "cub3d.h"
 
-static int ft_charset (char i)
+static int check_charset (char i)
 {
     return (i == '0' || i == '1' || i == '2' || i == 'N' || i == 'S' || i == 'E'
     || i == 'W' || i == ' ' || i == '\n');
 }
 
-static int ft_get_height(char *map)
+static int get_height(char *map)
 {
     int len;
 
     len = 1;
-    while (*map && ft_charset(*map))
+    while (*map && check_charset(*map))
         if (*map++ == '\n')
             len++;
     return (len);
 }
 
-static int ft_get_width(char *map)
+static int get_width(char *map)
 {
     int i;
     int wid;
@@ -37,7 +37,7 @@ static int ft_get_width(char *map)
     return (wid);
 }
 
-static void ft_find_player_part_2(t_cub3d *t, int y, int x)
+static void find_player_part_2(t_cub3d *t, int y, int x)
 {
     if (t->map[y][x] == 'N')
     {
@@ -61,7 +61,7 @@ static void ft_find_player_part_2(t_cub3d *t, int y, int x)
     }
 }
 
-static void ft_find_player(t_cub3d *t)
+static void find_player(t_cub3d *t)
 {
     int y;
     int x;
@@ -77,7 +77,7 @@ static void ft_find_player(t_cub3d *t)
             {
                 t->p_y = y;
                 t->p_x = x;
-                ft_find_player_part_2(t, y, x);
+                find_player_part_2(t, y, x);
                 return ;
             }
         }
@@ -126,14 +126,14 @@ static void find_sprites(t_cub3d *t)
         find_sprites_part_2(t);
 }
 
-void ft_map_parser(t_cub3d *t, char *file)
+void parse_map(t_cub3d *t, char *file)
 {
-    t->map_w = ft_get_width(file);
+    t->map_w = get_width(file);
     printf("width = %d\n", t->map_w);
-    t->map_h = ft_get_height(file);
+    t->map_h = get_height(file);
     printf("length = %d\n", t->map_h);
     t->map = ft_split_var(file, t);
-    ft_find_player(t);
+    find_player(t);
     find_sprites(t);
 
     // int i = 0;

@@ -96,7 +96,7 @@ static void make_calculations_1(t_cub3d *t, t_pwv *w)
     }
 }
 
-double ft_walls(t_cub3d *t, int i)
+double draw_walls(t_cub3d *t, int i)
 {
     t_pwv w;
     int j;
@@ -115,7 +115,7 @@ double ft_walls(t_cub3d *t, int i)
     while (++j < w.line_height && j < t->win_h)
     {
         w.texel = ft_getpxl(t->addr[w.tex_nbr], t->line_len[w.tex_nbr], t->bpp[w.tex_nbr], w.tex_x, w.tex_pos + (w.step * j));
-        w.texel = shader(w.texel, w.perp_wall_dist);
+        // w.texel = shader(w.texel, w.perp_wall_dist);
         if (w.texel != 4278190080)
             ft_putpxl(t, i, w.draw_start + j, w.texel);
     }

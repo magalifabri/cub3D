@@ -35,7 +35,7 @@ static void make_calculations(t_cub3d *t, t_pfv *f, int y)
     f->floor_y = t->p_y + f->row_distance * f->r_dir_y0;
 }
 
-void put_floors(t_cub3d *t)
+void draw_floors(t_cub3d *t)
 {
     t_pfv f;
     int y;

@@ -58,6 +58,7 @@ typedef struct  s_cub3d
     int d;
     int l_a;
     int r_a;
+    int mouse_move;
     // cub file parsing
     int win_w;
     int win_h;
@@ -78,23 +79,24 @@ typedef struct  s_cub3d
 
 int main(void);
 void ft_init(t_cub3d *t);
-int ft_keypress(int keycode, t_cub3d *t);
-int ft_keyrelease(int keycode, t_cub3d *t);
-int mouse_move_hook(int mouse_x);
+int keypress_hook(int keycode, t_cub3d *t);
+int keyrelease_hook(int keycode, t_cub3d *t);
+int mouse_move_hook(int mouse_x, int mouse_y, t_cub3d *t);
 int exit_hook(int keycode, t_cub3d *t);
-void ft_move(t_cub3d *t);
-void ft_cub_file_parser(t_cub3d *t);
-char *ft_copy_file(int fd);
-void ft_map_parser(t_cub3d *t, char *file);
+void move(t_cub3d *t);
+void parse_cub_file(t_cub3d *t);
+char *copy_file(int fd);
+void parse_map(t_cub3d *t, char *file);
 char **ft_split_var(char *s, t_cub3d *t);
 void get_textures(t_cub3d *t);
-unsigned int	ft_getpxl(char *addr, int size_line, int bpp, int x, int y);
+unsigned int ft_getpxl(char *addr, int size_line, int bpp, int x, int y);
 void ft_putpxl(t_cub3d *data, int x, int y, int color);
-double ft_walls(t_cub3d *t, int i);
-void put_sprites(t_cub3d *t, double *z_buf);
-void put_floors(t_cub3d *t);
-void put_skybox(t_cub3d *t);
-void put_skybox2(t_cub3d *t);
+double draw_walls(t_cub3d *t, int i);
+void draw_sprites(t_cub3d *t, double *z_buf);
+void draw_floors(t_cub3d *t);
+void draw_skybox(t_cub3d *t);
+void draw_skybox2(t_cub3d *t);
 unsigned int shader(unsigned int start_colour, double distance);
+void play_music(void);
 
 #endif

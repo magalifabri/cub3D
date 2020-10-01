@@ -44,7 +44,7 @@ static char	*ft_emptystr(void)
 	return (s);
 }
 
-char *ft_copy_file(int fd)
+char *copy_file(int fd)
 {
     char buf[2];
     char *map;

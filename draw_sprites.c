@@ -86,7 +86,7 @@ static void make_calculations_1(t_cub3d *t, t_spr *s)
         s->draw_end_x = t->win_w - 1;
 }
 
-void put_sprites(t_cub3d *t, double *z_buf)
+void draw_sprites(t_cub3d *t, double *z_buf)
 {
     t_spr s;
     int i;

@@ -8,7 +8,7 @@ void ft_putpxl(t_cub3d *data, int x, int y, int color)
     *(unsigned int *)dst = color;
 }
 
-void ft_background(t_cub3d *t, int sky, int floor)
+void draw_background(t_cub3d *t, int sky, int floor)
 {
     int x;
     int y;
@@ -29,71 +29,70 @@ void ft_background(t_cub3d *t, int sky, int floor)
     }
 }
 
-void play_music(void)
-{
-	// system("afplay -v 0.30 music2.mp3");
-    static double last_start_song;
-	long	clk_tck;
-	clock_t	actual_time;
-
-	actual_time = clock();
-	clk_tck = CLOCKS_PER_SEC;
-    // write(1, "!\n", 2);
-    // printf("%lu, %f, %ld, %f\n", actual_time, last_start_song, clk_tck, (double)(actual_time - last_start_song) / (double)clk_tck);
-	if (last_start_song == 0 || ((double)(actual_time - last_start_song) / (double)clk_tck >= 216.0))
-	{
-        // write(1, "?\n", 2);
-        printf("%lu, %f, %ld, %f\n", actual_time, last_start_song, clk_tck, (double)(actual_time - last_start_song) / (double)clk_tck);
-        system("killall afplay");
-        system("afplay -v 0.10 music2.mp3 & exit");
-        // system("afplay -v 0.10 music2.mp3 & exit &>/dev/null &");
-        last_start_song = actual_time;
-    }
-    // system("afplay -v 0.30 music2.mp3 &>/dev/null &");
-}
-
 int run_game(t_cub3d *t)
 {
     while (t->game == 1)
     {
         int i;
         double z_buf[t->win_w];
-
-        play_music();
-        ft_background(t, t->colors[1], t->colors[0]);
-        put_floors(t);
-        put_skybox(t);
-        put_skybox2(t);
+        
+        // play_music();
+        draw_background(t, t->colors[1], t->colors[0]);
+        // draw_floors(t);
+        // draw_skybox(t);
+        // draw_skybox2(t);
         i = -1;
         while (++i < t->win_w)
-            z_buf[i] = ft_walls(t, i);
+            z_buf[i] = draw_walls(t, i);
         if (t->sprite_n != 0)
-            put_sprites(t, z_buf);
+            draw_sprites(t, z_buf);
         mlx_put_image_to_window(t->mlx, t->win, t->img, 0, 0);
-        ft_move(t);
+        move(t);
+        t->mouse_move = 0;
         return (0);
     }
     return (0);
+}
+
+void            get_textures(t_cub3d *t)
+{
+    int     img_width[8];
+    int     img_height[8];
+    unsigned int texel;
+    unsigned int i;
+
+    t->tex_path[5] = "./textures/night_sky_long.xpm"; // skybox
+    t->tex_path[6] = "./textures/dirt_dark.xpm"; // floor
+    t->tex_path[7] = "./textures/clouds4.xpm"; // moving skybox overlay
+    i = 1;
+    while (i < 9)
+    {
+        t->texture[i - 1] = mlx_xpm_file_to_image(t->mlx, t->tex_path[i - 1], &img_width[i - 1], &img_height[i - 1]);
+        t->addr[i] = mlx_get_data_addr(t->texture[i - 1], &t->bpp[i], &t->line_len[i], &t->endian[i]);
+        texel = ft_getpxl(t->addr[i], t->line_len[i], t->bpp[i], 2, 2);
+        printf("%u\n", texel);
+        i++;
+    }
 }
 
 int main(void)
 {
     t_cub3d t;
 
-
     ft_init(&t);
-    ft_cub_file_parser(&t);
+    parse_cub_file(&t);
     t.mlx = mlx_init();
     t.win = mlx_new_window(t.mlx, t.win_w, t.win_h, "Hello world!");
     t.img = mlx_new_image(t.mlx, t.win_w, t.win_h);
     t.addr[0] = mlx_get_data_addr(t.img, &t.bpp[0], &t.line_len[0], &t.endian[0]);
+    mlx_mouse_hide();
+    mlx_mouse_move(t.win, t.win_w / 2, t.win_h / 2);
     get_textures(&t);
-    mlx_hook(t.win, 2, 1L << 0, ft_keypress, &t);
-    mlx_hook(t.win, 3, 1L << 1, ft_keyrelease, &t);
-    // mlx_hook(t.win, 6, 1L << 6, mouse_move_hook, &t);
+    mlx_hook(t.win, 2, 1L << 0, keypress_hook, &t);
+    mlx_hook(t.win, 3, 1L << 1, keyrelease_hook, &t);
+    mlx_hook(t.win, 6, 1L << 6, mouse_move_hook, &t);
     mlx_hook(t.win, 17, 0, exit_hook, &t);
     mlx_loop_hook(t.mlx, run_game, &t);
     mlx_loop(t.mlx);
-    system("killall afplay");
     return (0);
 }

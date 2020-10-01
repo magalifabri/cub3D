@@ -1,8 +1,8 @@
 NAME = cub3d
 
-SRCS = start.c ft_init.c ft_keyhooks.c cub_file_parser.c put_sprites.c \
-ft_copy_file.c ft_split_var.c get_textures.c map_parser.c put_walls.c \
-put_floors.c put_skybox.c
+SRCS = start.c ft_init.c hooks.c parse_cub_file.c draw_sprites.c \
+copy_file.c ft_split_var.c get_textures.c parse_map.c draw_walls.c \
+draw_floors.c draw_skybox.c sound.c move.c
 
 OBJDIR = objects
 OBJS = $(SRCS:.c=.o)

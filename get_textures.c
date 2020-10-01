@@ -34,24 +34,3 @@ unsigned int shader(unsigned int start_colour, double distance)
 //      + (((start_colour & 0x0000FF00) >> 9) << 8)
 //      + ((start_colour & 0x000000FF) >> 1));
 // }
-
-void            get_textures(t_cub3d *t)
-{
-    int     img_width[8];
-    int     img_height[8];
-    unsigned int texel;
-    unsigned int i;
-
-    t->tex_path[5] = "./textures/night_sky_long.xpm"; // skybox
-    t->tex_path[6] = "./textures/dirt_dark.xpm"; // floor
-    t->tex_path[7] = "./textures/clouds4.xpm"; // moving skybox overlay
-    i = 1;
-    while (i < 9)
-    {
-        t->texture[i - 1] = mlx_xpm_file_to_image(t->mlx, t->tex_path[i - 1], &img_width[i - 1], &img_height[i - 1]);
-        t->addr[i] = mlx_get_data_addr(t->texture[i - 1], &t->bpp[i], &t->line_len[i], &t->endian[i]);
-        texel = ft_getpxl(t->addr[i], t->line_len[i], t->bpp[i], 2, 2);
-        printf("%u\n", texel);
-        i++;
-    }
-}

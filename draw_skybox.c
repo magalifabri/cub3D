@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-typedef struct s_put_skybox_variables
+typedef struct s_draw_skybox_variables
 {
     double r_dir_x;
     double r_dir_y;
@@ -9,7 +9,7 @@ typedef struct s_put_skybox_variables
     double tex_y_incr;
 } t_psv;
 
-void put_skybox(t_cub3d *t)
+void draw_skybox(t_cub3d *t)
 {
     t_psv s;
     int x;
@@ -44,7 +44,7 @@ void put_skybox(t_cub3d *t)
     j = (j > 360.0) ? 0 : j;
 }
 
-void put_skybox2(t_cub3d *t)
+void draw_skybox2(t_cub3d *t)
 {
     t_psv s;
     int x;
