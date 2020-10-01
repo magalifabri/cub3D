@@ -100,12 +100,14 @@ static void find_sprites_part_2(t_cub3d *t)
         {
             if (t->map[y][x] == '2')
             {
-                t->spr[i].y = y;
-                t->spr[i++].x = x;
+                t->spr[i].y = y; 
+                t->spr[i].x = x;
+                t->spr[i].counter = 0;
+                t->spr[i++].dead = 0; // for enemies
             }
         }
     }
-    t->spr[i].y = t->map_h;
+    // t->spr[i].y = t->map_h;
 }
 
 static void find_sprites(t_cub3d *t)
@@ -122,6 +124,8 @@ static void find_sprites(t_cub3d *t)
             if (t->map[y][x] == '2')
                 t->sprite_n++;
     }
+    printf("map_w = %d, map_h = %d\n", t->map_w, t->map_h);
+    printf("number of sprites = %d\n", t->sprite_n);
     if (t->sprite_n != 0)
         find_sprites_part_2(t);
 }

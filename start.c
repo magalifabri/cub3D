@@ -35,7 +35,6 @@ int run_game(t_cub3d *t)
     {
         int i;
         double z_buf[t->win_w];
-        
         // play_music();
         draw_background(t, t->colors[1], t->colors[0]);
         // draw_floors(t);
@@ -54,21 +53,23 @@ int run_game(t_cub3d *t)
         mlx_put_image_to_window(t->mlx, t->win, t->img, 0, 0);
         move(t);
         find_path(t);
-        move_enemy(t);
+        // move_enemy(t);
         t->mouse_move = 0;
-        int y = 0;
-        int x = 0;
-        while (y < t->map_h)
-        {
-            while (x <= t->map_w)
-            {
-                printf("%c", t->map[y][x]);
-                x++;
-            }
-            printf("\n");
-            x = 0;
-            y++;
-        }
+
+        // int y = 0;
+        // int x = 0;
+        // while (y < t->map_h)
+        // {
+        //     while (x <= t->map_w)
+        //     {
+        //         printf("%c", t->map[y][x]);
+        //         x++;
+        //     }
+        //     printf("\n");
+        //     x = 0;
+        //     y++;
+        // }
+        
         return (0);
     }
     return (0);
@@ -97,8 +98,16 @@ void            get_textures(t_cub3d *t)
     t->tex_path[18] = "./textures/sprite_gun/sprite_gun2.xpm";
     t->tex_path[19] = "./textures/sprite_gun/sprite_gun3.xpm";
     t->tex_path[20] = "./textures/sprite_gun/sprite_gun4.xpm";
+    t->tex_path[21] = "./textures/sprite_death/sprite_blood_splatter1.xpm";
+    t->tex_path[22] = "./textures/sprite_death/sprite_blood_splatter2.xpm";
+    t->tex_path[23] = "./textures/sprite_spider/sprite_spiderv3.1.xpm";
+    t->tex_path[24] = "./textures/sprite_spider/sprite_spiderv3.2.xpm";
+    t->tex_path[25] = "./textures/sprite_spider/sprite_spiderv3.3.xpm";
+    t->tex_path[26] = "./textures/sprite_spider/sprite_spiderv3.4.xpm";
+    t->tex_path[27] = "./textures/sprite_spider/sprite_spiderv3.5.xpm";
+    t->tex_path[28] = "./textures/sprite_spider/sprite_spiderv3.6.xpm";
     i = 1;
-    while (i < 22)
+    while (i < 30)
     {
         t->texture[i - 1] = mlx_xpm_file_to_image(t->mlx, t->tex_path[i - 1], &img_width[i - 1], &img_height[i - 1]);
         t->addr[i] = mlx_get_data_addr(t->texture[i - 1], &t->bpp[i], &t->line_len[i], &t->endian[i]);

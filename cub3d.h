@@ -20,9 +20,13 @@ typedef struct  s_visited_squares
 
 typedef struct  s_sprite_xys
 {
-  int y;
   int x;
+  int y;
+  double x_draw;
+  double y_draw;
   int dis;
+  int dead;
+  int counter;
 }               t_sprite;
 
 typedef struct  s_cub3d 
@@ -116,7 +120,7 @@ unsigned int shader(unsigned int start_colour, double distance);
 void play_music(void);
 
 void find_path(t_cub3d *p);
-void move_enemy(t_cub3d *p);
+// void move_enemy(t_cub3d *p);
 
 void draw_crosshair(t_cub3d *t);
 void draw_torch(t_cub3d *t);

@@ -2,6 +2,10 @@
 
 int             keypress_hook(int keycode, t_cub3d *t)
 {
+    static double previous_time;
+    clock_t	current_time;
+
+	current_time = clock();
     // printf("key = %d\n", keycode);
     if (keycode == 53) // esc
         exit(0);
@@ -17,8 +21,12 @@ int             keypress_hook(int keycode, t_cub3d *t)
         t->a = 1;
     else if (keycode == 2) // d: strafe right
         t->d = 1;
-    else if (keycode == 49) // space: shoot
+    else if (keycode == 49 && (double)(current_time - previous_time) / (double)CLOCKS_PER_SEC > 0.5)
+    // else if (keycode == 49) // space: shoot
+    {
         t->shoot = 1;
+        previous_time = current_time;
+    }
     return (0);
 }
 
