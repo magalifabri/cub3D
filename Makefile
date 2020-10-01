@@ -2,7 +2,7 @@ NAME = cub3d
 
 SRCS = start.c ft_init.c hooks.c parse_cub_file.c draw_sprites.c \
 copy_file.c ft_split_var.c get_textures.c parse_map.c draw_walls.c \
-draw_floors.c draw_skybox.c sound.c move.c draw_enemy.c find_path.c \
+draw_floors.c draw_skybox.c sound.c move.c find_path.c \
 draw_ui_elements.c cast_ray.c
 
 OBJDIR = objects

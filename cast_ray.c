@@ -18,9 +18,30 @@ static void make_calculations_2(t_cub3d *t, t_ray *w)
 {
     int sprite;
 
-    while (t->map[w->map_y][w->map_x] != '2'
-    && t->map[w->map_y][w->map_x] != '1')
+    while (t->map[w->map_y][w->map_x] != '1')
     {
+        if (t->map[w->map_y][w->map_x] == '3' || t->map[w->map_y][w->map_x] == '5')
+        {
+            sprite = -1;
+            while (++sprite < t->sprite_n)
+            {
+                if (t->spr[sprite].y == w->map_y
+                && t->spr[sprite].x == w->map_x)
+                {
+                    t->spr[sprite].health--;
+                    if (t->spr[sprite].health == 0)
+                    {
+                        t->spr[sprite].alive = 0;
+                        t->map[w->map_y][w->map_x] = '0';
+                        t->spr[sprite].t_o_d = clock();
+                        // if (t->spr[sprite].type == '5')
+                        //     t->respawn = 0;
+                    }
+                    else
+                        t->spr[sprite].hit = 10;
+                }
+            }
+        }
         if (w->side_dist_x < w->side_dist_y)
         {
             w->side_dist_x += w->delta_dist_x;
@@ -30,25 +51,6 @@ static void make_calculations_2(t_cub3d *t, t_ray *w)
         {
             w->side_dist_y += w->delta_dist_y;
             w->map_y += w->step_y;
-        }
-    }
-    // printf("%d, %d\n", w->map_y, w->map_x);
-    sprite = -1;
-    while (++sprite < t->sprite_n)
-    {
-        if (t->spr[sprite].y == w->map_y
-        && t->spr[sprite].x == w->map_x)
-        {
-            t->spr[sprite].health--;
-            if (t->spr[sprite].health == 0)
-            {
-                t->spr[sprite].alive = 0;
-                t->map[w->map_y][w->map_x] = '0';
-                t->spr[sprite].t_o_d = clock();
-            }
-            else
-                t->spr[sprite].hit = 15;
-            printf("%d\n", t->spr[sprite].hit);
         }
     }
 }

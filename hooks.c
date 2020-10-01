@@ -21,11 +21,12 @@ int             keypress_hook(int keycode, t_cub3d *t)
         t->a = 1;
     else if (keycode == 2) // d: strafe right
         t->d = 1;
-    else if (keycode == 49 && (double)(current_time - previous_time) / (double)CLOCKS_PER_SEC > 0.5)
-    // else if (keycode == 49) // space: shoot
+    else if (t->p_bullets > 0 
+    && keycode == 49 && (double)(current_time - previous_time) / (double)CLOCKS_PER_SEC > 0.5)
     {
         t->shoot = 1;
         previous_time = current_time;
+        t->p_bullets--;
     }
     return (0);
 }
@@ -44,8 +45,6 @@ int             keyrelease_hook(int keycode, t_cub3d *t)
         t->a = 0;
     else if (keycode == 2)
         t->d = 0;
-    // else if (keycode == 49)
-    //     t->shoot = 0;
     return (0);
 }
 

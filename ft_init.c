@@ -17,5 +17,8 @@ void    ft_init(t_cub3d *t)
 	t->plane_x = 0;
 	t->plane_y = 0;
 	t->shoot = 0;
-	t->health = 3;
+	t->p_health = 5;
+	t->p_bullets = 5;
+	t->p_hit = 0;
+	t->respawn = 1;
 }

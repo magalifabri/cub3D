@@ -20,6 +20,7 @@ typedef struct  s_visited_squares
 
 typedef struct  s_sprite_xys
 {
+  char type;
   double x;
   double y;
   double x_draw;
@@ -30,20 +31,24 @@ typedef struct  s_sprite_xys
   int health;
   double t_o_d;
   int hit;
+  char mode;
+  int frame;
 }               t_sprite;
 
 typedef struct  s_cub3d 
 {
     // mlx
     void *img;
-    char *addr[40];
-    int  bpp[40];
-    int  line_len[40];
-    int  endian[40];
+    char *addr[50];
+    int  bpp[50];
+    int  line_len[50];
+    int  endian[50];
     void *mlx;
     void *win;
 
     int game;
+    double fps;
+    clock_t time_now;
 
     // player
     int fov;
@@ -55,7 +60,9 @@ typedef struct  s_cub3d
     double plane_x;
     double plane_y;
     double scrn_x;
-    int health;
+    int p_health;
+    int p_bullets;
+    double p_hit;
 
     // raycasting
     double r_dir;
@@ -85,8 +92,8 @@ typedef struct  s_cub3d
     char **map;
     int map_w;
     int map_h;
-    char *tex_path[40];
-    void *texture[40];
+    char *tex_path[50];
+    void *texture[50];
     int colors[2];
 
     // sprites
@@ -115,7 +122,6 @@ void ft_putpxl(t_cub3d *data, int x, int y, int color);
 
 double draw_walls(t_cub3d *t, int i);
 void draw_sprites(t_cub3d *t, double *z_buf);
-void draw_enemy(t_cub3d *t, double *z_buf);
 void draw_floors(t_cub3d *t);
 void draw_skybox(t_cub3d *t);
 void draw_skybox2(t_cub3d *t);
@@ -124,11 +130,14 @@ unsigned int shader(unsigned int start_colour, double distance);
 void play_music(void);
 
 void find_path(t_cub3d *p);
-// void move_enemy(t_cub3d *p);
+double get_distance(int y_dest, int x_dest, int y_src, int x_src);
 
 void draw_crosshair(t_cub3d *t);
 void draw_torch(t_cub3d *t);
 void draw_gun(t_cub3d *t);
+void draw_red_border(t_cub3d *t);
+void draw_hearts(t_cub3d *t);
+void draw_bullets(t_cub3d *t);
 
 void cast_ray(t_cub3d *t);
 

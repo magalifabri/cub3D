@@ -29,49 +29,88 @@ void draw_background(t_cub3d *t, int sky, int floor)
     }
 }
 
+double spawn_mob(t_cub3d *t)
+{
+    int sprite;
+
+    sprite = -1;
+    while (++sprite < t->sprite_n)
+    {
+        if (t->spr[sprite].x == 0)
+        {
+            t->spr[sprite].x = 2;
+            t->spr[sprite].y = 2;
+            t->spr[sprite].type = '3';
+            t->spr[sprite].health = 3;
+            t->spr[sprite].hit = 0;
+            t->spr[sprite].alive = 1;
+            t->spr[sprite].mode = 'i';
+            break ;
+        }
+    }
+    return (clock());
+}
+
 int run_game(t_cub3d *t)
 {
+    static double last_mob_spawn;
+    static double time_last_frame;
+    int sprite;
+
+	t->time_now = clock();
     while (t->game == 1)
     {
         int i;
         double z_buf[t->win_w];
         // play_music();
         draw_background(t, t->colors[1], t->colors[0]);
-        // draw_floors(t);
-        // draw_skybox(t);
-        // draw_skybox2(t);
+        draw_floors(t);
+        draw_skybox(t);
+        draw_skybox2(t);
         if (t->shoot == 1)
             cast_ray(t);
         i = -1;
         while (++i < t->win_w)
             z_buf[i] = draw_walls(t, i);
         if (t->sprite_n != 0)
-            draw_enemy(t, z_buf);
-        // if (t->sprite_n != 0)
-        //     draw_sprites(t, z_buf);
+            draw_sprites(t, z_buf);
         draw_crosshair(t);
         draw_torch(t);
         draw_gun(t);
+        draw_hearts(t);
+        draw_bullets(t);
+        sprite = -1;
+        while (++sprite < t->sprite_n)
+        {
+            if (t->spr[sprite].type == '5' && t->spr[sprite].alive)
+            // && (double)(t->time_now - last_mob_spawn) / (double)CLOCKS_PER_SEC > 5)
+                last_mob_spawn = spawn_mob(t);
+        if ((double)(t->time_now - t->p_hit) / (double)CLOCKS_PER_SEC < 0.1)
+            draw_red_border(t);
         mlx_put_image_to_window(t->mlx, t->win, t->img, 0, 0);
         move(t);
         find_path(t);
-        // move_enemy(t);
         t->mouse_move = 0;
+        if (t->p_health == 0)
+            exit(0);
 
-        int y = 0;
-        int x = 0;
-        while (y < t->map_h)
-        {
-            while (x <= t->map_w)
-            {
-                printf("%c", t->map[y][x]);
-                x++;
-            }
-            printf("\n");
-            x = 0;
-            y++;
-        }
-        
+        // int y = 0;
+        // int x = 0;
+        // while (y < t->map_h)
+        // {
+        //     while (x <= t->map_w)
+        //     {
+        //         printf("%c", t->map[y][x]);
+        //         x++;
+        //     }
+        //     printf("\n");
+        //     x = 0;
+        //     y++;
+        // }
+
+        t->fps = 1 / ((double)(t->time_now - time_last_frame) / (double)CLOCKS_PER_SEC);
+        time_last_frame = t->time_now;
+        // printf("%f\n", t->fps);
         return (0);
     }
     return (0);
@@ -79,8 +118,8 @@ int run_game(t_cub3d *t)
 
 void            get_textures(t_cub3d *t)
 {
-    int     img_width[40];
-    int     img_height[40];
+    int     img_width[50];
+    int     img_height[50];
     unsigned int texel;
     unsigned int i;
 
@@ -113,9 +152,18 @@ void            get_textures(t_cub3d *t)
     t->tex_path[31] = "./textures/sprite_spider/attack/sprite_spider_attack3.xpm";
     t->tex_path[32] = "./textures/sprite_spider/attack/sprite_spider_attack4.xpm";
     t->tex_path[33] = "./textures/sprite_spider/attack/sprite_spider_attack5.xpm";
-    // t->tex_path[29] = "./textures/sprite_spider/sprite_spider_hit.xpm";
+    t->tex_path[34] = "./textures/heart/sprite_heart1.xpm";
+    t->tex_path[35] = "./textures/heart/sprite_heart2.xpm";
+    t->tex_path[36] = "./textures/heart/sprite_heart3.xpm";
+    t->tex_path[37] = "./textures/heart/sprite_heart4.xpm";
+    t->tex_path[38] = "./textures/sprite_bullet2.xpm";
+    t->tex_path[39] = "./textures/sprite_bullets/sprite_bullets1.xpm";
+    t->tex_path[40] = "./textures/sprite_bullets/sprite_bullets2.xpm";
+    t->tex_path[41] = "./textures/sprite_bullets/sprite_bullets3.xpm";
+    t->tex_path[42] = "./textures/sprite_bullets/sprite_bullets4.xpm";
+    t->tex_path[43] = "./textures/sprite_spider/sprite_spider_nest.xpm";
     i = 1;
-    while (i < 31)
+    while (i < 45)
     {
         t->texture[i - 1] = mlx_xpm_file_to_image(t->mlx, t->tex_path[i - 1], &img_width[i - 1], &img_height[i - 1]);
         t->addr[i] = mlx_get_data_addr(t->texture[i - 1], &t->bpp[i], &t->line_len[i], &t->endian[i]);

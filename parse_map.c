@@ -2,7 +2,7 @@
 
 static int check_charset (char i)
 {
-    return (i == '0' || i == '1' || i == '2' || i == 'N' || i == 'S' || i == 'E'
+    return (i == '0' || i == '1' || i == '2' || i == '3' || i == '5' || i == 'N' || i == 'S' || i == 'E'
     || i == 'W' || i == ' ' || i == '\n');
 }
 
@@ -98,20 +98,32 @@ static void find_sprites_part_2(t_cub3d *t)
         x = -1;
         while (++x < t->map_w)
         {
-            if (t->map[y][x] == '2')
+            if (t->map[y][x] == '2' || t->map[y][x] == '3' || t->map[y][x] == '5')
             {
-                t->spr[i].y = y; 
+                t->spr[i].type = t->map[y][x];
+                t->spr[i].y = y;
                 t->spr[i].x = x;
+                t->spr[i].y_draw = 0;
+                t->spr[i].x_draw = 0;
                 t->spr[i].counter = 0;
-                t->spr[i].health = 3;
+                t->spr[i].frame = 0;
                 t->spr[i].hit = 0;
-                printf("location of sprite %d: %f, %f\n", i, t->spr[i].y, t->spr[i].x);
-                // printf("%d\n", t->spr[i].x);
-                t->spr[i++].alive = 1; // for enemies
+                if (t->spr[i].type == '3')
+                {
+                    t->spr[i].health = 3;
+                    t->spr[i].alive = 1;
+                    t->spr[i].mode = 'i';
+                }
+                if (t->spr[i].type == '5')
+                {
+                    t->spr[i].health = 3;
+                    t->spr[i].alive = 1;
+                }
+                printf("location of sprite %d of type %c: %f, %f\n", i, t->spr[i].type, t->spr[i].y, t->spr[i].x);
+                i++;
             }
         }
     }
-    // t->spr[i].y = t->map_h;
 }
 
 static void find_sprites(t_cub3d *t)
@@ -125,10 +137,9 @@ static void find_sprites(t_cub3d *t)
     {
         x = -1;
         while (++x < t->map_w)
-            if (t->map[y][x] == '2')
+            if (t->map[y][x] == '2' || t->map[y][x] == '3' || t->map[y][x] == '5')
                 t->sprite_n++;
     }
-    printf("map_w = %d, map_h = %d\n", t->map_w, t->map_h);
     printf("number of sprites = %d\n", t->sprite_n);
     if (t->sprite_n != 0)
         find_sprites_part_2(t);
@@ -143,13 +154,6 @@ void parse_map(t_cub3d *t, char *file)
     t->map = ft_split_var(file, t);
     find_player(t);
     find_sprites(t);
-
-    // int i = 0;
-    // while (t->spr[i].y != t->map_h)
-    // {
-    //     printf("%d, %d\n", t->spr[i].y, t->spr[i].x);
-    //     i++;
-    // }
     
     int y = 0;
     int x = 0;

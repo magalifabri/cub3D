@@ -130,20 +130,25 @@ void            move(t_cub3d *t)
     double rot_spd;
     double mouse_spd;
 
-    move_spd = 0.05;
-    rot_spd = 0.03;
+    // move_spd = 0.05;
+    move_spd = 3 / t->fps;
+    // rot_spd = 0.03;
+    rot_spd = 2 / t->fps;
     mouse_spd = t->mouse_move * 0.25;
-    if (t->w == 1)
+    if ((t->w && t->a) || (t->w && t->d) 
+    || (t->s && t->a)|| (t->s && t->d))
+        move_spd *= 0.75;
+    if (t->w)
         move_forward(t, move_spd);
-    if (t->s == 1)
+    if (t->s)
         move_backward(t, move_spd);
-    if (t->l_a == 1 || t->mouse_move < 0)
+    if (t->l_a || t->mouse_move < 0)
         turn_left(t, rot_spd);
-    if (t->r_a == 1 || t->mouse_move > 0)
+    if (t->r_a || t->mouse_move > 0)
         turn_right(t, rot_spd);
-    if (t->a == 1)
+    if (t->a)
         strafe_left(t, move_spd);
-    if (t->d == 1)
+    if (t->d)
         strafe_right(t, move_spd);
     return ;
 }
