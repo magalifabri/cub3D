@@ -5,7 +5,7 @@ WE ./textures/furnace_side.xpm
 EA ./textures/quartz_block_chiseled.xpm
 S ./textures/sapling_oak.xpm
 F 235,232,210
-C 166,229,255
+C 7,7,16
 1111111111111111111
 1000000000000000001
 1000000020000000001

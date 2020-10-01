@@ -1,149 +1,123 @@
 #include "cub3d.h"
 
-double ft_walls(cub3d *t, int i)
+typedef struct s_put_walls_variables
 {
     double r_dir_x;
     double r_dir_y;
+    int map_x;
+    int map_y;
+    double side_dist_x; //length of ray from current position to next x or y-side
+    double side_dist_y;
+    double delta_dist_x;
+    double delta_dist_y;
+    double perp_wall_dist;
+    int draw_start;
+    int draw_end;
+    int tex_nbr;
+    double wall_x;
+    double step;
+    double tex_pos;
+    int tex_x;
+    int line_height;
+    int step_x; //what direction to step in x or y-direction (either +1 or -1)
+    int step_y;
+    int side; //was a NS or a EW wall hit?
+    unsigned int texel;
+} t_pwv;
 
-    t->scrn_x = 2 * i / (double)t->win_w - 1;
-    r_dir_x = t->p_dir_x + (t->plane_x * t->scrn_x);
-    r_dir_y = t->p_dir_y + (t->plane_y * t->scrn_x);
+static void make_calculations_3(t_cub3d *t, t_pwv *w)
+{
+    if (w->r_dir_x >= 0 && w->side == 0) //choose texture
+        w->tex_nbr = 1; // west-facing: blue
+    else if (w->r_dir_x < 0 && w->side == 0)
+        w->tex_nbr = 2; // east-facing: green
+    else if (w->r_dir_y >= 0 && w->side == 1)
+        w->tex_nbr = 3; // south-facing: brown
+    else if (w->r_dir_y < 0 && w->side == 1)
+        w->tex_nbr = 4; // noth-facing: yellow
+    w->wall_x = (w->side == 0) ? (t->p_y + w->perp_wall_dist * w->r_dir_y)
+    : (t->p_x + w->perp_wall_dist * w->r_dir_x);
+    w->wall_x -= floor((w->wall_x));
+    w->tex_x = (int)(w->wall_x * (double)64); //x coordinate on the texture
+    if ((w->side == 0 && w->r_dir_x > 0) || (w->side == 1 && w->r_dir_y < 0))
+        w->tex_x = 64 - w->tex_x - 1;
+    w->step = 1.0 * 64 / w->line_height; // How much to increase the texture coordinate per screen pixel
+    w->tex_pos = (w->draw_start - t->win_h / 2 + w->line_height / 2) * w->step; // Starting texture coordinate
+}
 
-    //which box of the map we're in
-    int map_x = (int)t->p_x;
-    int map_y = (int)t->p_y;
-
-    //length of ray from current position to next x or y-side
-    double sideDistX;
-    double sideDistY;
-
-    //length of ray from one x or y-side to next x or y-side
-    double deltaDistX = fabs(1 / r_dir_x);
-    double deltaDistY = fabs(1 / r_dir_y);
-
-    double perpWallDist;
-
-    //what direction to step in x or y-direction (either +1 or -1)
-    int stepX;
-    int stepY;
-
-    int hit = 0; //was there a wall hit?
-    int side;    //was a NS or a EW wall hit?
-
-    //calculate step and initial sideDist
-    if (r_dir_x < 0)
+static void make_calculations_2(t_cub3d *t, t_pwv *w)
+{
+    while (t->map[w->map_y][w->map_x] != '1') //jump to next map square, OR in x-direction, OR in y-direction
     {
-        stepX = -1;
-        sideDistX = (t->p_x - map_x) * deltaDistX;
-    }
-    else
-    {
-        stepX = 1;
-        sideDistX = (map_x + 1.0 - t->p_x) * deltaDistX;
-    }
-    if (r_dir_y < 0)
-    {
-        stepY = -1;
-        sideDistY = (t->p_y - map_y) * deltaDistY;
-    }
-    else
-    {
-        stepY = 1;
-        sideDistY = (map_y + 1.0 - t->p_y) * deltaDistY;
-    }
-
-    while (hit == 0)
-    {
-        //jump to next map square, OR in x-direction, OR in y-direction
-        if (sideDistX < sideDistY)
+        if (w->side_dist_x < w->side_dist_y)
         {
-            sideDistX += deltaDistX;
-            map_x += stepX;
-            side = 0;
+            w->side_dist_x += w->delta_dist_x;
+            w->map_x += w->step_x;
+            w->side = 0;
         }
         else
         {
-            sideDistY += deltaDistY;
-            map_y += stepY;
-            side = 1;
+            w->side_dist_y += w->delta_dist_y;
+            w->map_y += w->step_y;
+            w->side = 1;
         }
-        if (t->map[map_y][map_x] == '1')
-            hit = 1;
     }
-    //Calculate distance projected on camera direction (Euclidean distance will give fisheye effect!)
-    if (side == 0)
-        perpWallDist = (map_x - t->p_x + (1 - stepX) / 2) / r_dir_x;
+    w->perp_wall_dist = (w->side == 0) 
+    ? (w->map_x - t->p_x + (1 - w->step_x) / 2) / w->r_dir_x
+    : (w->map_y - t->p_y + (1 - w->step_y) / 2) / w->r_dir_y;
+    w->line_height = (int)(t->win_h / w->perp_wall_dist); //Calculate height of line to draw on screen
+    w->draw_start = -w->line_height / 2 + t->win_h / 2; //calculate lowest and highest pixel to fill in current stripe
+    w->draw_start = (w->draw_start < 0) ? (0) : (w->draw_start);
+    w->draw_end = w->line_height / 2 + t->win_h / 2;
+    w->draw_end = (w->draw_end >= t->win_h) ? (t->win_h - 1) : (w->draw_end);
+}
+
+static void make_calculations_1(t_cub3d *t, t_pwv *w)
+{
+    if (w->r_dir_x < 0) //calculate step and initial sideDist
+    {
+        w->step_x = -1;
+        w->side_dist_x = (t->p_x - w->map_x) * w->delta_dist_x;
+    }
     else
-        perpWallDist = (map_y - t->p_y + (1 - stepY) / 2) / r_dir_y;
-    
-    // write(1, "a\n", 2);
-    // printf("i = %d, pwd = %f\n", i, perpWallDist);
-    // *z_buf[i] = perpWallDist;
-    // write(1, "b\n", 2);
-
-    //Calculate height of line to draw on screen
-    int lineHeight = (int)(t->win_h / perpWallDist);
-
-    //calculate lowest and highest pixel to fill in current stripe
-    int drawStart = -lineHeight / 2 + t->win_h / 2;
-    if (drawStart < 0)
-        drawStart = 0;
-    int drawEnd = lineHeight / 2 + t->win_h / 2;
-    if (drawEnd >= t->win_h)
-        drawEnd = t->win_h - 1;
-
-    //choose texture
-    int texNum;
-    if (r_dir_x >= 0 && side == 0)
-        texNum = 1; // west-facing: blue
-    if (r_dir_x < 0 && side == 0)
-        texNum = 2; // east-facing: green
-    if (r_dir_y >= 0 && side == 1)
-        texNum = 3; // south-facing: brown
-    if (r_dir_y < 0 && side == 1)
-        texNum = 4; // noth-facing: yellow
-
-    //calculate value of wallX
-    double wallX; //where exactly the wall was hit
-    if (side == 0)
-        wallX = t->p_y + perpWallDist * r_dir_y;
+    {
+        w->step_x = 1;
+        w->side_dist_x = (w->map_x + 1.0 - t->p_x) * w->delta_dist_x;
+    }
+    if (w->r_dir_y < 0)
+    {
+        w->step_y = -1;
+        w->side_dist_y = (t->p_y - w->map_y) * w->delta_dist_y;
+    }
     else
-        wallX = t->p_x + perpWallDist * r_dir_x;
-    wallX -= floor((wallX));
+    {
+        w->step_y = 1;
+        w->side_dist_y = (w->map_y + 1.0 - t->p_y) * w->delta_dist_y;
+    }
+}
 
-    //x coordinate on the texture
-    int texX = (int)(wallX * (double)64);
-    if (side == 0 && r_dir_x > 0)
-        texX = 64 - texX - 1;
-    if (side == 1 && r_dir_y < 0)
-        texX = 64 - texX - 1;
-
-    // How much to increase the texture coordinate per screen pixel
-    double step = 1.0 * 64 / lineHeight;
-    // Starting texture coordinate
-    double texPos = (drawStart - t->win_h / 2 + lineHeight / 2) * step;
-
+double ft_walls(t_cub3d *t, int i)
+{
+    t_pwv w;
     int j;
+
+    t->scrn_x = 2 * i / (double)t->win_w - 1;
+    w.r_dir_x = t->p_dir_x + (t->plane_x * t->scrn_x);
+    w.r_dir_y = t->p_dir_y + (t->plane_y * t->scrn_x);
+    w.map_x = (int)t->p_x; //which box of the map we're in
+    w.map_y = (int)t->p_y;
+    w.delta_dist_x = fabs(1 / w.r_dir_x); //length of ray from one x or y-side to next x or y-side
+    w.delta_dist_y = fabs(1 / w.r_dir_y);
+    make_calculations_1(t, &w);
+    make_calculations_2(t, &w);
+    make_calculations_3(t, &w);
     j = -1;
-    while (++j < lineHeight && j < t->win_h)
-        ft_putpxl(t, i, drawStart + j, ft_getpxl(t->addr[texNum], t->line_len[texNum], t->bpp[texNum], texX, texPos + (step * j)));
-
-    // COLOURS
-
-    // int colour;
-    // if (r_dir_x >= 0 && side == 0)
-    //     colour = 0x004DC1F3; // west-facing: blue
-    // if (r_dir_x < 0 && side == 0)
-    //     colour = 0x0083D44D; // east-facing: green
-    // if (r_dir_y >= 0 && side == 1)
-    //     colour = 0x0073491A; // south-facing: brown
-    // if (r_dir_y < 0 && side == 1)
-    //     colour = 0x00F2DD59; // noth-facing: yellow
-
-    // int j;
-    // j = 0;
-    // while (j < lineHeight && j < t->win_h)
-    //     ft_putpxl(t, i, drawStart + j++, colour);
-    
-    return (perpWallDist);
+    while (++j < w.line_height && j < t->win_h)
+    {
+        w.texel = ft_getpxl(t->addr[w.tex_nbr], t->line_len[w.tex_nbr], t->bpp[w.tex_nbr], w.tex_x, w.tex_pos + (w.step * j));
+        w.texel = shader(w.texel, w.perp_wall_dist);
+        if (w.texel != 4278190080)
+            ft_putpxl(t, i, w.draw_start + j, w.texel);
+    }
+    return (w.perp_wall_dist);
 }

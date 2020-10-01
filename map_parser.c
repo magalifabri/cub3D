@@ -37,7 +37,31 @@ static int ft_get_width(char *map)
     return (wid);
 }
 
-static void ft_find_player(cub3d *t)
+static void ft_find_player_part_2(t_cub3d *t, int y, int x)
+{
+    if (t->map[y][x] == 'N')
+    {
+        t->p_dir_y = -1;
+        t->plane_x = 0.66;
+    }
+    else if (t->map[y][x] == 'E')
+    {
+        t->p_dir_x = 1;
+        t->plane_y = 0.66;
+    }
+    else if (t->map[y][x] == 'S')
+    {
+        t->p_dir_y = 1;
+        t->plane_x = -0.66;
+    }
+    else
+    {
+        t->p_dir_x = -1;
+        t->plane_y = -0.66;
+    }
+}
+
+static void ft_find_player(t_cub3d *t)
 {
     int y;
     int x;
@@ -53,58 +77,20 @@ static void ft_find_player(cub3d *t)
             {
                 t->p_y = y;
                 t->p_x = x;
-                if (t->map[y][x] == 'N')
-                {
-                    t->p_dir_x = 0;
-                    t->p_dir_y = -1;
-                    t->plane_x = 0.66;
-                    t->plane_y = 0;
-                }
-                else if (t->map[y][x] == 'E')
-                {
-                    t->p_dir_x = 1;
-                    t->p_dir_y = 0;
-                    t->plane_x = 0;
-                    t->plane_y = 0.66;
-                }
-                else if (t->map[y][x] == 'S')
-                {
-                    t->p_dir_x = 0;
-                    t->p_dir_y = 1;
-                    t->plane_x = -0.66;
-                    t->plane_y = 0;
-                }
-                else
-                {
-                    t->p_dir_x = -1;
-                    t->p_dir_y = 0;
-                    t->plane_x = 0;
-                    t->plane_y = -0.66;
-                }
+                ft_find_player_part_2(t, y, x);
                 return ;
             }
         }
     }
 }
 
-static void sprites(cub3d *t)
+static void find_sprites_part_2(t_cub3d *t)
 {
     int y;
     int x;
-
-    t->sprite_n = 0;
-    y = -1;
-    while (++y < t->map_h)
-    {
-        x = -1;
-        while (++x < t->map_w)
-            if (t->map[y][x] == '2')
-                t->sprite_n++;
-    }
-    
     int i;
 
-    t->spr = malloc(sizeof(sprite) * t->sprite_n);
+    t->spr = malloc(sizeof(t_sprite) * t->sprite_n);
     i = 0;
     y = -1;
     while (++y < t->map_h)
@@ -122,7 +108,25 @@ static void sprites(cub3d *t)
     t->spr[i].y = t->map_h;
 }
 
-void ft_map_parser(cub3d *t, char *file)
+static void find_sprites(t_cub3d *t)
+{
+    int y;
+    int x;
+
+    t->sprite_n = 0;
+    y = -1;
+    while (++y < t->map_h)
+    {
+        x = -1;
+        while (++x < t->map_w)
+            if (t->map[y][x] == '2')
+                t->sprite_n++;
+    }
+    if (t->sprite_n != 0)
+        find_sprites_part_2(t);
+}
+
+void ft_map_parser(t_cub3d *t, char *file)
 {
     t->map_w = ft_get_width(file);
     printf("width = %d\n", t->map_w);
@@ -130,14 +134,14 @@ void ft_map_parser(cub3d *t, char *file)
     printf("length = %d\n", t->map_h);
     t->map = ft_split_var(file, t);
     ft_find_player(t);
-    sprites(t);
+    find_sprites(t);
 
-    int i = 0;
-    while (t->spr[i].y != t->map_h)
-    {
-        printf("%d, %d\n", t->spr[i].y, t->spr[i].x);
-        i++;
-    }
+    // int i = 0;
+    // while (t->spr[i].y != t->map_h)
+    // {
+    //     printf("%d, %d\n", t->spr[i].y, t->spr[i].x);
+    //     i++;
+    // }
     
     int y = 0;
     int x = 0;

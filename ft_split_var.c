@@ -42,7 +42,7 @@ static char		*ft_get_row(char *s, int width)
 	return (row);
 }
 
-char		**ft_split_var(char *s, cub3d *t)
+char		**ft_split_var(char *s, t_cub3d *t)
 {
 	int		i;
 	char	**array;

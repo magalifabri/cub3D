@@ -1,25 +1,36 @@
 #include "cub3d.h"
 
-static void sort_sprites(cub3d *t)
+typedef struct s_put_sprites_variables
 {
+    double sprite_y;
+    double sprite_x;
+    double sprite_x2;
+    double sprite_y2;
+    double inv_det;
+    double transform_x;
+    double transform_y;
+    int sprite_scrn_x;
+    int sprite_h;
+    int draw_start_y;
+    int draw_end_y;
+    int sprite_w;
+    int draw_start_x;
+    int draw_end_x;
+    unsigned int texel;
+    int tex_x;
+    int tex_y;
+    int d;
+} t_spr;
+
+static void sort_sprites(t_cub3d *t)
+{
+    t_sprite tmp;
     int i;
     int j;
-    sprite tmp;
 
     i = -1;
     while (++i < t->sprite_n)
         t->spr[i].dis = ((t->p_x - t->spr[i].x) * (t->p_x - t->spr[i].x) + (t->p_y - t->spr[i].y) * (t->p_y - t->spr[i].y));
-
-    // i = 0;
-    // if (t->r_dir == t->p_dir)
-    // {
-    //     while (t->spr[i].y != t->map_h)
-    //     {
-    //         printf("before: i = %d, dis = %d\n", i, t->spr[i].dis);
-    //         i++;
-    //     }
-    // }
-
     i = 0;
     j = 1;
     while (t->spr[i + 1].y != t->map_h)
@@ -37,83 +48,68 @@ static void sort_sprites(cub3d *t)
         i++;
         j = i + 1;
     }
-
-    // i = 0;
-    // if (t->r_dir == t->p_dir)
-    // {
-    //     while (t->spr[i].y != t->map_h)
-    //     {
-    //         printf("after: i = %d, dis = %d\n", i, t->spr[i].dis);
-    //         i++;
-    //     }
-    // }
 }
 
-void put_sprites(cub3d *t, double *z_buf)
+static void make_calculations_2(t_cub3d *t, t_spr *s, int x, int y)
 {
-    int i = 0;
+    s->d = (y)*256 - t->win_h * 128 + s->sprite_h * 128;
+    s->tex_y = ((s->d * 64) / s->sprite_h) / 256;
+    s->texel = ft_getpxl(t->addr[5], t->line_len[5],
+    t->bpp[5], s->tex_x, s->tex_y);
+    s->texel = shader(s->texel, s->transform_y);
+    if (s->texel != 4278190080 && (t->tex_x1 >= 0 && t->tex_x1 < 64))
+        ft_putpxl(t, x, y, s->texel); 
+}
+
+static void make_calculations_1(t_cub3d *t, t_spr *s)
+{
+    s->sprite_x2 = s->sprite_x - t->p_x; //translate sprite position to relative to camera
+    s->sprite_y2 = s->sprite_y - t->p_y;
+    s->inv_det = 1.0 / (t->plane_x * t->p_dir_y - t->p_dir_x * t->plane_y); //required for correct matrix multiplication
+    s->transform_x = s->inv_det * (t->p_dir_y * s->sprite_x2 - t->p_dir_x * s->sprite_y2);
+    s->transform_y = s->inv_det * (-t->plane_y * s->sprite_x2 + t->plane_x * s->sprite_y2); //this is actually the depth inside the screen, that what Z is in 3D
+    s->sprite_scrn_x = (int)((t->win_w / 2) * (1 + s->transform_x / s->transform_y));
+    //calculate height of the sprite on screen
+    s->sprite_h = abs((int)(t->win_h / (s->transform_y))); //using 'transform_y' instead of the real distance prevents fisheye
+    s->draw_start_y = -s->sprite_h / 2 + t->win_h / 2; //calculate lowest and highest pixel to fill in current x
+    if (s->draw_start_y < 0)
+        s->draw_start_y = 0;
+    s->draw_end_y = s->sprite_h / 2 + t->win_h / 2;
+    if (s->draw_end_y >= t->win_h)
+        s->draw_end_y = t->win_h - 1;
+    s->sprite_w = abs((int)(t->win_h / (s->transform_y))); //calculate width of the sprite
+    s->draw_start_x = -s->sprite_w / 2 + s->sprite_scrn_x;
+    if (s->draw_start_x < 0)
+        s->draw_start_x = 0;
+    s->draw_end_x = s->sprite_w / 2 + s->sprite_scrn_x;
+    if (s->draw_end_x >= t->win_w)
+        s->draw_end_x = t->win_w - 1;
+}
+
+void put_sprites(t_cub3d *t, double *z_buf)
+{
+    t_spr s;
+    int i;
+    int x;
+    int y;
 
     sort_sprites(t);
+    i = 0;
     while (t->spr[i].y != t->map_h)
     {
-        double sprite_y = t->spr[i].y + 0.5;
-        double sprite_x = t->spr[i++].x + 0.5;
-        
-        //translate sprite position to relative to camera
-        double spriteX = sprite_x - t->p_x;
-        double spriteY = sprite_y - t->p_y;
-        // double spriteX = sprite[spriteOrder[i]].x - t->p_dir_x;
-        // double spriteY = sprite[spriteOrder[i]].y - t->p_dir_y;
-
-        // printf("x = %f, y = %f\n", spriteX, spriteY);
-
-        double invDet = 1.0 / (t->plane_x * t->p_dir_y - t->p_dir_x * t->plane_y); //required for correct matrix multiplication
-
-        double transformX = invDet * (t->p_dir_y * spriteX - t->p_dir_x * spriteY);
-        double transformY = invDet * (-t->plane_y * spriteX + t->plane_x * spriteY); //this is actually the depth inside the screen, that what Z is in 3D
-
-        int spriteScreenX = (int)((t->win_w / 2) * (1 + transformX / transformY));
-
-        //calculate height of the sprite on screen
-        int spriteHeight = abs((int)(t->win_h / (transformY))); //using 'transformY' instead of the real distance prevents fisheye
-        //calculate lowest and highest pixel to fill in current stripe
-        int drawStartY = -spriteHeight / 2 + t->win_h / 2;
-        if (drawStartY < 0)
-            drawStartY = 0;
-        int drawEndY = spriteHeight / 2 + t->win_h / 2;
-        if (drawEndY >= t->win_h)
-            drawEndY = t->win_h - 1;
-        //calculate width of the sprite
-        int spriteWidth = abs((int)(t->win_h / (transformY)));
-        int drawStartX = -spriteWidth / 2 + spriteScreenX;
-        if (drawStartX < 0)
-            drawStartX = 0;
-        int drawEndX = spriteWidth / 2 + spriteScreenX;
-        if (drawEndX >= t->win_w)
-            drawEndX = t->win_w - 1;
-
-        // int j;
-        int stripe = drawStartX;
-        unsigned int texel;
-
-        while (stripe < drawEndX)
+        s.sprite_y = t->spr[i].y + 0.5;
+        s.sprite_x = t->spr[i++].x + 0.5;
+        make_calculations_1(t, &s);
+        x = s.draw_start_x - 1;
+        while (++x < s.draw_end_x)
         {
-            int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * 64 / spriteWidth) / 256;
-            if (transformY > 0 && stripe > 0 && stripe < t->win_w && transformY < z_buf[stripe])
+            s.tex_x = (int)(256 * (x - (-s.sprite_w / 2 + s.sprite_scrn_x)) * 64 / s.sprite_w) / 256;
+            if (s.transform_y > 0 && x > 0 && x < t->win_w && s.transform_y < z_buf[x])
             {
-                int y = drawStartY;
-                while (y < drawEndY)
-                {
-                    int d = (y)*256 - t->win_h * 128 + spriteHeight * 128;
-                    int texY = ((d * 64) / spriteHeight) / 256;
-                    texel = ft_getpxl(t->addr[5], t->line_len[5],
-                    t->bpp[5], texX, texY);
-                    if (texel != 4278190080 && (t->tex_x1 >= 0 && t->tex_x1 < 64))
-                        ft_putpxl(t, stripe, y, texel); 
-                    y++;  
-                }
+                y = s.draw_start_y - 1;
+                while (++y < s.draw_end_y)
+                    make_calculations_2(t, &s, x, y);
             }
-            stripe++;
         }
     }
 }

@@ -1,67 +1,127 @@
 #include "cub3d.h"
 
-void            ft_move(cub3d *t)
+void move_forward(t_cub3d *t, double moveSpeed)
 {
-    double moveSpeed = 0.05;
-    if (t->w == 1)
+    double new_y;
+    double new_x;
+
+    if (t->s == 0)
     {
-        if (t->map[(int)(t->p_y + t->p_dir_y * moveSpeed)][(int)t->p_x] != '1')
-            t->p_y += t->p_dir_y * moveSpeed;
-        if (t->map[(int)t->p_y][(int)(t->p_x + t->p_dir_x * moveSpeed)] != '1')
-            t->p_x += t->p_dir_x * moveSpeed;
+        new_y = t->p_dir_y * moveSpeed;
+        if (t->map[(int)(t->p_y + new_y)][(int)t->p_x] != '1')
+            t->p_y += new_y;
+        new_x = t->p_dir_x * moveSpeed;
+        if (t->map[(int)t->p_y][(int)(t->p_x + new_x)] != '1')
+            t->p_x += new_x;
     }
-    if (t->s == 1)
+}
+
+void move_backward(t_cub3d *t, double moveSpeed)
+{
+    double new_y;
+    double new_x;
+
+    if (t->w == 0)
     {
-        if (t->map[(int)(t->p_y - t->p_dir_y * moveSpeed)][(int)t->p_x] != '1')
-            t->p_y -= t->p_dir_y * moveSpeed;
-        if (t->map[(int)t->p_y][(int)(t->p_x - t->p_dir_x * moveSpeed)] != '1')
-            t->p_x -= t->p_dir_x * moveSpeed;
+        new_y = t->p_dir_y * moveSpeed;
+        if (t->map[(int)(t->p_y - new_y)][(int)t->p_x] != '1')
+            t->p_y -= new_y;
+        new_x = t->p_dir_x * moveSpeed;
+        if (t->map[(int)t->p_y][(int)(t->p_x - new_x)] != '1')
+            t->p_x -= new_x;
     }
-    if (t->l_a == 1)
+}
+
+void strafe_left(t_cub3d *t, double moveSpeed)
+{
+    double new_y;
+    double new_x;
+
+    if (t->d == 0)
     {
-        double rotspeed = 0.03;
-        double old_p_dir_x = t->p_dir_x;
+        new_y = t->p_y + (t->p_dir_y * cos(RD(90)) - t->p_dir_x * sin(RD(90))) * moveSpeed;
+        if (t->map[(int)new_y][(int)t->p_x] != '1')
+            t->p_y = new_y;
+        new_x = t->p_x + (t->p_dir_y * sin(RD(90)) + t->p_dir_x * cos(RD(90))) * moveSpeed;
+        if (t->map[(int)t->p_y][(int)new_x] != '1')
+            t->p_x = new_x;
+    }
+}
+
+void strafe_right(t_cub3d *t, double moveSpeed)
+{
+    double new_y;
+    double new_x;
+
+    if (t->a == 0)
+    {
+        new_y = t->p_y - (t->p_dir_y * cos(RD(90)) - t->p_dir_x * sin(RD(90))) * moveSpeed;
+        if (t->map[(int)new_y][(int)t->p_x] != '1')
+            t->p_y = new_y;
+        new_x = t->p_x - (t->p_dir_y * sin(RD(90)) + t->p_dir_x * cos(RD(90))) * moveSpeed;
+        if (t->map[(int)t->p_y][(int)new_x] != '1')
+            t->p_x = new_x;
+    }
+}
+
+void turn_left(t_cub3d *t, double rotspeed)
+{
+    double old_p_dir_x;
+    double old_plane_x;
+
+    if (t->r_a == 0)
+    {
+        old_p_dir_x = t->p_dir_x;
         t->p_dir_x = t->p_dir_x * cos(-rotspeed) - t->p_dir_y * sin(-rotspeed);
         t->p_dir_y = old_p_dir_x * sin(-rotspeed) + t->p_dir_y * cos(-rotspeed);
-        double old_plane_x = t->plane_x;
+        old_plane_x = t->plane_x;
         t->plane_x = t->plane_x * cos(-rotspeed) - t->plane_y * sin(-rotspeed);
         t->plane_y = old_plane_x * sin(-rotspeed) + t->plane_y * cos(-rotspeed);
     }
-    if (t->r_a == 1)
+}
+
+void turn_right(t_cub3d *t, double rotspeed)
+{
+    double old_p_dir_x;
+    double old_plane_x;
+
+    if (t->l_a == 0)
     {
-        double rotspeed = 0.03;
-        double old_p_dir_x = t->p_dir_x;
+        old_p_dir_x = t->p_dir_x;
         t->p_dir_x = t->p_dir_x * cos(rotspeed) - t->p_dir_y * sin(rotspeed);
         t->p_dir_y = old_p_dir_x * sin(rotspeed) + t->p_dir_y * cos(rotspeed);
-        double old_plane_x = t->plane_x;
+        old_plane_x = t->plane_x;
         t->plane_x = t->plane_x * cos(rotspeed) - t->plane_y * sin(rotspeed);
         t->plane_y = old_plane_x * sin(rotspeed) + t->plane_y * cos(rotspeed);
     }
+}
+
+
+void            ft_move(t_cub3d *t)
+{
+    double moveSpeed;
+    double rotspeed;
+
+    moveSpeed = 0.05;
+    rotspeed = 0.03;
+    if (t->w == 1)
+        move_forward(t, moveSpeed);
+    if (t->s == 1)
+        move_backward(t, moveSpeed);
+    if (t->l_a == 1)
+        turn_left(t, rotspeed);
+    if (t->r_a == 1)
+        turn_right(t, rotspeed);
     if (t->a == 1)
-    {
-        if (t->map[(int)(t->p_y + (t->p_dir_y * cos(90 * M_PI / 180) - t->p_dir_x * sin(90 * M_PI / 180)) * moveSpeed)][(int)t->p_x] != '1')
-            t->p_y += (t->p_dir_y * cos(90 * M_PI / 180) - t->p_dir_x * sin(90 * M_PI / 180)) * moveSpeed;
-        if (t->map[(int)t->p_y][(int)(t->p_x + (t->p_dir_y * sin(90 * M_PI / 180) + t->p_dir_x * cos(90 * M_PI / 180)) * moveSpeed)] != '1')
-            t->p_x += (t->p_dir_y * sin(90 * M_PI / 180) + t->p_dir_x * cos(90 * M_PI / 180)) * moveSpeed;
-    }
+        strafe_left(t, moveSpeed);
     if (t->d == 1)
-    {
-        if (t->map[(int)(t->p_y - (t->p_dir_y * cos(90 * M_PI / 180) - t->p_dir_x * sin(90 * M_PI / 180)) * moveSpeed)][(int)t->p_x] != '1')
-            t->p_y -= (t->p_dir_y  * cos(90 * M_PI / 180) - t->p_dir_x * sin(90 * M_PI / 180)) * moveSpeed;
-        if (t->map[(int)t->p_y][(int)(t->p_x - (t->p_dir_y * sin(90 * M_PI / 180) + t->p_dir_x * cos(90 * M_PI / 180)) * moveSpeed)] != '1')
-            t->p_x -= (t->p_dir_y * sin(90 * M_PI / 180) + t->p_dir_x * cos(90 * M_PI / 180)) * moveSpeed;
-    }
+        strafe_right(t, moveSpeed);
     return ;
 }
 
-int             ft_keypress(int keycode, cub3d *t)
+int             ft_keypress(int keycode, t_cub3d *t)
 {
-    double p_x_tmp;
-    double p_y_tmp;
-
-    // printf("key = %d\n", keycode);
-    p_x_tmp = t->p_x;
-    p_y_tmp = t->p_y;
+    // // printf("key = %d\n", keycode);
     if (keycode == 53) // esc
         exit(0);
     else if (keycode == 123) // left arrow: turn left
@@ -79,7 +139,7 @@ int             ft_keypress(int keycode, cub3d *t)
     return (0);
 }
 
-int             ft_keyrelease(int keycode, cub3d *t)
+int             ft_keyrelease(int keycode, t_cub3d *t)
 {
     if (keycode == 123)
         t->l_a = 0;
@@ -96,8 +156,23 @@ int             ft_keyrelease(int keycode, cub3d *t)
     return (0);
 }
 
-int             exit_hook(int keycode, cub3d *t)
+// int mouse_move_hook(int mouse_x)
+// {
+//     static int last_mouse_x;
+
+//     // if (mouse_x > last_mouse_x)
+//     //     // t->r_a = 1;
+//     // else if (mouse_x < last_mouse_x)
+//         // t->l_a = 1;
+//     printf("%d\n", mouse_x);
+//     last_mouse_x = mouse_x;
+//     return (mouse_x);
+// }
+
+int             exit_hook(int keycode, t_cub3d *t)
 {
+    system("killall afplay");
+    // system("sudo killall coreaudiod");
     exit(0);
     t->w = t->w;
     return (keycode);

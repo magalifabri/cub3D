@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void ft_r(cub3d *t, char *file, int *index)
+static void ft_r(t_cub3d *t, char *file, int *index)
 {
     int i;
 
@@ -72,7 +72,7 @@ static int ft_get_color(char *file, int *index)
     return ((r * 65536) + (g * 256) + b);
 }
 
-static void ft_function(cub3d *t, char *file)
+static void ft_function(t_cub3d *t, char *file)
 {
     int i;
 
@@ -104,12 +104,12 @@ static void ft_function(cub3d *t, char *file)
     }
 }
 
-void ft_cub_file_parser(cub3d *t)
+void ft_cub_file_parser(t_cub3d *t)
 {
     char *file;
     int fd;
 
-    fd = open("./maps/map.cub", O_RDONLY);
+    fd = open("./maps/cubfile_dark.cub", O_RDONLY);
     file = ft_copy_file(fd);
     ft_function(t, file);
 }
