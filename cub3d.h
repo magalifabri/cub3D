@@ -33,13 +33,13 @@ typedef struct			s_sprite_xys
 	int					hit;
 	char				mode;
 	int					frame;
-	double				time_frame_switch;
+	double				time_frame_swp;
 	double				time_spawn;
 }						t_sprite;
 
 typedef struct			s_texture_data
 {
-	int					texture;
+	void				*texture;
 	char				*tex_path;
 	char				*addr;
 	int					bpp;
@@ -65,6 +65,7 @@ typedef struct			s_cub3d
 	char				*tex_path[50];
 	void				*texture[50];
 	int					colors[2];
+	t_texture_data		*td;
 
 	double				fps;
 	clock_t				time_now;
@@ -90,8 +91,8 @@ typedef struct			s_cub3d
 	int					l_a;
 	int					r_a;
 	int					mouse_move;
-	int					shoot;
 	int					prev_mouse_x;
+	int					shoot;
 
 	int					sprite_n;
 	t_sprite			*spr;
@@ -99,8 +100,8 @@ typedef struct			s_cub3d
 	int					path_steps;
 }						t_cub3d;
 
-int						main(void);
-void					ft_init(t_cub3d *t);
+// int						main(void);
+void					initialise_variables(t_cub3d *t);
 
 int						keypress_hook(int keycode, t_cub3d *t);
 int						keyrelease_hook(int keycode, t_cub3d *t);
@@ -108,27 +109,33 @@ int						mouse_move_hook(int mouse_x, int mouse_y, t_cub3d *t);
 int						exit_hook(int keycode, t_cub3d *t);
 
 void					move(t_cub3d *t);
-void					parse_cub_file(t_cub3d *t);
+void					turn_left(t_cub3d *t, double rot_spd);
+void					turn_right(t_cub3d *t, double rot_spd);
+
+int						parse_cub_file(t_cub3d *t, int ac, char **av);
 char					*copy_file(int fd);
 void					parse_map(t_cub3d *t, char *file);
+void					find_sprites(t_cub3d *t);
 char					**ft_split_var(char *s, t_cub3d *t);
 void					get_textures(t_cub3d *t);
-void					get_extra_texture_paths1(t_cub3d *t);
-void					get_extra_texture_paths2(t_cub3d *t);
-unsigned int			ft_getpxl(char *addr, int size_line, int bpp, int x, int y);
+unsigned int			ft_getpxl(t_cub3d *t, int i, int x, int y);
 void					ft_putpxl(t_cub3d *data, int x, int y, int color);
 
 double					draw_walls(t_cub3d *t, int i);
 void					draw_sprites(t_cub3d *t, double *z_buf);
-int						get_sprite_frame(t_cub3d *t, int i, clock_t curr_time);
+int						get_sprite_frame(t_cub3d *t, int i);
 void					draw_floor(t_cub3d *t);
 void					draw_skybox(t_cub3d *t);
 void					draw_skybox2(t_cub3d *t);
 
 unsigned int			shader(unsigned int start_colour, double distance);
-void					play_music(void);
+void					play_music(t_cub3d *t);
 
-void					find_path(t_cub3d *p);
+void					sprite_control(t_cub3d *t, int s);
+void					enemy_pathfinding(t_cub3d *p, int s);
+int						obstacle(char c);
+void					move_enemy(t_cub3d *t, int i);
+
 double					get_distance(int y_dest, int x_dest, int y_src, int x_src);
 
 void					draw_crosshair(t_cub3d *t);
@@ -138,7 +145,7 @@ void					draw_red_border(t_cub3d *t);
 void					draw_hearts(t_cub3d *t);
 void					draw_bullets(t_cub3d *t);
 
-void					cast_ray(t_cub3d *t);
+void					shoot(t_cub3d *t);
 
 unsigned int			shader_red(unsigned int start_colour);
 

@@ -41,7 +41,7 @@ void			draw_skybox(t_cub3d *t)
 		s.tex_y_incr = (128.0 / (t->win_h / 2)); // calc y incrementation for texture
 		y = -1;
 		while (++y < t->win_h / 2)
-			ft_putpxl(t, x, y, ft_getpxl(t->addr[6], t->line_len[6], t->bpp[6], s.tex_x, y * s.tex_y_incr));
+			ft_putpxl(t, x, y, ft_getpxl(t, 5, s.tex_x, y * s.tex_y_incr));
 	}
 }
 
@@ -62,8 +62,7 @@ void			draw_skybox2(t_cub3d *t)
 		y = -1;
 		while (++y < t->win_h / 2)
 		{
-			texel = ft_getpxl(t->addr[8], t->line_len[8],
-				t->bpp[8], s.tex_x, y * s.tex_y_incr);
+			texel = ft_getpxl(t, 7, s.tex_x, y * s.tex_y_incr);
 			if (texel != 4278190080)
 				ft_putpxl(t, x, y, texel);
 		}

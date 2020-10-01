@@ -1,17 +1,17 @@
 #include "cub3d.h"
 
-static int ft_get_length(char *map)
+static int	ft_get_length(char *map)
 {
-    int max;
+	int max;
 
-    max = 1;
-    while (*map)
-        if (*map++ == '\n')
-            max++;
-    return (max);
+	max = 1;
+	while (*map)
+		if (*map++ == '\n')
+			max++;
+	return (max);
 }
 
-static char		*ft_get_row(char *s, int width)
+static char	*ft_get_row(char *s, int width)
 {
 	int		i;
 	char	*row;
@@ -30,10 +30,6 @@ static char		*ft_get_row(char *s, int width)
 	{
 		if (*s == ' ')
 			row[i++] = (width != 0) ? ('0') : (' ');
-			// if (width != 0)
-			// 	row[i++] = '0';
-			// else
-			// 	row[i++] = ' ';
 		else
 			row[i++] = *s;
 		s++;

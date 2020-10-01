@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void    ft_init(t_cub3d *t)
+void	initialise_variables(t_cub3d *t)
 {
 	t->fov = 60;
 	t->spd = 3;
@@ -10,6 +10,7 @@ void    ft_init(t_cub3d *t)
 	t->d = 0;
 	t->l_a = 0;
 	t->r_a = 0;
+	t->mouse_move = 0;
 	t->map_w = 0;
 	t->p_dir_x = 0;
 	t->p_dir_y = 0;

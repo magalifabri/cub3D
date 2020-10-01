@@ -65,8 +65,7 @@ static void	make_calculations_2(t_cub3d *t, t_spr *s, int frame, double z_buf)
 		{
 			s->d = y * 256 - t->win_h * 128 + s->sprite_h * 128;
 			s->tex_y = ((s->d * 64) / s->sprite_h) / 256;
-			s->texel = ft_getpxl(t->addr[frame], t->line_len[frame],
-			t->bpp[frame], s->tex_x, s->tex_y);
+			s->texel = ft_getpxl(t, frame, s->tex_x, s->tex_y);
 			if (t->spr[s->i].hit > 0)
 				s->texel = shader_red(s->texel);
 			s->texel = shader(s->texel, s->transform_y);
@@ -120,7 +119,7 @@ void		draw_sprites(t_cub3d *t, double *z_buf)
 			s.sprite_x =
 			t->spr[s.i].x + 0.5 + t->spr[s.i].x_draw * t->spr[s.i].mod;
 			make_calculations_1(t, &s);
-			frame[s.i] = get_sprite_frame(t, s.i, t->time_now);
+			frame[s.i] = get_sprite_frame(t, s.i);
 			s.x = s.draw_start_x - 1;
 			while (++s.x < s.draw_end_x)
 			{

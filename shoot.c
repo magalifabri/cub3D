@@ -81,7 +81,7 @@ static void		make_calculations_1(t_cub3d *t, t_ray *w)
 	}
 }
 
-void			cast_ray(t_cub3d *t)
+void			shoot(t_cub3d *t)
 {
 	t_ray w;
 

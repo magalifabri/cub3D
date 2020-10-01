@@ -54,7 +54,7 @@ void		draw_floor(t_cub3d *t)
 			f.ty = (int)(64 * (f.floor_y - f.cell_y)) & (64 - 1);
 			f.floor_x += f.floor_step_x;
 			f.floor_y += f.floor_step_y;
-			f.texel = ft_getpxl(t->addr[7], t->line_len[7], t->bpp[7], f.tx, f.ty);
+			f.texel = ft_getpxl(t, 6, f.tx, f.ty);
 			f.texel = shader(f.texel, f.row_distance);
 			ft_putpxl(t, x, y, f.texel);
 		}
