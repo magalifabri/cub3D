@@ -1,9 +1,9 @@
 R 600 400
-NO ./textures/dispenser_front_horizontal.xpm
-SO ./textures/sandstone_normal.xpm
-WE ./textures/furnace_side.xpm
-EA ./textures/quartz_block_chiseled.xpm
-S ./textures/Sprite-0002-clr.xpm
+NO ./textures/surfaces/dispenser_front_horizontal_dark.xpm
+SO ./textures/surfaces/furnace_top_dark.xpm
+WE ./textures/surfaces/furnace_side_dark.xpm
+EA ./textures/surfaces/furnace_front_off_dark.xpm
+S ./textures/sprite_dead_tree.xpm
 F 235,232,210
 C 7,7,16
 1111111111111111111

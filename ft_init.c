@@ -16,4 +16,5 @@ void    ft_init(t_cub3d *t)
 	t->p_dir_y = 0;
 	t->plane_x = 0;
 	t->plane_y = 0;
+	t->shoot = 0;
 }

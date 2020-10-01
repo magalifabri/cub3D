@@ -45,10 +45,30 @@ int run_game(t_cub3d *t)
         while (++i < t->win_w)
             z_buf[i] = draw_walls(t, i);
         if (t->sprite_n != 0)
-            draw_sprites(t, z_buf);
+            draw_enemy(t, z_buf);
+        // if (t->sprite_n != 0)
+        //     draw_sprites(t, z_buf);
+        draw_crosshair(t);
+        draw_torch(t);
+        draw_gun(t);
         mlx_put_image_to_window(t->mlx, t->win, t->img, 0, 0);
         move(t);
+        find_path(t);
+        move_enemy(t);
         t->mouse_move = 0;
+        int y = 0;
+        int x = 0;
+        while (y < t->map_h)
+        {
+            while (x <= t->map_w)
+            {
+                printf("%c", t->map[y][x]);
+                x++;
+            }
+            printf("\n");
+            x = 0;
+            y++;
+        }
         return (0);
     }
     return (0);
@@ -56,23 +76,37 @@ int run_game(t_cub3d *t)
 
 void            get_textures(t_cub3d *t)
 {
-    int     img_width[8];
-    int     img_height[8];
+    int     img_width[30];
+    int     img_height[30];
     unsigned int texel;
     unsigned int i;
 
     t->tex_path[5] = "./textures/night_sky_long.xpm"; // skybox
-    t->tex_path[6] = "./textures/dirt_dark.xpm"; // floor
+    t->tex_path[6] = "./textures/surfaces/dirt_dark.xpm"; // floor
     t->tex_path[7] = "./textures/clouds4.xpm"; // moving skybox overlay
+    t->tex_path[8] = "./textures/sprite_crosshair2.xpm";
+    t->tex_path[9] = "./textures/sprite_bat/bat1.2.1.xpm";
+    t->tex_path[10] = "./textures/sprite_bat/bat1.2.2.xpm";
+    t->tex_path[11] = "./textures/sprite_bat/bat1.2.3.xpm";
+    t->tex_path[12] = "./textures/sprite_bat/bat1.2.4.xpm";
+    t->tex_path[13] = "./textures/sprite_torch/sprite_torch1.xpm";
+    t->tex_path[14] = "./textures/sprite_torch/sprite_torch2.xpm";
+    t->tex_path[15] = "./textures/sprite_torch/sprite_torch3.xpm";
+    t->tex_path[16] = "./textures/sprite_torch/sprite_torch4.xpm";
+    t->tex_path[17] = "./textures/sprite_gun/sprite_gun1.xpm";
+    t->tex_path[18] = "./textures/sprite_gun/sprite_gun2.xpm";
+    t->tex_path[19] = "./textures/sprite_gun/sprite_gun3.xpm";
+    t->tex_path[20] = "./textures/sprite_gun/sprite_gun4.xpm";
     i = 1;
-    while (i < 9)
+    while (i < 22)
     {
         t->texture[i - 1] = mlx_xpm_file_to_image(t->mlx, t->tex_path[i - 1], &img_width[i - 1], &img_height[i - 1]);
         t->addr[i] = mlx_get_data_addr(t->texture[i - 1], &t->bpp[i], &t->line_len[i], &t->endian[i]);
         texel = ft_getpxl(t->addr[i], t->line_len[i], t->bpp[i], 2, 2);
-        printf("%u\n", texel);
+        printf("texture %d, %u\n", i, texel);
         i++;
     }
+    printf("loading textures complete\n");
 }
 
 int main(void)
@@ -87,6 +121,7 @@ int main(void)
     t.addr[0] = mlx_get_data_addr(t.img, &t.bpp[0], &t.line_len[0], &t.endian[0]);
     mlx_mouse_hide();
     mlx_mouse_move(t.win, t.win_w / 2, t.win_h / 2);
+    t.prev_mouse_x = t.win_w / 2;
     get_textures(&t);
     mlx_hook(t.win, 2, 1L << 0, keypress_hook, &t);
     mlx_hook(t.win, 3, 1L << 1, keyrelease_hook, &t);
