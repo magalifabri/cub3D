@@ -1,5 +1,53 @@
 #include "cub3d.h"
 
+void		check_map_horizontally(t_cub3d *t)
+{
+	int y;
+	int x;
+
+	y = -1;
+	while (++y < t->map_h)
+	{
+		x = -1;
+		while (++x < t->map_w)
+		{
+			if ((t->map[y][x] != '1' && t->map[y][x] != ','
+			&& (t->map[y][x + 1] == '\0' || t->map[y][x + 1] == ','))
+			|| ((t->map[y][x] == ',' && t->map[y][x + 1] != '1'
+			&& t->map[y][x + 1] != ',' && t->map[y][x + 1] != '\0'))
+			|| ((x == 0 && t->map[y][x] != ',' && t->map[y][x] != '1')))
+			{
+				printf("Error\nfound hole in wall at y:%d / x:%d\n", y, x);
+				exit_cub3d(t);
+			}
+		}
+	}
+}
+
+void		check_map_vertically(t_cub3d *t)
+{
+	int y;
+	int x;
+
+	x = -1;
+	while (++x < t->map_w)
+	{
+		y = -1;
+		while (++y < t->map_h)
+		{
+			if ((t->map[y][x] != '1' && t->map[y][x] != ','
+			&& (t->map[y + 1][x] == '\0' || t->map[y + 1][x] == ','))
+			|| ((t->map[y][x] == ',' && t->map[y + 1][x] != '1'
+			&& t->map[y + 1][x] != ',' && t->map[y + 1][x] != '\0'))
+			|| ((y == 0 && t->map[y][x] != ',' && t->map[y][x] != '1')))
+			{
+				printf("Error\nfound hole in wall at y:%d / x:%d\n", y, x);
+				exit_cub3d(t);
+			}
+		}
+	}
+}
+
 static void	initialise_sprite(t_cub3d *t, int y, int x, int i)
 {
 	t->spr[i].type = t->map[y][x];
@@ -21,6 +69,7 @@ static void	initialise_sprite(t_cub3d *t, int y, int x, int i)
 	{
 		t->spr[i].health = 3;
 		t->spr[i].alive = 1;
+		t->spr[i].time_spawn = 0;
 	}
 }
 
@@ -30,7 +79,9 @@ static void	find_sprites_part_2(t_cub3d *t)
 	int x;
 	int i;
 
-	t->spr = malloc(sizeof(t_sprite) * t->sprite_n);
+	if (!(t->spr = malloc(sizeof(t_sprite) * t->sprite_n)))
+		exit_cub3d(t);
+	t->malloc_spr = 1;
 	i = 0;
 	y = -1;
 	while (++y < t->map_h)
@@ -42,7 +93,6 @@ static void	find_sprites_part_2(t_cub3d *t)
 			|| t->map[y][x] == '5')
 			{
 				initialise_sprite(t, y, x, i);
-				printf("location of sprite %d of type %c: %f, %f\n", i, t->spr[i].type, t->spr[i].y, t->spr[i].x);
 				i++;
 			}
 		}
@@ -64,7 +114,6 @@ void		find_sprites(t_cub3d *t)
 			|| t->map[y][x] == '5')
 				t->sprite_n++;
 	}
-	printf("number of sprites = %d\n", t->sprite_n);
 	if (t->sprite_n != 0)
 		find_sprites_part_2(t);
 }

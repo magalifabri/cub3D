@@ -64,7 +64,7 @@ static int		in_l_o_s(t_cub3d *t, int s)
     return (1);
 }
 
-static double	spawn_mobs(t_cub3d *t, int nest)
+void			spawn_mobs(t_cub3d *t, int nest)
 {
 	int sprite;
 
@@ -73,8 +73,9 @@ static double	spawn_mobs(t_cub3d *t, int nest)
 	{
 		if (t->spr[sprite].type == '0')
 		{
+			// printf("%lu, spawn\n", t->time_now);
 			t->spr[sprite].x = t->spr[nest].x + 1;
-			t->spr[sprite].y = t->spr[nest].y;
+			t->spr[sprite].y = t->spr[nest].y + 1;
 			t->spr[sprite].type = '3';
 			t->spr[sprite].health = 3;
 			t->spr[sprite].hit = 0;
@@ -84,12 +85,12 @@ static double	spawn_mobs(t_cub3d *t, int nest)
 			break ;
 		}
 	}
-	return (clock());
+	// return (t->time_now);
 }
 
 void			sprite_control(t_cub3d *t, int s)
 {
-	static double	time_mob_spawn;
+	// static double	time_mob_spawn;
 
 	if (t->spr[s].type == '3' && t->spr[s].mode == 'i' && in_l_o_s(t, s))
 	{
@@ -99,14 +100,14 @@ void			sprite_control(t_cub3d *t, int s)
 	if (t->spr[s].type == '3' && t->spr[s].mode != 'a'&&
 	get_distance(t->p_y, t->p_x, (int)t->spr[s].y, (int)t->spr[s].x) < 1.5)
 	{
+		system("afplay -v 0.10 audio/hiss.mp3 & exit");
 		t->spr[s].mode = 'a';
 		t->spr[s].frame = 0;
 	}
 	if (t->spr[s].type == '3' && t->spr[s].alive && t->spr[s].mode == 'm')
 		enemy_pathfinding(t, s);
 	if (t->spr[s].type == '5' && t->spr[s].alive
-	&& (t->spr[s].time_spawn == 0 
-	|| (double)(t->time_now - t->spr[s].time_spawn)
-	/ (double)CLOCKS_PER_SEC > 5))
-		time_mob_spawn = spawn_mobs(t, s);
+	&& (double)(t->time_now - t->spr[s].time_spawn)
+	/ (double)CLOCKS_PER_SEC > 5)
+		spawn_mobs(t, s);
 }

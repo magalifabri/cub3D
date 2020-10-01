@@ -49,8 +49,8 @@ static void		get_extra_texture_paths2(t_cub3d *t)
 
 void			get_textures(t_cub3d *t)
 {
-	int				img_width[50];
-	int				img_height[50];
+	int				img_width;
+	int				img_height;
 	unsigned int	i;
 	// unsigned int texel;
 
@@ -60,7 +60,7 @@ void			get_textures(t_cub3d *t)
 	while (i < 44)
 	{
 		t->td[i].texture = mlx_xpm_file_to_image(t->mlx, t->td[i].tex_path,
-		&img_width[i], &img_height[i]);
+		&img_width, &img_height);
 		t->td[i].addr = mlx_get_data_addr(t->td[i].texture, &t->td[i].bpp,
 		&t->td[i].line_len, &t->td[i].endian);
 		// texel = ft_getpxl(t, i, 2, 2);

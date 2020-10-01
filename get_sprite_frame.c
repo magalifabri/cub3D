@@ -41,7 +41,9 @@ static int	get_frame_bullets(t_cub3d *t, int i)
 		t->spr[i].frame = 0;
 	if (get_distance(t->p_y, t->p_x, (int)t->spr[i].y, (int)t->spr[i].x) < 1.1)
 	{
-		t->p_bullets += 2;
+		system("afplay -v 0.10 audio/reload.mp3 & exit");
+		// t->p_bullets += 2;
+		t->p_bullets = (t->p_bullets >= 8) ? 10 : t->p_bullets + 2;
 		t->map[(int)t->spr[i].y][(int)t->spr[i].x] = '0';
 		t->spr[i].type = '0';
 	}
@@ -64,9 +66,9 @@ static int	get_frame_spider_walk(t_cub3d *t, int i)
 int			get_sprite_frame(t_cub3d *t, int i)
 {
 	// turn dead spiders into bullets after death animation has played
-	if (t->spr[i].type == '3'
+	if ((t->spr[i].type == '3' || t->spr[i].type == '5')
 	&& !t->spr[i].alive && (double)(t->time_now - t->spr[i].t_o_d)
-	/ (double)CLOCKS_PER_SEC > 0.1 && t->spr[i].type != '0')
+	/ (double)CLOCKS_PER_SEC > 0.1)
 	{
 		t->map[(int)t->spr[i].y][(int)t->spr[i].x] = '4';
 		t->spr[i].type = '4';

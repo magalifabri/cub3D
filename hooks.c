@@ -1,11 +1,34 @@
 #include "cub3d.h"
 
-int	keypress_hook(int keycode, t_cub3d *t)
+void	exit_cub3d(t_cub3d *t)
+{
+	int i;
+
+	printf("freeing\n");
+	i = t->map_h;
+	if (t->malloc_map)
+		while (--i)
+			free(t->map[i]);
+	if (t->malloc_map)
+		free(t->map);
+	i = 5;
+	while (i--)
+		if (t->td[i].malloc == 1)
+			free(t->td[i].tex_path);
+	if (t->malloc_td)
+		free(t->td);
+	if (t->malloc_spr)
+		free(t->spr);
+	printf("exiting\n");
+	exit(0);
+}
+
+int		keypress_hook(int keycode, t_cub3d *t)
 {
 	static double previous_time;
 
 	if (keycode == 53)
-		exit(0);
+		exit_cub3d(t);
 	else if (keycode == 123)
 		t->l_a = 1;
 	else if (keycode == 124)
@@ -18,18 +41,18 @@ int	keypress_hook(int keycode, t_cub3d *t)
 		t->a = 1;
 	else if (keycode == 2)
 		t->d = 1;
-	else if (t->p_bullets > 0
-	&& keycode == 49 && (double)(t->time_now - previous_time)
-	/ (double)CLOCKS_PER_SEC > 0.5)
+	else if (t->p_bullets > 0 && keycode == 49
+	&& (double)(t->time_now - previous_time) / (double)CLOCKS_PER_SEC > 0.5)
 	{
 		t->shoot = 1;
 		previous_time = t->time_now;
 		t->p_bullets--;
 	}
+	(keycode == 46) ? system("killall afplay") : (0);
 	return (0);
 }
 
-int	keyrelease_hook(int keycode, t_cub3d *t)
+int		keyrelease_hook(int keycode, t_cub3d *t)
 {
 	if (keycode == 123)
 		t->l_a = 0;
@@ -46,7 +69,7 @@ int	keyrelease_hook(int keycode, t_cub3d *t)
 	return (0);
 }
 
-int	mouse_move_hook(int current_mouse_x, int current_mouse_y, t_cub3d *t)
+int		mouse_move_hook(int current_mouse_x, int current_mouse_y, t_cub3d *t)
 {
 	if (current_mouse_x == t->prev_mouse_x)
 		return (0);
@@ -66,12 +89,13 @@ int	mouse_move_hook(int current_mouse_x, int current_mouse_y, t_cub3d *t)
 		mlx_mouse_move(t->win, t->win_w / 2, t->win_h / 2);
 		t->prev_mouse_x = current_mouse_x - t->win_w / 2;
 	}
+	if (current_mouse_y <= 0 || current_mouse_y >= t->win_h)
+		mlx_mouse_move(t->win, current_mouse_x, t->win_h / 2);
 	return (current_mouse_y);
 }
 
-int	exit_hook(int keycode, t_cub3d *t)
+int		exit_hook(int keycode, t_cub3d *t)
 {
-	exit(0);
-	t->w = t->w;
+	exit_cub3d(t);
 	return (keycode);
 }

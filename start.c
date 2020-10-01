@@ -83,54 +83,32 @@ static int	run_game(t_cub3d *t)
 	t->mouse_move = 0;
 	t->shoot = 0;
 	if (t->p_health == 0)
-		exit(0);
-	// print_terminal_map(t);
+	{
+		printf("GAME OVER!\n");
+		exit_cub3d(t);
+	}
 	t->fps = 1 / ((double)(t->time_now - time_last_frame)
 	/ (double)CLOCKS_PER_SEC);
+	// printf("%f\n", t->fps);
+	// print_terminal_map(t);
 	time_last_frame = t->time_now;
+	if (t->save == 1)
+		get_bmp(t);
 	return (0);
 }
-
-// int	check_arguments(int ac, char **av)
-// {
-// 	int fd;
-// 	char *save;
-// 	int i;
-
-// 	save = "--save";
-// 	i = 0;
-// 	if (ac == 3)
-// 	{
-// 		while (av[2][i] && av[2][i] == save[i])
-// 			i++;
-// 		if (i == 6)
-// 		{
-// 			printf("save bmp image\n");
-// 			fd = open(av[1], O_RDONLY);
-// 		}
-// 		else
-// 			return (0);
-// 	}
-// 	else if (ac == 2)
-// 	{
-// 		fd = open(av[1], O_RDONLY);
-// 		printf("%d\n", fd);
-// 	}
-// 	else
-// 		return (0);
-// }
 
 int			main(int ac, char **av)
 {
 	t_cub3d t;
 	
-	t.td = malloc(sizeof(t_texture_data) * 50);
+	if (!(t.td = malloc(sizeof(t_texture_data) * 50)))
+		return (0);
 	initialise_variables(&t);
 	parse_cub_file(&t, ac, av);
 	t.mlx = mlx_init();
 	t.win = mlx_new_window(t.mlx, t.win_w, t.win_h, "cub3D");
 	t.img = mlx_new_image(t.mlx, t.win_w, t.win_h);
-	t.addr[0] = mlx_get_data_addr(t.img, &t.bpp[0], &t.line_len[0], &t.endian[0]);
+	t.addr = mlx_get_data_addr(t.img, &t.bpp, &t.line_len, &t.endian);
 	mlx_mouse_hide();
 	mlx_mouse_move(t.win, t.win_w / 2, t.win_h / 2);
 	t.prev_mouse_x = t.win_w / 2;

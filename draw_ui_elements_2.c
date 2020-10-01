@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int	draw_hearts_part_2(t_cub3d *t, int x_start, int frame)
+static int	draw_hearts_part_2(t_cub3d *t, int x_start, int frame)
 {
 	int				x;
 	int				y;
@@ -20,7 +20,7 @@ int	draw_hearts_part_2(t_cub3d *t, int x_start, int frame)
 	return (x_start -= 32);
 }
 
-void	draw_hearts(t_cub3d *t)
+void		draw_hearts(t_cub3d *t)
 {
 	int				heart;
 	int				x_start;

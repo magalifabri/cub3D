@@ -4,7 +4,7 @@ void			ft_putpxl(t_cub3d *data, int x, int y, int color)
 {
 	char *dst;
 
-	dst = data->addr[0] + (y * data->line_len[0] + x * (data->bpp[0] / 8));
+	dst = data->addr + (y * data->line_len + x * (data->bpp / 8));
 	*(unsigned int *)dst = color;
 }
 
@@ -27,7 +27,7 @@ unsigned int	shader_red(unsigned int start_colour)
 
 	if (start_colour == 4278190080)
 		return (start_colour);
-	end_colour_r = ((start_colour & 0x0000FF00) >> 8) * 1;
+	end_colour_r = ((start_colour & 0x00FF0000) >> 16) * 1;
 	end_colour_g = ((start_colour & 0x0000FF00) >> 8) * 0.5;
 	end_colour_b = (start_colour & 0x000000FF) * 0.5;
 	return (end_colour = (end_colour_r << 16)

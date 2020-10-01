@@ -9,7 +9,7 @@ void	play_music(t_cub3d *t)
 	{
 		printf("%lu, %f, %i, %f\n", t->time_now, time_start_music, CLOCKS_PER_SEC, (double)(t->time_now - time_start_music) / (double)CLOCKS_PER_SEC);
 		system("killall afplay");
-		system("afplay -v 0.10 music2.mp3 & exit");
+		system("afplay -v 0.10 audio/music2.mp3 & exit");
 		time_start_music = t->time_now;
 	}
 }

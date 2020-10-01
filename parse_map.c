@@ -2,7 +2,7 @@
 
 static int	check_charset(char i)
 {
-	return (i == '0' || i == '1' || i == '2' || i == '3' || i == '5' 
+	return (i == '0' || i == '1' || i == '2' || i == '3' || i == '5'
 	|| i == 'N' || i == 'S' || i == 'E' || i == 'W' || i == ' ' || i == '\n');
 }
 
@@ -13,7 +13,7 @@ static void	get_map_dimensions(char *map, t_cub3d *t)
 	i = 0;
 	while (*map && check_charset(*map))
 	{
-		if (*map++ == '\n')
+		if (*map == '\n')
 		{
 			t->map_w = (i > t->map_w) ? (i) : (t->map_w);
 			i = 0;
@@ -21,6 +21,13 @@ static void	get_map_dimensions(char *map, t_cub3d *t)
 			t->map_h++;
 		}
 		i++;
+		(*map) && (map++);
+	}
+	(i == 1) && (t->map_h--);
+	if (*map != '\0')
+	{
+		printf("Error\nencountered unknown character in map\n");
+		exit_cub3d(t);
 	}
 }
 
@@ -69,20 +76,30 @@ static void	find_player(t_cub3d *t)
 			}
 		}
 	}
+	printf("Error\nplayer not found\n");
+	exit_cub3d(t);
 }
 
 void		parse_map(t_cub3d *t, char *file)
 {
 	get_map_dimensions(file, t);
-	printf("width = %d, length = %d\n", t->map_w, t->map_h);
+	printf("Passed 1st map check: width %d, length %d\n", t->map_w, t->map_h);
+	if (t->map_w < 4 || t->map_h < 4)
+	{
+		printf("Error\nmap not wide or high enough\n");
+		exit_cub3d(t);
+	}
 	t->map = ft_split_var(file, t);
+	t->malloc_map = 1;
+	check_map_horizontally(t);
+	check_map_vertically(t);
 	find_player(t);
 	find_sprites(t);
 	
 	// print map, remove or use ft_printf
 	int y = 0;
 	int x = 0;
-	while (y < t->map_h)
+	while (y <= t->map_h)
 	{
 		while (x <= t->map_w)
 		{

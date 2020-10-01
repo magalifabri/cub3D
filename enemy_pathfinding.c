@@ -88,7 +88,8 @@ void		enemy_pathfinding(t_cub3d *t, int s)
 	t_fpv f;
 
 	f.i = 0;
-	t->l = malloc(sizeof(t_visited_squares) * 300);
+	if (!(t->l = malloc(sizeof(t_visited_squares) * 300)))
+		exit_cub3d(t);
 	t->l[f.i].y = t->p_y;
 	t->l[f.i].x = t->p_x;
 	f.front_of_list = 0;
@@ -106,4 +107,5 @@ void		enemy_pathfinding(t_cub3d *t, int s)
 	}
 	t->path_steps = f.i;
 	move_enemy(t, s);
+	free(t->l);
 }

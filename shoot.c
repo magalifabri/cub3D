@@ -29,7 +29,8 @@ static void		make_calculations_3(t_cub3d *t, t_ray *w)
 			{
 				t->spr[sprite].alive = 0;
 				t->map[w->map_y][w->map_x] = '0';
-				t->spr[sprite].t_o_d = clock();
+				t->spr[sprite].t_o_d = t->time_now;
+				system("afplay audio/gore.mp3 & exit");
 			}
 			else
 				t->spr[sprite].hit = 10;
@@ -85,6 +86,7 @@ void			shoot(t_cub3d *t)
 {
 	t_ray w;
 
+	system("afplay -v 0.10 audio/gun_shot_2.mp3 & exit");
 	t->scrn_x = 2 * (t->win_w / 2) / (double)t->win_w - 1;
 	w.r_dir_x = t->p_dir_x + (t->plane_x * t->scrn_x);
 	w.r_dir_y = t->p_dir_y + (t->plane_y * t->scrn_x);

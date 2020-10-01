@@ -1,7 +1,18 @@
 #include "cub3d.h"
 
+void	initialise_variables_part_2(t_cub3d *t)
+{
+	t->td[0].malloc = 0;
+	t->td[1].malloc = 0;
+	t->td[2].malloc = 0;
+	t->td[3].malloc = 0;
+	t->td[4].malloc = 0;
+}
+
 void	initialise_variables(t_cub3d *t)
 {
+	t->save = 0;
+	t->error = 0;
 	t->fov = 60;
 	t->spd = 3;
 	t->w = 0;
@@ -20,4 +31,9 @@ void	initialise_variables(t_cub3d *t)
 	t->p_health = 5;
 	t->p_bullets = 5;
 	t->p_hit = 0;
+	t->malloc_map = 0;
+	t->malloc_tex_paths = 0;
+	t->malloc_spr = 0;
+	t->malloc_td = 1;
+	initialise_variables_part_2(t);
 }
