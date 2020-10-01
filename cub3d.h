@@ -8,6 +8,13 @@
 # include <fcntl.h>
 # include <stdio.h>
 
+typedef struct  s_sprite_xys
+{
+  int y;
+  int x;
+  int dis;
+}               sprite;
+
 typedef struct  s_cub3d 
 {
     // mlx
@@ -25,6 +32,12 @@ typedef struct  s_cub3d
     int p_dir;
     double p_x;
     double p_y;
+    double p_dir_x;
+    double p_dir_y;
+    double plane_x;
+    double plane_y;
+    double scrn_x;
+
     // raycasting
     double r_dir;
     double d1;
@@ -52,14 +65,16 @@ typedef struct  s_cub3d
     int colors[2];
     void    *texture[5];
     //sprites
-    int sprite_coords[2];
-    char side;
+    // int sprite_coords[2];
+    // char side;
+    // int *sprite_xys;
+    int sprite_n;
+    sprite *spr;
+    // double *z_buf;
 }               cub3d;
 
 int main(void);
 void ft_init(cub3d *t);
-// double ft_raycaster_1(cub3d *t);
-// double ft_raycaster_2(cub3d *t);
 int ft_keypress(int keycode, cub3d *t);
 int ft_keyrelease(int keycode, cub3d *t);
 int exit_hook(int keycode, cub3d *t);
@@ -70,8 +85,9 @@ void ft_map_parser(cub3d *t, char *file);
 char **ft_split_var(char *s, cub3d *t);
 void    ft_textures(cub3d *t);
 unsigned int	ft_getpxl(char *addr, int size_line, int bpp, int x, int y);
-void raycaster_main(cub3d *t);
-int raycaster_sprites_main(cub3d *t);
-void put_sprites(cub3d *t, int i);
+void ft_putpxl(cub3d *data, int x, int y, int color);
+double ft_walls(cub3d *t, int i);
+void put_sprites(cub3d *t, double *z_buf);
+void put_floors(cub3d *t);
 
 #endif

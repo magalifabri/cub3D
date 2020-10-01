@@ -2,51 +2,54 @@
 
 void            ft_move(cub3d *t)
 {
-    double p_x_tmp;
-    double p_y_tmp;
+    double moveSpeed = 0.05;
     if (t->w == 1)
     {
-        p_y_tmp = t->p_y - sin(t->p_dir * M_PI / 180)*t->spd;
-        p_x_tmp = t->p_x + cos(t->p_dir * M_PI / 180)*t->spd;
-        if (t->map[(int)p_y_tmp >> 6][(int)p_x_tmp >> 6] != '1')
-        {
-            t->p_y = p_y_tmp;
-            t->p_x = p_x_tmp;
-        }
+        if (t->map[(int)(t->p_y + t->p_dir_y * moveSpeed)][(int)t->p_x] != '1')
+            t->p_y += t->p_dir_y * moveSpeed;
+        if (t->map[(int)t->p_y][(int)(t->p_x + t->p_dir_x * moveSpeed)] != '1')
+            t->p_x += t->p_dir_x * moveSpeed;
     }
     if (t->s == 1)
     {
-        p_y_tmp = t->p_y + sin(t->p_dir * M_PI / 180)*t->spd;
-        p_x_tmp = t->p_x - cos(t->p_dir * M_PI / 180)*t->spd;
-        if (t->map[(int)p_y_tmp >> 6][(int)p_x_tmp >> 6] != '1')
-        {
-            t->p_y = p_y_tmp;
-            t->p_x = p_x_tmp;
-        }
+        if (t->map[(int)(t->p_y - t->p_dir_y * moveSpeed)][(int)t->p_x] != '1')
+            t->p_y -= t->p_dir_y * moveSpeed;
+        if (t->map[(int)t->p_y][(int)(t->p_x - t->p_dir_x * moveSpeed)] != '1')
+            t->p_x -= t->p_dir_x * moveSpeed;
     }
     if (t->l_a == 1)
-        t->p_dir = (t->p_dir + 2 > 360) ? (0) : (t->p_dir + 1);
+    {
+        double rotspeed = 0.03;
+        double old_p_dir_x = t->p_dir_x;
+        t->p_dir_x = t->p_dir_x * cos(-rotspeed) - t->p_dir_y * sin(-rotspeed);
+        t->p_dir_y = old_p_dir_x * sin(-rotspeed) + t->p_dir_y * cos(-rotspeed);
+        double old_plane_x = t->plane_x;
+        t->plane_x = t->plane_x * cos(-rotspeed) - t->plane_y * sin(-rotspeed);
+        t->plane_y = old_plane_x * sin(-rotspeed) + t->plane_y * cos(-rotspeed);
+    }
     if (t->r_a == 1)
-        t->p_dir = (t->p_dir - 2 < 0) ? (360) : (t->p_dir - 1);
+    {
+        double rotspeed = 0.03;
+        double old_p_dir_x = t->p_dir_x;
+        t->p_dir_x = t->p_dir_x * cos(rotspeed) - t->p_dir_y * sin(rotspeed);
+        t->p_dir_y = old_p_dir_x * sin(rotspeed) + t->p_dir_y * cos(rotspeed);
+        double old_plane_x = t->plane_x;
+        t->plane_x = t->plane_x * cos(rotspeed) - t->plane_y * sin(rotspeed);
+        t->plane_y = old_plane_x * sin(rotspeed) + t->plane_y * cos(rotspeed);
+    }
     if (t->a == 1)
     {
-        p_y_tmp = t->p_y - sin((t->p_dir + 90 > 360 ? t->p_dir - 270 : t->p_dir + 90) * M_PI / 180)*t->spd;
-        p_x_tmp = t->p_x + cos((t->p_dir + 90 > 360 ? t->p_dir - 270 : t->p_dir + 90) * M_PI / 180)*t->spd;
-        if (t->map[(int)p_y_tmp >> 6][(int)p_x_tmp >> 6] != '1')
-        {
-            t->p_y = p_y_tmp;
-            t->p_x = p_x_tmp;
-        }
+        if (t->map[(int)(t->p_y + (t->p_dir_y * cos(90 * M_PI / 180) - t->p_dir_x * sin(90 * M_PI / 180)) * moveSpeed)][(int)t->p_x] != '1')
+            t->p_y += (t->p_dir_y * cos(90 * M_PI / 180) - t->p_dir_x * sin(90 * M_PI / 180)) * moveSpeed;
+        if (t->map[(int)t->p_y][(int)(t->p_x + (t->p_dir_y * sin(90 * M_PI / 180) + t->p_dir_x * cos(90 * M_PI / 180)) * moveSpeed)] != '1')
+            t->p_x += (t->p_dir_y * sin(90 * M_PI / 180) + t->p_dir_x * cos(90 * M_PI / 180)) * moveSpeed;
     }
     if (t->d == 1)
     {
-        p_y_tmp = t->p_y - sin((t->p_dir - 90 < 0 ? t->p_dir + 270 : t->p_dir - 90) * M_PI / 180)*t->spd;
-        p_x_tmp = t->p_x + cos((t->p_dir - 90 < 0 ? t->p_dir + 270 : t->p_dir - 90) * M_PI / 180)*t->spd;
-        if (t->map[(int)p_y_tmp >> 6][(int)p_x_tmp >> 6] != '1')
-        {
-            t->p_y = p_y_tmp;
-            t->p_x = p_x_tmp;
-        }
+        if (t->map[(int)(t->p_y - (t->p_dir_y * cos(90 * M_PI / 180) - t->p_dir_x * sin(90 * M_PI / 180)) * moveSpeed)][(int)t->p_x] != '1')
+            t->p_y -= (t->p_dir_y  * cos(90 * M_PI / 180) - t->p_dir_x * sin(90 * M_PI / 180)) * moveSpeed;
+        if (t->map[(int)t->p_y][(int)(t->p_x - (t->p_dir_y * sin(90 * M_PI / 180) + t->p_dir_x * cos(90 * M_PI / 180)) * moveSpeed)] != '1')
+            t->p_x -= (t->p_dir_y * sin(90 * M_PI / 180) + t->p_dir_x * cos(90 * M_PI / 180)) * moveSpeed;
     }
     return ;
 }

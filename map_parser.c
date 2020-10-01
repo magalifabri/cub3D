@@ -51,16 +51,75 @@ static void ft_find_player(cub3d *t)
             if (t->map[y][x] == 'N' || t->map[y][x] == 'E' 
             || t->map[y][x] == 'S' || t->map[y][x] == 'W')
             {
-                t->p_y = y * 64;
-                t->p_x = x * 64;
-                (t->map[y][x] == 'N') && (t->p_dir = 90);
-                (t->map[y][x] == 'E') && (t->p_dir = 0);
-                (t->map[y][x] == 'S') && (t->p_dir = 270);
-                (t->map[y][x] == 'W') && (t->p_dir = 180);
+                t->p_y = y;
+                t->p_x = x;
+                if (t->map[y][x] == 'N')
+                {
+                    t->p_dir_x = 0;
+                    t->p_dir_y = -1;
+                    t->plane_x = 0.66;
+                    t->plane_y = 0;
+                }
+                else if (t->map[y][x] == 'E')
+                {
+                    t->p_dir_x = 1;
+                    t->p_dir_y = 0;
+                    t->plane_x = 0;
+                    t->plane_y = 0.66;
+                }
+                else if (t->map[y][x] == 'S')
+                {
+                    t->p_dir_x = 0;
+                    t->p_dir_y = 1;
+                    t->plane_x = -0.66;
+                    t->plane_y = 0;
+                }
+                else
+                {
+                    t->p_dir_x = -1;
+                    t->p_dir_y = 0;
+                    t->plane_x = 0;
+                    t->plane_y = -0.66;
+                }
                 return ;
             }
         }
     }
+}
+
+static void sprites(cub3d *t)
+{
+    int y;
+    int x;
+
+    t->sprite_n = 0;
+    y = -1;
+    while (++y < t->map_h)
+    {
+        x = -1;
+        while (++x < t->map_w)
+            if (t->map[y][x] == '2')
+                t->sprite_n++;
+    }
+    
+    int i;
+
+    t->spr = malloc(sizeof(sprite) * t->sprite_n);
+    i = 0;
+    y = -1;
+    while (++y < t->map_h)
+    {
+        x = -1;
+        while (++x < t->map_w)
+        {
+            if (t->map[y][x] == '2')
+            {
+                t->spr[i].y = y;
+                t->spr[i++].x = x;
+            }
+        }
+    }
+    t->spr[i].y = t->map_h;
 }
 
 void ft_map_parser(cub3d *t, char *file)
@@ -71,6 +130,14 @@ void ft_map_parser(cub3d *t, char *file)
     printf("length = %d\n", t->map_h);
     t->map = ft_split_var(file, t);
     ft_find_player(t);
+    sprites(t);
+
+    int i = 0;
+    while (t->spr[i].y != t->map_h)
+    {
+        printf("%d, %d\n", t->spr[i].y, t->spr[i].x);
+        i++;
+    }
     
     int y = 0;
     int x = 0;
