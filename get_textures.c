@@ -43,7 +43,7 @@ void            get_textures(t_cub3d *t)
     unsigned int i;
 
     t->tex_path[5] = "./textures/night_sky_long.xpm"; // skybox
-    t->tex_path[6] = "./textures/hay_block_top.xpm"; // floor
+    t->tex_path[6] = "./textures/dirt_dark.xpm"; // floor
     t->tex_path[7] = "./textures/clouds4.xpm"; // moving skybox overlay
     i = 1;
     while (i < 9)

@@ -3,7 +3,7 @@ NO ./textures/dispenser_front_horizontal.xpm
 SO ./textures/sandstone_normal.xpm
 WE ./textures/furnace_side.xpm
 EA ./textures/quartz_block_chiseled.xpm
-S ./textures/sapling_oak.xpm
+S ./textures/Sprite-0002-clr.xpm
 F 235,232,210
 C 7,7,16
 1111111111111111111

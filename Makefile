@@ -25,6 +25,7 @@ $(NAME): $(OBJ) cub3d.h
 
 test: all
 	./$(NAME)
+	killall afplay
 
 clean: 
 	$(RM) *.o

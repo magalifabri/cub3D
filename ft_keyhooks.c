@@ -96,7 +96,6 @@ void turn_right(t_cub3d *t, double rotspeed)
     }
 }
 
-
 void            ft_move(t_cub3d *t)
 {
     double moveSpeed;
