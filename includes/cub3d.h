@@ -11,6 +11,127 @@
 # include <stdio.h>
 # include <time.h>
 
+typedef struct			s_draw_floor_variables
+{
+	float				r_dir_x0;
+	float				r_dir_y0;
+	float				r_dir_x1;
+	float				r_dir_y1;
+	int					p;
+	float				pos_z;
+	float				row_distance;
+	float				floor_step_x;
+	float				floor_step_y;
+	float				floor_x;
+	float				floor_y;
+	int					cell_x;
+	int					cell_y;
+	int					tx;
+	int					ty;
+	unsigned int		texel;
+}						t_dfv;
+
+typedef struct			s_draw_skybox_variables
+{
+	double				r_dir_x;
+	double				r_dir_y;
+	double				r_degree;
+	int					tex_x;
+	double				tex_y_incr;
+}						t_psv;
+
+typedef struct			s_draw_sprites_variables
+{
+	int					i;
+	int					x;
+	double				sprite_y;
+	double				sprite_x;
+	double				sprite_x2;
+	double				sprite_y2;
+	double				inv_det;
+	double				transform_x;
+	double				transform_y;
+	int					sprite_scrn_x;
+	int					sprite_h;
+	int					draw_start_y;
+	int					draw_end_y;
+	int					sprite_w;
+	int					draw_start_x;
+	int					draw_end_x;
+	unsigned int		texel;
+	int					tex_x;
+	int					tex_y;
+	int					d;
+}						t_spr;
+
+typedef struct			s_draw_walls_variables
+{
+	double				r_dir_x;
+	double				r_dir_y;
+	int					map_x;
+	int					map_y;
+	double				side_dist_x;
+	double				side_dist_y;
+	double				delta_dist_x;
+	double				delta_dist_y;
+	double				perp_wall_dist;
+	int					draw_start;
+	int					draw_end;
+	int					tex_nbr;
+	double				wall_x;
+	double				step;
+	double				tex_pos;
+	int					tex_x;
+	int					line_height;
+	int					step_x;
+	int					step_y;
+	int					side;
+	unsigned int		texel;
+}						t_pwv;
+
+typedef struct			s_find_path_variables
+{
+	int					current_y;
+	int					current_x;
+	int					i;
+	int					check;
+	int					front_of_list;
+}						t_fpv;
+
+typedef struct			s_gen_bitmap_data
+{
+	int					bpp;
+	int					file_h_size;
+	int					info_h_size;
+	char				*file_name;
+	unsigned char		*image;
+}						t_gen_bmp_data;
+
+typedef struct			s_check_for_walls_variables
+{
+	double				y_dest;
+	double				x_dest;
+    double				y_dif;
+    double				x_dif;
+    double				step_x;
+    double				step_y;
+    double				tmp;
+}						t_cfwv;
+
+typedef struct			s_cast_ray
+{
+	double				r_dir_x;
+	double				r_dir_y;
+	int					map_x;
+	int					map_y;
+	double				side_dist_x;
+	double				side_dist_y;
+	double				delta_dist_x;
+	double				delta_dist_y;
+	int					step_x;
+	int					step_y;
+}						t_ray;
+
 typedef struct			s_visited_squares
 {
 	int					y;
@@ -106,12 +227,13 @@ typedef struct			s_cub3d
 	int					malloc_spr;
 }						t_cub3d;
 
-// int						main(void);
-void					initialise_variables(t_cub3d *t);
 void					play_music(t_cub3d *t);
 void					*terminate(char **s);
 void					exit_cub3d(t_cub3d *t);
 void					get_bmp(t_cub3d *t);
+unsigned int			get_pxl_for_bmp(t_cub3d *t, int x, int y);
+
+void					print_terminal_map(t_cub3d *t);
 
 void					parse_cub_file(t_cub3d *t, int ac, char **av);
 char					*copy_file(int fd);
@@ -135,6 +257,7 @@ void					move(t_cub3d *t);
 void					turn_left(t_cub3d *t, double rot_spd);
 void					turn_right(t_cub3d *t, double rot_spd);
 
+void					draw_background(t_cub3d *t, int sky, int floor);
 double					draw_walls(t_cub3d *t, int i);
 void					draw_sprites(t_cub3d *t, double *z_buf);
 int						get_sprite_frame(t_cub3d *t, int i);

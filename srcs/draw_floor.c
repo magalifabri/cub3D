@@ -1,24 +1,16 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_floor.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/27 16:05:40 by mfabri            #+#    #+#             */
+/*   Updated: 2020/04/27 16:05:41 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-typedef struct		s_draw_floor_variables
-{
-	float			r_dir_x0;
-	float			r_dir_y0;
-	float			r_dir_x1;
-	float			r_dir_y1;
-	int				p;
-	float			pos_z;
-	float			row_distance;
-	float			floor_step_x;
-	float			floor_step_y;
-	float			floor_x;
-	float			floor_y;
-	int				cell_x;
-	int				cell_y;
-	int				tx;
-	int				ty;
-	unsigned int	texel;
-}					t_dfv;
+#include "cub3d.h"
 
 static void	make_calculations(t_cub3d *t, t_dfv *f, int y)
 {

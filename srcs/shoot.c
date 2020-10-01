@@ -1,18 +1,16 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shoot.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/27 16:28:59 by mfabri            #+#    #+#             */
+/*   Updated: 2020/04/27 18:34:33 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-typedef struct	s_cast_ray
-{
-	double		r_dir_x;
-	double		r_dir_y;
-	int			map_x;
-	int			map_y;
-	double		side_dist_x;
-	double		side_dist_y;
-	double		delta_dist_x;
-	double		delta_dist_y;
-	int			step_x;
-	int			step_y;
-}				t_ray;
+#include "cub3d.h"
 
 static void		make_calculations_3(t_cub3d *t, t_ray *w)
 {
@@ -96,4 +94,5 @@ void			shoot(t_cub3d *t)
 	w.delta_dist_y = fabs(1 / w.r_dir_y);
 	make_calculations_1(t, &w);
 	make_calculations_2(t, &w);
+	t->shoot = 0;
 }

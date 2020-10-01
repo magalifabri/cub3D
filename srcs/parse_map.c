@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/27 16:27:11 by mfabri            #+#    #+#             */
+/*   Updated: 2020/04/28 08:53:00 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static int	check_charset(char i)
@@ -83,7 +95,6 @@ static void	find_player(t_cub3d *t)
 void		parse_map(t_cub3d *t, char *file)
 {
 	get_map_dimensions(file, t);
-	printf("Passed 1st map check: width %d, length %d\n", t->map_w, t->map_h);
 	if (t->map_w < 4 || t->map_h < 4)
 	{
 		printf("Error\nmap not wide or high enough\n");
@@ -95,8 +106,7 @@ void		parse_map(t_cub3d *t, char *file)
 	check_map_vertically(t);
 	find_player(t);
 	find_sprites(t);
-	
-	// print map, remove or use ft_printf
+
 	int y = 0;
 	int x = 0;
 	while (y <= t->map_h)

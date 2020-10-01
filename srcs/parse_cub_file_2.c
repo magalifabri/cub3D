@@ -13,7 +13,6 @@ void		check_tex_path(t_cub3d *t, char *tex_path, int n)
 		t->td[n].malloc = 0;
 		exit_cub3d(t);
 	}
-	printf("Passed texture path check: path = %s\n", tex_path);
 	close(fd);
 }
 
@@ -28,7 +27,6 @@ int			check_colour(t_cub3d *t, int r, int g, int b)
 		exit_cub3d(t);
 	}
 	colour = (r * 65536) + (g * 256) + b;
-	printf("Passed colour check: %d\n", colour);
 	return (colour);
 }
 
@@ -86,7 +84,7 @@ int			check_arguments(t_cub3d *t, int ac, char **av)
 			i++;
 		if (i == 6)
 		{
-			printf("save bmp image\n");
+			printf("saving bmp image...\n");
 			t->save = 1;
 			return (fd);
 		}

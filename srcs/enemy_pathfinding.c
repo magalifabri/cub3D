@@ -1,26 +1,27 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enemy_pathfinding.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/27 16:19:38 by mfabri            #+#    #+#             */
+/*   Updated: 2020/04/27 16:19:55 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-typedef struct	s_find_path_variables
-{
-	int			current_y;
-	int			current_x;
-	int			i;
-	int			check;
-	int			front_of_list;
-}				t_fpv;
+#include "cub3d.h"
 
 static void	check_north(t_cub3d *t, t_fpv *f)
 {
 	if (!obstacle(t->map[f->current_y - 1][f->current_x]))
 	{
-		// check if adjacent north square is on the list
 		f->check = f->front_of_list + 1;
 		while (--f->check >= 0 && !(t->l[f->check].y == f->current_y - 1
 		&& t->l[f->check].x == f->current_x))
 		{
-			if (f->check == 0) // if f->check reaches 0, that means the coords aren't on the list
+			if (f->check == 0)
 			{
-				// it has not been visited, 
 				t->l[++f->front_of_list].y = f->current_y - 1;
 				t->l[f->front_of_list].x = f->current_x;
 				t->l[f->front_of_list].direction_of_origin = 's';
@@ -31,7 +32,7 @@ static void	check_north(t_cub3d *t, t_fpv *f)
 
 static void	check_south(t_cub3d *t, t_fpv *f)
 {
-	if (!obstacle(t->map[f->current_y + 1][f->current_x])) // check adjacent south square
+	if (!obstacle(t->map[f->current_y + 1][f->current_x]))
 	{
 		f->check = f->front_of_list + 1;
 		while (--f->check >= 0 && !(t->l[f->check].y == f->current_y + 1
@@ -93,7 +94,6 @@ void		enemy_pathfinding(t_cub3d *t, int s)
 	t->l[f.i].y = t->p_y;
 	t->l[f.i].x = t->p_x;
 	f.front_of_list = 0;
-	// check if searched object is found in current location
 	while (!(t->l[f.i].y == (int)t->spr[s].y
 	&& t->l[f.i].x == (int)t->spr[s].x))
 	{

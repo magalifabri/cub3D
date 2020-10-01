@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_ui_elements.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/27 16:15:07 by mfabri            #+#    #+#             */
+/*   Updated: 2020/05/01 21:28:43 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	draw_red_border(t_cub3d *t)
@@ -48,7 +60,7 @@ void	draw_bullets(t_cub3d *t)
 	int				x_start;
 
 	bullet = 0;
-	x_start = t->win_w / 3;
+	x_start = 5;
 	while (bullet < t->p_bullets)
 	{
 		y = -1;

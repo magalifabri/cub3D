@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   auxiliary.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/27 11:00:20 by mfabri            #+#    #+#             */
+/*   Updated: 2020/04/27 11:03:23 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void			ft_putpxl(t_cub3d *data, int x, int y, int color)
@@ -14,6 +26,16 @@ unsigned int	ft_getpxl(t_cub3d *t, int i, int x, int y)
 	char			*ptr;
 
 	ptr = t->td[i].addr + (y * t->td[i].line_len + x * (t->td[i].bpp / 8));
+	color = *(unsigned int *)ptr;
+	return (color);
+}
+
+unsigned int	get_pxl_for_bmp(t_cub3d *t, int x, int y)
+{
+	unsigned int	color;
+	char			*ptr;
+
+	ptr = t->addr + (y * t->line_len + x * (t->bpp / 8));
 	color = *(unsigned int *)ptr;
 	return (color);
 }
@@ -51,21 +73,4 @@ unsigned int	shader(unsigned int start_colour, double distance)
 	end_colour_b = (start_colour & 0x000000FF) * shade;
 	return (end_colour = (end_colour_r << 16)
 	+ (end_colour_g << 8) + end_colour_b);
-}
-
-double			get_distance(int y_dest, int x_dest, int y_src, int x_src)
-{
-    double	x_dif;
-    double	y_dif;
-    double	angle;
-    double	distance;
-
-    x_dif = x_src - x_dest;
-    y_dif = y_src - y_dest;
-    angle = fabs(atan(y_dif/x_dif));
-    if ((angle > 0.25 && angle < 0.75) || (angle > 1.25 && angle < 1.75))
-        distance = y_dif / sin(angle);
-    else
-        distance = x_dif / cos(angle);
-    return (fabs(distance));
 }

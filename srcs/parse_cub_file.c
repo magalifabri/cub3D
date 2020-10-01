@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_cub_file.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/27 16:26:20 by mfabri            #+#    #+#             */
+/*   Updated: 2020/04/28 08:51:42 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static void	get_resolution(t_cub3d *t, char *file, int *index)
@@ -21,7 +33,6 @@ static void	get_resolution(t_cub3d *t, char *file, int *index)
 		printf("Error\nfailed resolution check\n");
 		exit_cub3d(t);
 	}
-	printf("Passed resolution check: w = %d, h = %d\n", t->win_w, t->win_h);
 }
 
 static char	*get_texture_path(t_cub3d *t, int n, char *file, int *index)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_sprite_frame.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/27 09:22:47 by Magali            #+#    #+#             */
+/*   Updated: 2020/05/01 21:32:38 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static int	get_frame_spider_attack(t_cub3d *t, int i)
@@ -10,14 +22,12 @@ static int	get_frame_spider_attack(t_cub3d *t, int i)
 	}
 	if (t->spr[i].frame > 4)
 		t->spr[i].frame = 0;
-	// switch back to walking if player moved away
 	if (t->spr[i].frame == 0
 	&& get_distance(t->p_y, t->p_x, (int)t->spr[i].y, (int)t->spr[i].x) > 1.5)
 	{
 		t->spr[i].mode = 'm';
 		t->spr[i].frame = 0;
 	}
-	// damage player if player is within range at the striking frame
 	if (t->spr[i].frame == 3
 	&& get_distance(t->p_y, t->p_x, (int)t->spr[i].y, (int)t->spr[i].x) < 1.5
 	&& (t->p_hit == 0 || (double)(t->time_now - t->p_hit)
@@ -42,8 +52,7 @@ static int	get_frame_bullets(t_cub3d *t, int i)
 	if (get_distance(t->p_y, t->p_x, (int)t->spr[i].y, (int)t->spr[i].x) < 1.1)
 	{
 		system("afplay -v 0.10 audio/reload.mp3 & exit");
-		// t->p_bullets += 2;
-		t->p_bullets = (t->p_bullets >= 8) ? 10 : t->p_bullets + 2;
+		t->p_bullets = (t->p_bullets >= 18) ? 20 : t->p_bullets + 2;
 		t->map[(int)t->spr[i].y][(int)t->spr[i].x] = '0';
 		t->spr[i].type = '0';
 	}
@@ -65,7 +74,6 @@ static int	get_frame_spider_walk(t_cub3d *t, int i)
 
 int			get_sprite_frame(t_cub3d *t, int i)
 {
-	// turn dead spiders into bullets after death animation has played
 	if ((t->spr[i].type == '3' || t->spr[i].type == '5')
 	&& !t->spr[i].alive && (double)(t->time_now - t->spr[i].t_o_d)
 	/ (double)CLOCKS_PER_SEC > 0.1)
@@ -81,11 +89,11 @@ int			get_sprite_frame(t_cub3d *t, int i)
 		return (43);
 	if (t->spr[i].type == '4')
 		return (get_frame_bullets(t, i));
-	if (!t->spr[i].alive)
+	if ((t->spr[i].type == '3' || t->spr[i].type == '5') && !t->spr[i].alive)
 		return (21);
-	else if (t->spr[i].mode == 'm')
+	else if (t->spr[i].type == '3' && t->spr[i].mode == 'm')
 		return (get_frame_spider_walk(t, i));
-	else if (t->spr[i].mode == 'a')
+	else if (t->spr[i].type == '3' && t->spr[i].mode == 'a')
 		return (get_frame_spider_attack(t, i));
 	else
 		return (23);

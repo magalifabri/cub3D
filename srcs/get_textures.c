@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_textures.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/27 16:23:55 by mfabri            #+#    #+#             */
+/*   Updated: 2020/04/27 16:24:52 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static void		get_extra_texture_paths1(t_cub3d *t)
@@ -52,20 +64,16 @@ void			get_textures(t_cub3d *t)
 	int				img_width;
 	int				img_height;
 	unsigned int	i;
-	// unsigned int texel;
 
 	get_extra_texture_paths1(t);
 	get_extra_texture_paths2(t);
-	i = 0;
-	while (i < 44)
+	i = -1;
+	while (++i < 44)
 	{
 		t->td[i].texture = mlx_xpm_file_to_image(t->mlx, t->td[i].tex_path,
 		&img_width, &img_height);
 		t->td[i].addr = mlx_get_data_addr(t->td[i].texture, &t->td[i].bpp,
 		&t->td[i].line_len, &t->td[i].endian);
-		// texel = ft_getpxl(t, i, 2, 2);
-		// printf("texture %d, %u\n", i, texel);
-		i++;
 	}
 	printf("loading textures complete\n");
 }

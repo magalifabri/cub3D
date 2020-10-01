@@ -1,34 +1,22 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_sprites.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/27 16:13:39 by mfabri            #+#    #+#             */
+/*   Updated: 2020/05/01 21:04:31 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-typedef struct		s_put_sprites_variables
-{
-	int				i;
-	int				x;
-	double			sprite_y;
-	double			sprite_x;
-	double			sprite_x2;
-	double			sprite_y2;
-	double			inv_det;
-	double			transform_x;
-	double			transform_y;
-	int				sprite_scrn_x;
-	int				sprite_h;
-	int				draw_start_y;
-	int				draw_end_y;
-	int				sprite_w;
-	int				draw_start_x;
-	int				draw_end_x;
-	unsigned int	texel;
-	int				tex_x;
-	int				tex_y;
-	int				d;
-}					t_spr;
+#include "cub3d.h"
 
 static void	sort_sprites(t_cub3d *t)
 {
-	t_sprite tmp;
-	int i;
-	int j;
+	t_sprite	tmp;
+	int			i;
+	int			j;
 
 	i = -1;
 	while (++i < t->sprite_n)
@@ -77,24 +65,23 @@ static void	make_calculations_2(t_cub3d *t, t_spr *s, int frame, double z_buf)
 
 static void	make_calculations_1(t_cub3d *t, t_spr *s)
 {
-	s->sprite_x2 = s->sprite_x - t->p_x; //translate sprite position to relative to camera
+	s->sprite_x2 = s->sprite_x - t->p_x;
 	s->sprite_y2 = s->sprite_y - t->p_y;
-	s->inv_det = 1.0 / (t->plane_x * t->p_dir_y - t->p_dir_x * t->plane_y); //required for correct matrix multiplication
+	s->inv_det = 1.0 / (t->plane_x * t->p_dir_y - t->p_dir_x * t->plane_y);
 	s->transform_x =
 	s->inv_det * (t->p_dir_y * s->sprite_x2 - t->p_dir_x * s->sprite_y2);
 	s->transform_y =
-	s->inv_det * (-t->plane_y * s->sprite_x2 + t->plane_x * s->sprite_y2); //this is actually the depth inside the screen, that what Z is in 3D
+	s->inv_det * (-t->plane_y * s->sprite_x2 + t->plane_x * s->sprite_y2);
 	s->sprite_scrn_x =
 	(int)((t->win_w / 2) * (1 + s->transform_x / s->transform_y));
-	//calculate height of the sprite on screen
-	s->sprite_h = abs((int)(t->win_h / (s->transform_y))); //using 'transform_y' instead of the real distance prevents fisheye
-	s->draw_start_y = -s->sprite_h / 2 + t->win_h / 2; //calculate lowest and highest pixel to fill in current x
+	s->sprite_h = abs((int)(t->win_h / (s->transform_y)));
+	s->draw_start_y = -s->sprite_h / 2 + t->win_h / 2;
 	if (s->draw_start_y < 0)
 		s->draw_start_y = 0;
 	s->draw_end_y = s->sprite_h / 2 + t->win_h / 2;
 	if (s->draw_end_y >= t->win_h)
 		s->draw_end_y = t->win_h - 1;
-	s->sprite_w = abs((int)(t->win_h / (s->transform_y))); //calculate width of the sprite
+	s->sprite_w = abs((int)(t->win_h / (s->transform_y)));
 	s->draw_start_x = -s->sprite_w / 2 + s->sprite_scrn_x;
 	if (s->draw_start_x < 0)
 		s->draw_start_x = 0;
@@ -106,7 +93,7 @@ static void	make_calculations_1(t_cub3d *t, t_spr *s)
 void		draw_sprites(t_cub3d *t, double *z_buf)
 {
 	t_spr		s;
-	static int	frame[10];
+	static int	frame[50];
 
 	sort_sprites(t);
 	s.i = -1;

@@ -1,8 +1,8 @@
 .DS_STORE
 cub3d
 *.png
-/objects
+/obj
 /images
 *.pdf
-*.mp3
+audio
 *.bmp

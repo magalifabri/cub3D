@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split_var.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/27 16:21:09 by mfabri            #+#    #+#             */
+/*   Updated: 2020/04/27 16:21:55 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static int	ft_get_length(char *map)
@@ -33,13 +45,13 @@ static char	*ft_get_row(char *s, int width)
 
 static void	*malloc_error_abort(char **array, int i)
 {
-  while (i >= 0)
-  {
-    free(array[i]);
-    array[i--] = NULL;
-  }
-  free(array);
-  return (NULL);
+	while (i >= 0)
+	{
+		free(array[i]);
+		array[i--] = NULL;
+	}
+	free(array);
+	return (NULL);
 }
 
 char		**ft_split_var(char *s, t_cub3d *t)

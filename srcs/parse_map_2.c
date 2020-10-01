@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map_2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/27 13:28:24 by mfabri            #+#    #+#             */
+/*   Updated: 2020/04/28 08:53:14 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void		check_map_horizontally(t_cub3d *t)
@@ -92,8 +104,7 @@ static void	find_sprites_part_2(t_cub3d *t)
 			if (t->map[y][x] == '2' || t->map[y][x] == '3'
 			|| t->map[y][x] == '5')
 			{
-				initialise_sprite(t, y, x, i);
-				i++;
+				initialise_sprite(t, y, x, i++);
 			}
 		}
 	}
