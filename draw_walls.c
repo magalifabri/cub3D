@@ -96,12 +96,12 @@ static void make_calculations_1(t_cub3d *t, t_pwv *w)
     }
 }
 
-double draw_walls(t_cub3d *t, int i)
+double draw_walls(t_cub3d *t, int x)
 {
     t_pwv w;
-    int j;
+    int y;
 
-    t->scrn_x = 2 * i / (double)t->win_w - 1;
+    t->scrn_x = 2 * x / (double)t->win_w - 1;
     w.r_dir_x = t->p_dir_x + (t->plane_x * t->scrn_x);
     w.r_dir_y = t->p_dir_y + (t->plane_y * t->scrn_x);
     w.map_x = (int)t->p_x; //which box of the map we're in
@@ -111,13 +111,13 @@ double draw_walls(t_cub3d *t, int i)
     make_calculations_1(t, &w);
     make_calculations_2(t, &w);
     make_calculations_3(t, &w);
-    j = -1;
-    while (++j < w.line_height && j < t->win_h)
+    y = -1;
+    while (++y < w.line_height && y < t->win_h)
     {
-        w.texel = ft_getpxl(t->addr[w.tex_nbr], t->line_len[w.tex_nbr], t->bpp[w.tex_nbr], w.tex_x, w.tex_pos + (w.step * j));
+        w.texel = ft_getpxl(t->addr[w.tex_nbr], t->line_len[w.tex_nbr], t->bpp[w.tex_nbr], w.tex_x, w.tex_pos + (w.step * y));
         // w.texel = shader(w.texel, w.perp_wall_dist);
         if (w.texel != 4278190080)
-            ft_putpxl(t, i, w.draw_start + j, w.texel);
+            ft_putpxl(t, x, w.draw_start + y, w.texel);
     }
     return (w.perp_wall_dist);
 }

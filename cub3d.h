@@ -20,23 +20,26 @@ typedef struct  s_visited_squares
 
 typedef struct  s_sprite_xys
 {
-  int x;
-  int y;
+  double x;
+  double y;
   double x_draw;
   double y_draw;
   int dis;
-  int dead;
+  int alive;
   int counter;
+  int health;
+  double t_o_d;
+  int hit;
 }               t_sprite;
 
 typedef struct  s_cub3d 
 {
     // mlx
     void *img;
-    char *addr[30];
-    int  bpp[30];
-    int  line_len[30];
-    int  endian[30];
+    char *addr[40];
+    int  bpp[40];
+    int  line_len[40];
+    int  endian[40];
     void *mlx;
     void *win;
 
@@ -52,6 +55,7 @@ typedef struct  s_cub3d
     double plane_x;
     double plane_y;
     double scrn_x;
+    int health;
 
     // raycasting
     double r_dir;
@@ -81,8 +85,8 @@ typedef struct  s_cub3d
     char **map;
     int map_w;
     int map_h;
-    char *tex_path[30];
-    void *texture[30];
+    char *tex_path[40];
+    void *texture[40];
     int colors[2];
 
     // sprites
@@ -125,5 +129,9 @@ void find_path(t_cub3d *p);
 void draw_crosshair(t_cub3d *t);
 void draw_torch(t_cub3d *t);
 void draw_gun(t_cub3d *t);
+
+void cast_ray(t_cub3d *t);
+
+unsigned int shader_red(unsigned int start_colour);
 
 #endif

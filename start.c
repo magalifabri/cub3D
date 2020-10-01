@@ -40,6 +40,8 @@ int run_game(t_cub3d *t)
         // draw_floors(t);
         // draw_skybox(t);
         // draw_skybox2(t);
+        if (t->shoot == 1)
+            cast_ray(t);
         i = -1;
         while (++i < t->win_w)
             z_buf[i] = draw_walls(t, i);
@@ -56,19 +58,19 @@ int run_game(t_cub3d *t)
         // move_enemy(t);
         t->mouse_move = 0;
 
-        // int y = 0;
-        // int x = 0;
-        // while (y < t->map_h)
-        // {
-        //     while (x <= t->map_w)
-        //     {
-        //         printf("%c", t->map[y][x]);
-        //         x++;
-        //     }
-        //     printf("\n");
-        //     x = 0;
-        //     y++;
-        // }
+        int y = 0;
+        int x = 0;
+        while (y < t->map_h)
+        {
+            while (x <= t->map_w)
+            {
+                printf("%c", t->map[y][x]);
+                x++;
+            }
+            printf("\n");
+            x = 0;
+            y++;
+        }
         
         return (0);
     }
@@ -77,8 +79,8 @@ int run_game(t_cub3d *t)
 
 void            get_textures(t_cub3d *t)
 {
-    int     img_width[30];
-    int     img_height[30];
+    int     img_width[40];
+    int     img_height[40];
     unsigned int texel;
     unsigned int i;
 
@@ -100,14 +102,20 @@ void            get_textures(t_cub3d *t)
     t->tex_path[20] = "./textures/sprite_gun/sprite_gun4.xpm";
     t->tex_path[21] = "./textures/sprite_death/sprite_blood_splatter1.xpm";
     t->tex_path[22] = "./textures/sprite_death/sprite_blood_splatter2.xpm";
-    t->tex_path[23] = "./textures/sprite_spider/sprite_spiderv3.1.xpm";
-    t->tex_path[24] = "./textures/sprite_spider/sprite_spiderv3.2.xpm";
-    t->tex_path[25] = "./textures/sprite_spider/sprite_spiderv3.3.xpm";
-    t->tex_path[26] = "./textures/sprite_spider/sprite_spiderv3.4.xpm";
-    t->tex_path[27] = "./textures/sprite_spider/sprite_spiderv3.5.xpm";
-    t->tex_path[28] = "./textures/sprite_spider/sprite_spiderv3.6.xpm";
+    t->tex_path[23] = "./textures/sprite_spider/walk/sprite_spiderv3.1.xpm";
+    t->tex_path[24] = "./textures/sprite_spider/walk/sprite_spiderv3.2.xpm";
+    t->tex_path[25] = "./textures/sprite_spider/walk/sprite_spiderv3.3.xpm";
+    t->tex_path[26] = "./textures/sprite_spider/walk/sprite_spiderv3.4.xpm";
+    t->tex_path[27] = "./textures/sprite_spider/walk/sprite_spiderv3.5.xpm";
+    t->tex_path[28] = "./textures/sprite_spider/walk/sprite_spiderv3.6.xpm";
+    t->tex_path[29] = "./textures/sprite_spider/attack/sprite_spider_attack1.xpm";
+    t->tex_path[30] = "./textures/sprite_spider/attack/sprite_spider_attack2.xpm";
+    t->tex_path[31] = "./textures/sprite_spider/attack/sprite_spider_attack3.xpm";
+    t->tex_path[32] = "./textures/sprite_spider/attack/sprite_spider_attack4.xpm";
+    t->tex_path[33] = "./textures/sprite_spider/attack/sprite_spider_attack5.xpm";
+    // t->tex_path[29] = "./textures/sprite_spider/sprite_spider_hit.xpm";
     i = 1;
-    while (i < 30)
+    while (i < 31)
     {
         t->texture[i - 1] = mlx_xpm_file_to_image(t->mlx, t->tex_path[i - 1], &img_width[i - 1], &img_height[i - 1]);
         t->addr[i] = mlx_get_data_addr(t->texture[i - 1], &t->bpp[i], &t->line_len[i], &t->endian[i]);

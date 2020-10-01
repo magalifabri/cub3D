@@ -44,8 +44,8 @@ int             keyrelease_hook(int keycode, t_cub3d *t)
         t->a = 0;
     else if (keycode == 2)
         t->d = 0;
-    else if (keycode == 49)
-        t->shoot = 0;
+    // else if (keycode == 49)
+    //     t->shoot = 0;
     return (0);
 }
 

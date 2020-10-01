@@ -79,5 +79,7 @@ void draw_gun(t_cub3d *t)
         }
         if (frame > 3)
             frame = 0;
+        t->shoot = 0;
     }
 }
+

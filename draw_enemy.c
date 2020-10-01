@@ -51,21 +51,20 @@ static void sort_sprites(t_cub3d *t)
     }
 }
 
-static void make_calculations_2(t_cub3d *t, t_spr *s, int x, int y, int frame)
+static void make_calculations_2(t_cub3d *t, t_spr *s, int x, int y, int frame, int sprite)
 {
-    // printf("!\n");
     s->d = (y)*256 - t->win_h * 128 + s->sprite_h * 128;
     s->tex_y = ((s->d * 64) / s->sprite_h) / 256;
     s->texel = ft_getpxl(t->addr[frame + 24], t->line_len[frame + 24],
     t->bpp[frame + 24], s->tex_x, s->tex_y);
+    if (t->spr[sprite].hit > 0)
+        s->texel = shader_red(s->texel);
     // s->texel = shader(s->texel, s->transform_y);
     if (s->texel != 4278190080 && (t->tex_x1 >= 0 && t->tex_x1 < 64))
         ft_putpxl(t, x, y, s->texel);
 }
 static void death_animation(t_cub3d *t, t_spr *s, int x, int y)
 {
-    // static int frame;
-
     s->d = (y)*256 - t->win_h * 128 + s->sprite_h * 128;
     s->tex_y = ((s->d * 64) / s->sprite_h) / 256;
     s->texel = ft_getpxl(t->addr[22], t->line_len[22],
@@ -73,7 +72,6 @@ static void death_animation(t_cub3d *t, t_spr *s, int x, int y)
     // s->texel = shader(s->texel, s->transform_y);
     if (s->texel != 4278190080 && (t->tex_x1 >= 0 && t->tex_x1 < 64))
         ft_putpxl(t, x, y, s->texel);
-    // frame++;
 }
 
 static void make_calculations_1(t_cub3d *t, t_spr *s)
@@ -108,7 +106,7 @@ void draw_enemy(t_cub3d *t, double *z_buf)
     int x;
     int y;
     static double last_frame_switch[10];
-    static double t_o_d[10];
+    // static double t_o_d[10];
     static int frame[10];
 	clock_t	curr_time;
 
@@ -117,8 +115,8 @@ void draw_enemy(t_cub3d *t, double *z_buf)
     i = 0;
     while (i < t->sprite_n)
     {
-        if (t->spr[i].dead != 1 || (t->spr[i].dead == 1 
-        && ((double)(curr_time - t_o_d[i]) / (double)CLOCKS_PER_SEC < 0.1)))
+        if (t->spr[i].alive || (!t->spr[i].alive 
+        && ((double)(curr_time - t->spr[i].t_o_d) / (double)CLOCKS_PER_SEC < 0.1)))
         {
             // printf("%d, %f, %f\n", i, t->spr[i].y_draw, t->spr[i].x_draw);
             s.sprite_y = t->spr[i].y + 0.5 + t->spr[i].y_draw * t->spr[i].counter;
@@ -127,25 +125,25 @@ void draw_enemy(t_cub3d *t, double *z_buf)
             x = s.draw_start_x - 1;
             while (++x < s.draw_end_x)
             {
-                if (x == t->win_w / 2 && t->shoot == 1)
-                {
-                    t->spr[i].dead = 1;
-                    // t->shoot = 0;
-                    t->map[(int)t->spr[i].y][(int)t->spr[i].x] = '0';
-                    t_o_d[i] = clock();
-                }
                 s.tex_x = (int)(256 * (x - (-s.sprite_w / 2 + s.sprite_scrn_x)) * 64 / s.sprite_w) / 256;
-                if (t->spr[i].dead == 1)
+                if (!t->spr[i].alive)
                 {
                     y = s.draw_start_y - 1;
                     while (++y < s.draw_end_y)
                         death_animation(t, &s, x, y);
                 }
+                // else if (t->spr[i].hit > 0)
+                // {
+                //     // printf("!\n");
+                //     y = s.draw_start_y - 1;
+                //     while (++y < s.draw_end_y)
+                //         make_calculations_2(t, &s, x, y, 6);
+                // }
                 else if (s.transform_y > 0 && x > 0 && x < t->win_w && s.transform_y < z_buf[x])
                 {
                     y = s.draw_start_y - 1;
                     while (++y < s.draw_end_y)
-                        make_calculations_2(t, &s, x, y, frame[i]);
+                        make_calculations_2(t, &s, x, y, frame[i], i);
                 }
             }
             if ((double)(curr_time - last_frame_switch[i]) / (double)CLOCKS_PER_SEC > 0.05)
@@ -156,6 +154,15 @@ void draw_enemy(t_cub3d *t, double *z_buf)
             if (frame[i] > 5)
                 frame[i] = 0;
         }
+        // remove now invisible sprite from playing field after death animation has played
+        else if (!t->spr[i].alive
+        && (double)(curr_time - t->spr[i].t_o_d) / (double)CLOCKS_PER_SEC > 0.1)
+        {
+            t->spr[i].y = 0;
+            t->spr[i].x = 0;
+        }
+        if (t->spr[i].hit > 0)
+            t->spr[i].hit--;
         i++;
     }
 }

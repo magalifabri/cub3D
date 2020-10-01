@@ -103,7 +103,11 @@ static void find_sprites_part_2(t_cub3d *t)
                 t->spr[i].y = y; 
                 t->spr[i].x = x;
                 t->spr[i].counter = 0;
-                t->spr[i++].dead = 0; // for enemies
+                t->spr[i].health = 3;
+                t->spr[i].hit = 0;
+                printf("location of sprite %d: %f, %f\n", i, t->spr[i].y, t->spr[i].x);
+                // printf("%d\n", t->spr[i].x);
+                t->spr[i++].alive = 1; // for enemies
             }
         }
     }
