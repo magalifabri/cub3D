@@ -2,7 +2,7 @@
 
 static size_t	ft_strlen(const char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -10,7 +10,7 @@ static size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-static char	*ft_strjoin(char const *s1, char const *s2)
+static char		*ft_strjoin(char const *s1, char const *s2)
 {
 	unsigned int	s1s2_len;
 	unsigned int	i;
@@ -34,7 +34,7 @@ static char	*ft_strjoin(char const *s1, char const *s2)
 	return (s3);
 }
 
-static char	*ft_emptystr(void)
+static char		*ft_emptystr(void)
 {
 	char	*s;
 
@@ -44,17 +44,17 @@ static char	*ft_emptystr(void)
 	return (s);
 }
 
-char *copy_file(int fd)
+char			*copy_file(int fd)
 {
-    char buf[2];
-    char *map;
-    int bytes;
+	char	buf[2];
+	char	*map;
+	int		bytes;
 
-    map = ft_emptystr();
-    while ((bytes = read(fd, buf, 1) > 0))
-    {
-        buf[bytes] = '\0';
-        map = ft_strjoin(map, buf);
-    }
-    return (map);
+	map = ft_emptystr();
+	while ((bytes = read(fd, buf, 1) > 0))
+	{
+		buf[bytes] = '\0';
+		map = ft_strjoin(map, buf);
+	}
+	return (map);
 }

@@ -4,7 +4,6 @@ void draw_red_border(t_cub3d *t)
 {
     int x;
     int y;
-    // unsigned int texel;
     int width;
 
     width = 10;
@@ -39,40 +38,41 @@ void draw_crosshair(t_cub3d *t)
     }
 }
 
-void draw_hearts(t_cub3d *t)
+int draw_hearts_part_2(t_cub3d *t, int x_start, int frame)
 {
     int x;
     int y;
     unsigned int texel;
+
+	y = -1;
+	while (++y < 32)
+	{
+		x = -1;
+		while (++x < 32)
+		{
+			texel = ft_getpxl(t->addr[35 + frame], t->line_len[35 + frame], t->bpp[35 + frame], x / 2, y / 2);
+			if (texel != 4278190080)
+				ft_putpxl(t, x_start + x, y, texel);
+		}
+	}
+	return (x_start -= 32);
+}
+
+void draw_hearts(t_cub3d *t)
+{
     int heart;
     int x_start;
     static double last_frame_switch;
     static int frame;
-	clock_t	actual_time;
 
-	actual_time = clock();
-    heart = 0;
+    heart = -1;
     x_start = t->win_w - (32 * 1 + heart);
-    while (heart < t->p_health)
-    {
-        y = -1;
-        while (++y < 32)
-        {
-            x = -1;
-            while (++x < 32)
-            {
-                texel = ft_getpxl(t->addr[35 + frame], t->line_len[35 + frame], t->bpp[35 + frame], x / 2, y / 2);
-                if (texel != 4278190080)
-                    ft_putpxl(t, x_start + x, y, texel);
-            }
-        }
-        x_start -= 32;
-        heart++;
-    }
-    if ((double)(actual_time - last_frame_switch) / (double)CLOCKS_PER_SEC > 0.1)
+    while (++heart < t->p_health)
+		x_start = draw_hearts_part_2(t, x_start, frame);
+    if ((double)(t->time_now - last_frame_switch) / (double)CLOCKS_PER_SEC > 0.1)
     {
         frame++;
-        last_frame_switch = actual_time;
+        last_frame_switch = t->time_now;
     }
     if (frame > 3)
         frame = 0;
@@ -113,9 +113,7 @@ void draw_torch(t_cub3d *t)
     unsigned int texel;
     static double last_frame_switch;
     static int frame;
-	clock_t	actual_time;
 
-	actual_time = clock();
     y = -1;
     while (++y < 256)
     {
@@ -127,10 +125,10 @@ void draw_torch(t_cub3d *t)
                 ft_putpxl(t, x, y, texel);
         }
     }
-    if ((double)(actual_time - last_frame_switch) / (double)CLOCKS_PER_SEC > 0.1)
+    if ((double)(t->time_now - last_frame_switch) / (double)CLOCKS_PER_SEC > 0.1)
     {
         frame++;
-        last_frame_switch = actual_time;
+        last_frame_switch = t->time_now;
     }
     if (frame > 3)
         frame = 0;
@@ -143,9 +141,7 @@ void draw_gun(t_cub3d *t)
     unsigned int texel;
     static double last_frame_switch;
     static int frame;
-	clock_t	actual_time;
 
-	actual_time = clock();
     y = -1;
     while (++y < 256)
     {
@@ -157,16 +153,14 @@ void draw_gun(t_cub3d *t)
                 ft_putpxl(t, (t->win_w - 256) + x, (t->win_h - 256) + y, texel);
         }
     }
-    if (t->shoot == 1 || frame > 0)
-    {
-        if ((double)(actual_time - last_frame_switch) / (double)CLOCKS_PER_SEC > 0.1)
-        {
-            frame++;
-            last_frame_switch = actual_time;
-        }
-        if (frame > 3)
-            frame = 0;
-        t->shoot = 0;
-    }
+	if ((t->shoot == 1 || frame > 0) 
+	&& (double)(t->time_now - last_frame_switch) / (double)CLOCKS_PER_SEC > 0.1)
+	{
+		frame++;
+		last_frame_switch = t->time_now;
+	}
+	if (frame > 3)
+		frame = 0;
+	t->shoot = 0;
 }
 

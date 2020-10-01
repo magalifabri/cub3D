@@ -78,7 +78,7 @@ void move_enemy(t_cub3d *p, int i)
 	current_time = clock();
     if ((double)(current_time - time_last_move[i]) / (double)CLOCKS_PER_SEC > 0.05)
     {
-        if (p->spr[i].counter == 0)
+        if (p->spr[i].mod == 0)
         {
                 p->spr[i].y_draw = 0;
                 p->spr[i].x_draw = 0;
@@ -101,14 +101,15 @@ void move_enemy(t_cub3d *p, int i)
             // }
         
         }
-        p->spr[i].counter++;
-        if (p->spr[i].counter == 10)
+        p->spr[i].mod++;
+        if (p->spr[i].mod == 10)
         {
-            p->map[(int)p->spr[i].y][(int)p->spr[i].x] = '0';
+            if (p->map[(int)p->spr[i].y][(int)p->spr[i].x] != '5')
+                p->map[(int)p->spr[i].y][(int)p->spr[i].x] = '0';
             p->spr[i].y = p->spr[i].y + (p->spr[i].y_draw * 10);
             p->spr[i].x = p->spr[i].x + (p->spr[i].x_draw * 10);
             p->map[(int)p->spr[i].y][(int)p->spr[i].x] = '3';
-            p->spr[i].counter = 0;
+            p->spr[i].mod = 0;
         }
         time_last_move[i] = current_time;
     }
@@ -131,16 +132,19 @@ void find_path(t_cub3d *p)
         p->l[i].y = p->p_y;
         p->l[i].x = p->p_x;
         front_of_list = 0;
+        // if sprite if spider and idle and can see player, it moves
         if (p->spr[s].type == '3' && p->spr[s].mode == 'i' && check_for_walls(p, p->p_y - 0.5, p->p_x - 0.5, p->spr[s].y, p->spr[s].x))
         {
             p->spr[s].mode = 'm';
             p->spr[s].frame = 0;
         }
+        // if sprite is spider and not attacking and within attack range, it attacks
         if (p->spr[s].type == '3' && p->spr[s].mode != 'a' && get_distance(p->l[i].y, p->l[i].x, (int)p->spr[s].y, (int)p->spr[s].x) < 1.5)
         {
             p->spr[s].mode = 'a';
             p->spr[s].frame = 0;
         }
+        // if sprite is spider and alife (don't want moving blood splatters) and moving
         if (p->spr[s].type == '3' && p->spr[s].alive && p->spr[s].mode == 'm')
         {
             while (1)
@@ -159,7 +163,8 @@ void find_path(t_cub3d *p)
                 }
                 // check if adjacent north square is a wall
                 if (p->map[current_y - 1][current_x] != '1' 
-                && p->map[current_y - 1][current_x] != '2')
+                && p->map[current_y - 1][current_x] != '2'
+                && p->map[current_y - 1][current_x] != '5')
                 {
                     // check if adjacent north square is on the list
                     check = front_of_list + 1;
@@ -175,7 +180,8 @@ void find_path(t_cub3d *p)
                     }
                 }
                 if (p->map[current_y + 1][current_x] != '1' 
-                && p->map[current_y + 1][current_x] != '2') // check adjacent south square
+                && p->map[current_y + 1][current_x] != '2'
+                && p->map[current_y + 1][current_x] != '5') // check adjacent south square
                 {
                     check = front_of_list + 1;
                     while (--check >= 0 && !(p->l[check].y == current_y + 1 && p->l[check].x == current_x))
@@ -189,7 +195,8 @@ void find_path(t_cub3d *p)
                     }
                 }
                 if (p->map[current_y][current_x - 1] != '1' 
-                && p->map[current_y][current_x - 1] != '2') // check adjacent west square
+                && p->map[current_y][current_x - 1] != '2'
+                && p->map[current_y][current_x - 1] != '5') // check adjacent west square
                 {
                     check = front_of_list + 1;
                     while (--check >= 0 && !(p->l[check].y == current_y && p->l[check].x == current_x - 1))
@@ -203,7 +210,8 @@ void find_path(t_cub3d *p)
                     }
                 }
                 if (p->map[current_y][current_x + 1] != '1' 
-                && p->map[current_y][current_x + 1] != '2') // check adjacent east square
+                && p->map[current_y][current_x + 1] != '2'
+                && p->map[current_y][current_x + 1] != '5') // check adjacent east square
                 {
                     check = front_of_list + 1;
                     while (--check >= 0 && !(p->l[check].y == current_y && p->l[check].x == current_x + 1))

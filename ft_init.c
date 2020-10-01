@@ -3,7 +3,6 @@
 void    ft_init(t_cub3d *t)
 {
 	t->fov = 60;
-	t->game = 1;
 	t->spd = 3;
 	t->w = 0;
 	t->s = 0;
@@ -20,5 +19,4 @@ void    ft_init(t_cub3d *t)
 	t->p_health = 5;
 	t->p_bullets = 5;
 	t->p_hit = 0;
-	t->respawn = 1;
 }

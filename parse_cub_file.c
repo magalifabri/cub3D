@@ -76,8 +76,8 @@ static void ft_function(t_cub3d *t, char *file)
 {
     int i;
 
-    i = 0;
-    while (file[i])
+    i = -1;
+    while (file[++i] && t->map_w == 0)
     {
         if (file[i] == 'R')
             get_resolution(t, file + (i + 1), &i);
@@ -96,11 +96,7 @@ static void ft_function(t_cub3d *t, char *file)
         else if (file[i] == 'C')
             t->colors[1] = get_colour(file + (i + 1), &i);
         else if (file[i] == ' ' || file[i] == '1')
-        {
             parse_map(t, file + i);
-            return ;
-        }
-        (file[i]) && (i++);
     }
 }
 
@@ -111,5 +107,7 @@ void parse_cub_file(t_cub3d *t)
 
     fd = open("./maps/cubfile_dark.cub", O_RDONLY);
     file = copy_file(fd);
+    t->map_w = 0;
+    t->map_h = 1;
     ft_function(t, file);
 }

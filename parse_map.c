@@ -6,35 +6,22 @@ static int check_charset (char i)
     || i == 'W' || i == ' ' || i == '\n');
 }
 
-static int get_height(char *map)
-{
-    int len;
-
-    len = 1;
-    while (*map && check_charset(*map))
-        if (*map++ == '\n')
-            len++;
-    return (len);
-}
-
-static int get_width(char *map)
+static void get_map_dimensions(char *map, t_cub3d *t)
 {
     int i;
-    int wid;
 
     i = 0;
-    wid = 0;
-    while (*map)
+    while (*map && check_charset(*map))
     {
         if (*map++ == '\n')
         {
-            wid = (i > wid) ? (i) : (wid);
+            t->map_w = (i > t->map_w) ? (i) : (t->map_w);
             i = 0;
             map++;
+            t->map_h++;
         }
         i++;
     }
-    return (wid);
 }
 
 static void find_player_part_2(t_cub3d *t, int y, int x)
@@ -84,6 +71,30 @@ static void find_player(t_cub3d *t)
     }
 }
 
+void initialise_sprite(t_cub3d *t, int y, int x, int i)
+{
+    t->spr[i].type = t->map[y][x];
+    t->spr[i].y = y;
+    t->spr[i].x = x;
+    t->spr[i].y_draw = 0;
+    t->spr[i].x_draw = 0;
+    t->spr[i].mod = 0;
+    t->spr[i].frame = 0;
+	t->spr[i].time_frame_switch = 0;
+    t->spr[i].hit = 0;
+    if (t->spr[i].type == '3')
+    {
+        t->spr[i].health = 3;
+        t->spr[i].alive = 1;
+        t->spr[i].mode = 'i';
+    }
+    if (t->spr[i].type == '5')
+    {
+        t->spr[i].health = 3;
+        t->spr[i].alive = 1;
+    }
+}
+
 static void find_sprites_part_2(t_cub3d *t)
 {
     int y;
@@ -98,27 +109,10 @@ static void find_sprites_part_2(t_cub3d *t)
         x = -1;
         while (++x < t->map_w)
         {
-            if (t->map[y][x] == '2' || t->map[y][x] == '3' || t->map[y][x] == '5')
+            if (t->map[y][x] == '2' || t->map[y][x] == '3' 
+            || t->map[y][x] == '5')
             {
-                t->spr[i].type = t->map[y][x];
-                t->spr[i].y = y;
-                t->spr[i].x = x;
-                t->spr[i].y_draw = 0;
-                t->spr[i].x_draw = 0;
-                t->spr[i].counter = 0;
-                t->spr[i].frame = 0;
-                t->spr[i].hit = 0;
-                if (t->spr[i].type == '3')
-                {
-                    t->spr[i].health = 3;
-                    t->spr[i].alive = 1;
-                    t->spr[i].mode = 'i';
-                }
-                if (t->spr[i].type == '5')
-                {
-                    t->spr[i].health = 3;
-                    t->spr[i].alive = 1;
-                }
+                initialise_sprite(t, y, x, i);
                 printf("location of sprite %d of type %c: %f, %f\n", i, t->spr[i].type, t->spr[i].y, t->spr[i].x);
                 i++;
             }
@@ -147,14 +141,13 @@ static void find_sprites(t_cub3d *t)
 
 void parse_map(t_cub3d *t, char *file)
 {
-    t->map_w = get_width(file);
-    printf("width = %d\n", t->map_w);
-    t->map_h = get_height(file);
-    printf("length = %d\n", t->map_h);
+    get_map_dimensions(file, t);
+    printf("width = %d, length = %d\n", t->map_w, t->map_h);
     t->map = ft_split_var(file, t);
     find_player(t);
     find_sprites(t);
     
+    // print map, remove or use ft_printf
     int y = 0;
     int x = 0;
     while (y < t->map_h)
