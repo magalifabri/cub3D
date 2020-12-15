@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:12:12 by mfabri            #+#    #+#             */
-/*   Updated: 2020/04/27 16:12:12 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/10/27 14:33:45 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ static void		make_calculations(t_cub3d *t, t_psv *s, int x)
 		s->r_degree = s->r_degree + 270;
 }
 
+/*
+** draw_skybox() adds a skybox
+*/
+
 void			draw_skybox(t_cub3d *t)
 {
 	t_psv	s;
@@ -38,6 +42,7 @@ void			draw_skybox(t_cub3d *t)
 	while (++x < t->win_w)
 	{
 		make_calculations(t, &s, x);
+		// s.tex_x = (1024 / 360.0) * (s.r_degree);
 		s.tex_x = (1024 / (t->win_h / 2)) * (s.r_degree);
 		if (s.tex_x > 1024)
 			return ;
@@ -47,6 +52,10 @@ void			draw_skybox(t_cub3d *t)
 			ft_putpxl(t, x, y, ft_getpxl(t, 5, s.tex_x, y * s.tex_y_incr));
 	}
 }
+
+/*
+** draw_skybox2() draws moving clouds on top of the skybox above
+*/
 
 void			draw_skybox2(t_cub3d *t)
 {
