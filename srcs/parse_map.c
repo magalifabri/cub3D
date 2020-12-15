@@ -48,22 +48,22 @@ static void	find_player_part_2(t_cub3d *t, int y, int x)
 	if (t->map[y][x] == 'N')
 	{
 		t->p_dir_y = -1;
-		t->plane_x = 0.66;
+		t->plane_x = (0.6/((double)t->win_h / (double)t->win_w));
 	}
 	else if (t->map[y][x] == 'E')
 	{
 		t->p_dir_x = 1;
-		t->plane_y = 0.66;
+		t->plane_y = (0.6/((double)t->win_h / (double)t->win_w));
 	}
 	else if (t->map[y][x] == 'S')
 	{
 		t->p_dir_y = 1;
-		t->plane_x = -0.66;
+		t->plane_x = -(0.6/((double)t->win_h / (double)t->win_w));
 	}
 	else
 	{
 		t->p_dir_x = -1;
-		t->plane_y = -0.66;
+		t->plane_y = -(0.6/((double)t->win_h / (double)t->win_w));
 	}
 }
 
