@@ -77,7 +77,6 @@ static void	initialise_variables(t_cub3d *t)
 {
 	t->save = 0;
 	t->error = 0;
-	t->fov = 60;
 	t->spd = 3;
 	t->w = 0;
 	t->s = 0;
