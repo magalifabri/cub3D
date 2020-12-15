@@ -192,7 +192,6 @@ typedef struct			s_cub3d
 	clock_t				time_now;
 	int					error;
 
-	int					fov;
 	int					p_dir;
 	double				p_x;
 	double				p_y;
