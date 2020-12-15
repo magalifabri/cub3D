@@ -42,8 +42,7 @@ void			draw_skybox(t_cub3d *t)
 	while (++x < t->win_w)
 	{
 		make_calculations(t, &s, x);
-		// s.tex_x = (1024 / 360.0) * (s.r_degree);
-		s.tex_x = (1024 / (t->win_h / 2)) * (s.r_degree);
+		s.tex_x = (1024 / 360.0) * (s.r_degree);
 		if (s.tex_x > 1024)
 			return ;
 		s.tex_y_incr = (128.0 / (t->win_h / 2));
