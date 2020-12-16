@@ -56,7 +56,7 @@ static void	make_calculations_2(t_cub3d *t, t_spr *s, int frame, double z_buf)
 			s->texel = ft_getpxl(t, frame, s->tex_x, s->tex_y);
 			if (t->spr[s->i].hit > 0)
 				s->texel = shader_red(s->texel);
-			// s->texel = shader(s->texel, s->transform_y);
+			s->texel = shader(s->texel, s->transform_y);
 			if (s->texel != 4278190080)
 				ft_putpxl(t, s->x, y, s->texel);
 		}

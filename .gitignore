@@ -1,7 +1,7 @@
 .DS_STORE
-cub3d
+cub3d*
 *.png
-/obj
+/obj*
 /images
 *.pdf
 audio

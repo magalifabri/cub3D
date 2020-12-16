@@ -19,36 +19,8 @@ INCLUDES = -I$(MLXDIR) -I$(INCDIR)
 
 MLXDIR = ./mlx/
 
-# .c files of which there is a separate version for the mandatory version of cub3D and the bonus version
-SRC_EXCLUSIVE = start.c \
-				draw_sprites.c \
-				draw_walls.c \
-				move.c
-# .c files that are used by both the mandatory and the bonus versions of cub3D
-SRC_SHARED =	hooks.c \
-				parse_cub_file.c \
-				parse_cub_file_2.c \
-				parse_map.c \
-				parse_map_2.c \
-				copy_file.c \
-				ft_split_var.c \
-				get_textures.c \
-				draw_floor.c \
-				draw_skybox.c \
-				move_2.c \
-				enemy_pathfinding.c \
-				draw_ui_elements.c \
-				draw_ui_elements_2.c \
-				shoot.c \
-				get_sprite_frame.c \
-				enemy_pathfinding_utils.c \
-				auxiliary.c \
-				auxiliary_2.c \
-				sprite_control.c \
-				get_bmp.c
-
 SRCDIR = ./srcs/
-# SRCS = $(addprefix $(SRCDIR), $(SRC))
+SRCS = $(addprefix $(SRCDIR), $(SRC))
 SRC = 	start.c \
 		hooks.c \
 		parse_cub_file.c \
@@ -76,12 +48,32 @@ SRC = 	start.c \
 		get_bmp.c
 # BONUS
 SRCDIR_BONUS = ./srcs_bonus/
-# SRCS_BONUS = $(addprefix $(SRCDIR_BONUS), $(SRC_BONUS))
-SRC_BONUS = 	$(SRC)
-				# start.c \
-				# draw_sprites.c \
-				# draw_walls.c \
-				# move.c
+SRCS_BONUS = $(addprefix $(SRCDIR_BONUS), $(SRC_BONUS))
+SRC_BONUS = 	start.c \
+		hooks.c \
+		parse_cub_file.c \
+		parse_cub_file_2.c \
+		parse_map.c \
+		parse_map_2.c \
+		draw_sprites.c \
+		copy_file.c \
+		ft_split_var.c \
+		get_textures.c \
+		draw_walls.c \
+		draw_floor.c \
+		draw_skybox.c \
+		move.c \
+		move_2.c \
+		enemy_pathfinding.c \
+		draw_ui_elements.c \
+		draw_ui_elements_2.c \
+		shoot.c \
+		get_sprite_frame.c \
+		enemy_pathfinding_utils.c \
+		auxiliary.c \
+		auxiliary_2.c \
+		sprite_control.c \
+		get_bmp.c
 
 OBJDIR = ./obj/
 OBJS = $(addprefix $(OBJDIR), $(OBJ))
@@ -129,9 +121,7 @@ test_bonus: bonus
 
 clean:
 	$(RM) $(OBJS)
-	$(RM) $(OBJS_BONUS)
 	$(RMDIR) $(OBJDIR)
-	$(RMDIR) $(OBJDIR_BONUS)
 	$(MAKE) -C $(MLXDIR) clean
 
 fclean: clean
