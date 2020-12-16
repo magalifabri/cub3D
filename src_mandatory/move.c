@@ -12,6 +12,12 @@
 
 #include "cub3d.h"
 
+/*
+** Difference from bonus:
+** - no wall or sprite collision
+** - no map manipulation (needed for pathing(?))
+*/
+
 static void	move_forward(t_cub3d *t, double move_spd)
 {
 	double	new_y;
@@ -19,14 +25,10 @@ static void	move_forward(t_cub3d *t, double move_spd)
 
 	if (t->s == 0)
 	{
-		// t->map[(int)t->p_y][(int)t->p_x] = '0';
 		new_y = t->p_dir_y * move_spd;
-		// if (t->map[(int)(t->p_y + new_y)][(int)t->p_x] == '0')
-			t->p_y += new_y;
+		t->p_y += new_y;
 		new_x = t->p_dir_x * move_spd;
-		// if (t->map[(int)t->p_y][(int)(t->p_x + new_x)] == '0')
-			t->p_x += new_x;
-		// t->map[(int)t->p_y][(int)t->p_x] = 'P';
+		t->p_x += new_x;
 	}
 }
 
@@ -37,14 +39,10 @@ static void	move_backward(t_cub3d *t, double move_spd)
 
 	if (t->w == 0)
 	{
-		// t->map[(int)t->p_y][(int)t->p_x] = '0';
 		new_y = t->p_dir_y * move_spd;
-		// if (t->map[(int)(t->p_y - new_y)][(int)t->p_x] == '0')
-			t->p_y -= new_y;
+		t->p_y -= new_y;
 		new_x = t->p_dir_x * move_spd;
-		// if (t->map[(int)t->p_y][(int)(t->p_x - new_x)] == '0')
-			t->p_x -= new_x;
-		// t->map[(int)t->p_y][(int)t->p_x] = 'P';
+		t->p_x -= new_x;
 	}
 }
 
@@ -55,16 +53,12 @@ static void	strafe_left(t_cub3d *t, double move_spd)
 
 	if (t->d == 0)
 	{
-		// t->map[(int)t->p_y][(int)t->p_x] = '0';
 		new_y = t->p_y + (t->p_dir_y * cos(RD(90))
 		- t->p_dir_x * sin(RD(90))) * move_spd;
-		// if (t->map[(int)new_y][(int)t->p_x] == '0')
-			t->p_y = new_y;
+		t->p_y = new_y;
 		new_x = t->p_x + (t->p_dir_y * sin(RD(90))
 		+ t->p_dir_x * cos(RD(90))) * move_spd;
-		// if (t->map[(int)t->p_y][(int)new_x] == '0')
-			t->p_x = new_x;
-		// t->map[(int)t->p_y][(int)t->p_x] = 'P';
+		t->p_x = new_x;
 	}
 }
 
@@ -75,16 +69,12 @@ static void	strafe_right(t_cub3d *t, double move_spd)
 
 	if (t->a == 0)
 	{
-		// t->map[(int)t->p_y][(int)t->p_x] = '0';
 		new_y = t->p_y - (t->p_dir_y * cos(RD(90))
 		- t->p_dir_x * sin(RD(90))) * move_spd;
-		// if (t->map[(int)new_y][(int)t->p_x] == '0')
-			t->p_y = new_y;
+		t->p_y = new_y;
 		new_x = t->p_x - (t->p_dir_y * sin(RD(90))
 		+ t->p_dir_x * cos(RD(90))) * move_spd;
-		// if (t->map[(int)t->p_y][(int)new_x] == '0')
-			t->p_x = new_x;
-		// t->map[(int)t->p_y][(int)t->p_x] = 'P';
+		t->p_x = new_x;
 	}
 }
 

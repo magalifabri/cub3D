@@ -19,12 +19,18 @@ INCLUDES = -I$(MLXDIR) -I$(INCDIR)
 
 MLXDIR = ./mlx/
 
-# .c files of which there is a separate version for the mandatory version of cub3D and the bonus version
-SRC_EXCLUSIVE = start.c \
+# .c files of which there is a mandatory and bonus version
+SRC_NOT_SHARED = start.c \
 				draw_sprites.c \
 				draw_walls.c \
 				move.c
-# .c files that are used by both the mandatory and the bonus versions of cub3D
+
+# The versions of these files are kept in these directories:
+SRC_BONUS_DIR = ./src_bonus/
+SRC_MANDATORY_DIR = ./src_mandatory/
+
+# .c files that are used by both the mandatory and bonus version
+SRC_SHARED_DIR = ./src_shared/
 SRC_SHARED =	hooks.c \
 				parse_cub_file.c \
 				parse_cub_file_2.c \
@@ -47,49 +53,13 @@ SRC_SHARED =	hooks.c \
 				sprite_control.c \
 				get_bmp.c
 
-SRCDIR = ./srcs/
-# SRCS = $(addprefix $(SRCDIR), $(SRC))
-SRC = 	start.c \
-		hooks.c \
-		parse_cub_file.c \
-		parse_cub_file_2.c \
-		parse_map.c \
-		parse_map_2.c \
-		draw_sprites.c \
-		copy_file.c \
-		ft_split_var.c \
-		get_textures.c \
-		draw_walls.c \
-		draw_floor.c \
-		draw_skybox.c \
-		move.c \
-		move_2.c \
-		enemy_pathfinding.c \
-		draw_ui_elements.c \
-		draw_ui_elements_2.c \
-		shoot.c \
-		get_sprite_frame.c \
-		enemy_pathfinding_utils.c \
-		auxiliary.c \
-		auxiliary_2.c \
-		sprite_control.c \
-		get_bmp.c
-# BONUS
-SRCDIR_BONUS = ./srcs_bonus/
-# SRCS_BONUS = $(addprefix $(SRCDIR_BONUS), $(SRC_BONUS))
-SRC_BONUS = 	$(SRC)
-				# start.c \
-				# draw_sprites.c \
-				# draw_walls.c \
-				# move.c
-
 OBJDIR = ./obj/
 OBJS = $(addprefix $(OBJDIR), $(OBJ))
-OBJ = $(SRC:.c=.o)
+OBJ = $(SRC_SHARED:.c=.o) $(SRC_NOT_SHARED:.c=.o)
 # BONUS
 OBJDIR_BONUS = ./obj_bonus/
 OBJS_BONUS = $(addprefix $(OBJDIR_BONUS), $(OBJ_BONUS))
-OBJ_BONUS = $(SRC_BONUS:.c=.o)
+OBJ_BONUS = $(SRC_SHARED:.c=.o) $(SRC_NOT_SHARED:.c=.o)
 
 INCDIR = ./includes/
 INCS = $(addprefix $(INCDIR), $(INC))
@@ -105,10 +75,14 @@ bonus: $(OBJDIR_BONUS) $(OBJS_BONUS)
 	$(MAKE) -C $(MLXDIR)
 	gcc $(CFLAGS) $(OBJS_BONUS) -L$(MLXDIR) -lmlx -framework OpenGL -framework AppKit -o $(NAME)_bonus
 
-$(OBJDIR)%.o: $(SRCDIR)%.c $(INCS)
+$(OBJDIR)%.o: $(SRC_SHARED_DIR)%.c $(INCS)
+	gcc $(CFLAGS) $(INCLUDES) -c -o $@ $<
+$(OBJDIR)%.o: $(SRC_MANDATORY_DIR)%.c $(INCS)
 	gcc $(CFLAGS) $(INCLUDES) -c -o $@ $<
 # BONUS
-$(OBJDIR_BONUS)%.o: $(SRCDIR_BONUS)%.c $(INCS)
+$(OBJDIR_BONUS)%.o: $(SRC_SHARED_DIR)%.c $(INCS)
+	gcc $(CFLAGS) $(INCLUDES) -c -o $@ $<
+$(OBJDIR_BONUS)%.o: $(SRC_BONUS_DIR)%.c $(INCS)
 	gcc $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 $(OBJDIR):

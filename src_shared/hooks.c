@@ -16,6 +16,7 @@ void	exit_cub3d(t_cub3d *t)
 {
 	int i;
 
+	system("killall afplay");
 	printf("freeing\n");
 	i = t->map_h;
 	if (t->malloc_map)
