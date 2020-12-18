@@ -12,7 +12,69 @@
 
 #include "cub3d.h"
 
-static void	get_resolution(t_cub3d *t, char *file, int *index)
+/*
+compare_resolutions(): Compares the desired resolution given in the .cub file to 
+- 1. the minimum resolutions set in the header (going below these values compromises the functionality program). If the resolutions from the .cub are below these minimum values, they are increased to match them.
+- 2. the max resolutions set in the get_screen_resolution() function. If the resolutions given in the .cub file are above these, they are decreased to match them so that the cub3D window fits on the screen.
+*/
+
+static void compare_resolutions(t_cub3d *t)
+{
+	if (t->win_w < MIN_WINDOW_WIDTH)
+	{
+		printf("Error: Given width resolution too low. Set to minimum\n");
+		t->win_w = MIN_WINDOW_WIDTH;
+	}
+	else if (t->win_w > t->max_win_w)
+	{
+		printf("Error: Given width resolution too high. Set to max\n");
+		t->win_w = t->max_win_w;
+	}
+	if (t->win_h < MIN_WINDOW_HEIGHT)
+	{
+		printf("Error: Given height resolution too low. Set to minimum\n");
+		t->win_h = MIN_WINDOW_HEIGHT;
+	}
+	else if (t->win_h > t->max_win_h)
+	{
+		printf("Error: Given height resolution too high. Set to max.\n");
+		t->win_h = t->max_win_h;
+	}
+}
+
+/*
+get_screen_resolution(): Gets the resolution of the screen (and whether it's a retina screen) that the program has been compiled on by interpreting the native_res.txt file (created during compilation). It then sets the max_win_w and max_win_h variables to indicate the maximum window width and height of the cub3D window. The height is decreased a bit because it needs to take the horizontal top macOS menu bar into account.
+*/
+
+static void get_screen_resolution(t_cub3d *t)
+{
+	int fd;
+	char *file;
+	int i;
+
+	if ((fd = open("native_res.txt", O_RDONLY)) == -1)
+		error_and_exit(t, "get_screen_resolution: open() returned NULL");
+	file = copy_file(fd);
+	close(fd);
+	if (!file)
+		error_and_exit(t, "get_screen_resolution: copy_file() returned NULL");
+	i = 0;
+	while (file[i] == ' ')
+		i++;
+	t->max_win_w = 0;
+	while (file[i] >= '0' && file[i] <= '9')
+		t->max_win_w = t->max_win_w * 10 + (file[i++] - '0');
+	while (file[i] == ' ' || file[i] == 'x')
+		i++;
+	t->max_win_h = 0;
+	while (file[i] >= '0' && file[i] <= '9')
+		t->max_win_h = t->max_win_h * 10 + (file[i++] - '0');
+	t->retina = (file[i] == ' ') ? 1 : 0;
+	(t->retina) && (t->max_win_w /= 2);
+	t->max_win_h = t->retina ? (t->max_win_h / 2) - 100 : t->max_win_h - 50;
+}
+
+static void	get_window_resolution(t_cub3d *t, char *file, int *index)
 {
 	int i;
 
@@ -29,10 +91,9 @@ static void	get_resolution(t_cub3d *t, char *file, int *index)
 		t->win_h = t->win_h * 10 + (file[i++] - '0');
 	*index = *index + i;
 	if (t->win_w <= 0 || t->win_h <= 0)
-	{
-		printf("Error\nfailed resolution check\n");
-		exit_cub3d(t);
-	}
+		error_and_exit(t, "get_window_resolution: resolution in .cub wrong");
+	get_screen_resolution(t);
+	compare_resolutions(t);
 }
 
 static char	*get_texture_path(t_cub3d *t, int n, char *file, int *index)
@@ -51,14 +112,14 @@ static char	*get_texture_path(t_cub3d *t, int n, char *file, int *index)
 	while (file[i] > 32 && file[i] < 127)
 		i++;
 	if (!(tex_path = malloc(i + 1)))
-		exit_cub3d(t);
+		error_and_exit(t, "get_texture_path: malloc error");
 	t->td[n].malloc = 1;
 	i = 0;
 	while (*file > 32 && *file < 127)
 		tex_path[i++] = *file++;
 	tex_path[i] = '\0';
 	*index = *index + i;
-	check_tex_path(t, tex_path, n);
+	check_tex_path(t, tex_path);
 	return (tex_path);
 }
 
@@ -70,7 +131,7 @@ static void	get_map_config(t_cub3d *t, char *file)
 	while (file[++i] && t->map_w == 0)
 	{
 		if (file[i] == 'R')
-			get_resolution(t, file + (i + 1), &i);
+			get_window_resolution(t, file + (i + 1), &i);
 		else if (file[i] == 'N' && file[i + 1] == 'O')
 			t->td[0].tex_path = get_texture_path(t, 0, file + (i + 2), &i);
 		else if (file[i] == 'E' && file[i + 1] == 'A')
@@ -97,9 +158,11 @@ void		parse_cub_file(t_cub3d *t, int ac, char **av)
 
 	fd = check_arguments(t, ac, av);
 	if (fd < 0)
-		exit_cub3d(t);
-	if (!(file = copy_file(fd)))
-		exit_cub3d(t);
+		error_and_exit(t, "parse_cub_file: fd < 0");
+	file = copy_file(fd);
+	close(fd);
+	if (!file)
+		error_and_exit(t, "parse_cub_file: bad return from copy_file()");
 	t->map_w = 0;
 	t->map_h = 1;
 	get_map_config(t, file);

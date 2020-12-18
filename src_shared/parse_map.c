@@ -37,10 +37,7 @@ static void	get_map_dimensions(char *map, t_cub3d *t)
 	}
 	(i == 1) && (t->map_h--);
 	if (*map != '\0')
-	{
-		printf("Error\nencountered unknown character in map\n");
-		exit_cub3d(t);
-	}
+		error_and_exit(t, "Encountered unknown character in map");
 }
 
 static void	find_player_part_2(t_cub3d *t, int y, int x)
@@ -88,19 +85,14 @@ static void	find_player(t_cub3d *t)
 			}
 		}
 	}
-	printf("Error\nplayer not found\n");
-	exit_cub3d(t);
+	error_and_exit(t, "Player not found on map");
 }
 
 void		parse_map(t_cub3d *t, char *file)
 {
 	get_map_dimensions(file, t);
-	if (t->map_w < 4 || t->map_h < 4)
-	{
-		printf("Error\nmap not wide or high enough\n");
-		exit_cub3d(t);
-	}
-	t->map = ft_split_var(file, t);
+	if (!(t->map = ft_split_var(file, t)))
+		error_and_exit(t, "parse_map: ft_split_var returned NULL");
 	t->malloc_map = 1;
 	check_map_horizontally(t);
 	check_map_vertically(t);

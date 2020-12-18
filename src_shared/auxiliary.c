@@ -30,16 +30,6 @@ unsigned int	ft_getpxl(t_cub3d *t, int i, int x, int y)
 	return (color);
 }
 
-unsigned int	get_pxl_for_bmp(t_cub3d *t, int x, int y)
-{
-	unsigned int	color;
-	char			*ptr;
-
-	ptr = t->addr + (y * t->line_len + x * (t->bpp / 8));
-	color = *(unsigned int *)ptr;
-	return (color);
-}
-
 unsigned int	shader_red(unsigned int start_colour)
 {
 	int	end_colour;

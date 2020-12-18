@@ -1,16 +1,12 @@
 #include "cub3d.h"
 
-void		check_tex_path(t_cub3d *t, char *tex_path, int n)
+void		check_tex_path(t_cub3d *t, char *tex_path)
 {
 	int fd;
 
-	fd = open(tex_path, O_RDONLY);
-	if (fd < 0)
+	if ((fd = open(tex_path, O_RDONLY)) < 0)
 	{
-		printf("Error\nfailed texture path check: %s\n", tex_path);
-		close(fd);
-		free(tex_path);
-		t->td[n].malloc = 0;
+		printf(B_RED"Error: Failed texture path check: %s"RESET"\n", tex_path);
 		exit_cub3d(t);
 	}
 	close(fd);
@@ -22,10 +18,7 @@ int			check_colour(t_cub3d *t, int r, int g, int b)
 
 	if (r < 0 || g < 0 || b < 0
 	|| r > 255 || g > 255 || b > 255)
-	{
-		printf("Error\nfailed colour check\n");
-		exit_cub3d(t);
-	}
+		error_and_exit(t, "check_colour: Failed colour check");
 	colour = (r * 65536) + (g * 256) + b;
 	return (colour);
 }

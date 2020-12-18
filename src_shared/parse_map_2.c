@@ -28,10 +28,7 @@ void		check_map_horizontally(t_cub3d *t)
 			|| ((t->map[y][x] == ',' && t->map[y][x + 1] != '1'
 			&& t->map[y][x + 1] != ',' && t->map[y][x + 1] != '\0'))
 			|| ((x == 0 && t->map[y][x] != ',' && t->map[y][x] != '1')))
-			{
-				printf("Error\nfound hole in wall at y:%d / x:%d\n", y, x);
-				exit_cub3d(t);
-			}
+				error_and_exit(t, "Found a hole in a wall");
 		}
 	}
 }
@@ -52,10 +49,7 @@ void		check_map_vertically(t_cub3d *t)
 			|| ((t->map[y][x] == ',' && t->map[y + 1][x] != '1'
 			&& t->map[y + 1][x] != ',' && t->map[y + 1][x] != '\0'))
 			|| ((y == 0 && t->map[y][x] != ',' && t->map[y][x] != '1')))
-			{
-				printf("Error\nfound hole in wall at y:%d / x:%d\n", y, x);
-				exit_cub3d(t);
-			}
+				error_and_exit(t, "Found a hole in a wall");
 		}
 	}
 }
@@ -103,9 +97,7 @@ static void	find_sprites_part_2(t_cub3d *t)
 		{
 			if (t->map[y][x] == '2' || t->map[y][x] == '3'
 			|| t->map[y][x] == '5')
-			{
 				initialise_sprite(t, y, x, i++);
-			}
 		}
 	}
 }

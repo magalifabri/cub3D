@@ -16,6 +16,7 @@ void	exit_cub3d(t_cub3d *t)
 {
 	int i;
 
+	system("leaks cub3d_bonus > leaks1.txt");
 	system("killall afplay");
 	printf("freeing\n");
 	i = t->map_h;
@@ -28,11 +29,12 @@ void	exit_cub3d(t_cub3d *t)
 	while (i--)
 		if (t->td[i].malloc == 1)
 			free(t->td[i].tex_path);
-	if (t->malloc_td)
+	// if (t->malloc_td)
 		free(t->td);
 	if (t->malloc_spr)
 		free(t->spr);
 	printf("exiting\n");
+	system("leaks cub3d_bonus > leaks2.txt");
 	exit(0);
 }
 

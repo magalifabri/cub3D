@@ -12,6 +12,12 @@
 
 #include "cub3d.h"
 
+void	error_and_exit(t_cub3d *t, char *message)
+{
+	printf(B_RED"Error: %s"RESET"\n", message);
+	exit_cub3d(t);
+}
+
 void	draw_background(t_cub3d *t, int sky, int floor)
 {
 	int x;

@@ -40,6 +40,10 @@ static void		calculate_steps(t_cub3d *t, t_cfwv *c, int s)
 	}
 }
 
+/*
+in_l_o_s: Auxiliary function for deciding spider behaviour that checks if the player is in line of sight of the spider. If so, the spider will start moving towards the player.
+*/
+
 static int		in_l_o_s(t_cub3d *t, int s)
 {
 	t_cfwv c;
@@ -65,6 +69,10 @@ static int		in_l_o_s(t_cub3d *t, int s)
 	return (1);
 }
 
+/*
+spawn_mobs: Checks for dead spiders (t->spr[].type == '0') and "reinitialises" them back to life near a nest's location.
+*/
+
 void			spawn_mobs(t_cub3d *t, int nest)
 {
 	int sprite;
@@ -86,6 +94,11 @@ void			spawn_mobs(t_cub3d *t, int nest)
 		}
 	}
 }
+
+/*
+sprite_control: Controls the behavior (mode) of the spiders and their spawning.
+The spiders have three modes for their behavior: idle (i), move (m) and attack (a).
+*/
 
 void			sprite_control(t_cub3d *t, int s)
 {
