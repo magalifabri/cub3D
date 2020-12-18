@@ -2,6 +2,22 @@
 # define CUB3D_H
 
 # define RD(x) (x * 0.01745329251)
+# define MIN_WINDOW_WIDTH 300
+# define MIN_WINDOW_HEIGHT 250
+
+#define RED "\033[0;31m"	
+#define B_RED "\033[1;31m"	
+#define GREEN "\033[0;32m"	
+#define B_GREEN "\033[1;32m"	
+#define YELLOW "\033[0;33m"	
+#define B_YELLOW "\033[01;33m"	
+#define BLUE "\033[0;34m"	
+#define B_BLUE "\033[1;34m"	
+#define MAGENTA "\033[0;35m"	
+#define B_MAGENTA "\033[1;35m"	
+#define CYAN "\033[0;36m"	
+#define B_CYAN "\033[1;36m"	
+#define RESET "\033[0m"	
 
 # include "../mlx/mlx.h"
 # include <math.h>
@@ -103,8 +119,14 @@ typedef struct			s_gen_bitmap_data
 	int					bpp;
 	int					file_h_size;
 	int					info_h_size;
-	char				*file_name;
+	char				*filename;
+	int					fd;
 	unsigned char		*image;
+	unsigned char		*file_h;
+	unsigned char		*info_h;
+	int					malloc_image;
+	int					malloc_file_h;
+	int					malloc_info_h;
 }						t_gen_bmp_data;
 
 typedef struct			s_check_for_walls_variables
@@ -181,6 +203,9 @@ typedef struct			s_cub3d
 
 	int					win_w;
 	int					win_h;
+	int					max_win_w;
+	int					max_win_h;
+	int					retina;
 	char				**map;
 	int					map_w;
 	int					map_h;
@@ -228,9 +253,14 @@ typedef struct			s_cub3d
 
 void					play_music(t_cub3d *t);
 void					*terminate(char **s);
+void					error_and_exit(t_cub3d *t, char *message);
 void					exit_cub3d(t_cub3d *t);
+
 void					get_bmp(t_cub3d *t);
+void					free_stuff(t_gen_bmp_data *b);
+void					bmp_creation_error(t_cub3d *t, t_gen_bmp_data *b);
 unsigned int			get_pxl_for_bmp(t_cub3d *t, int x, int y);
+
 
 void					print_terminal_map(t_cub3d *t);
 
@@ -238,7 +268,7 @@ void					parse_cub_file(t_cub3d *t, int ac, char **av);
 char					*copy_file(int fd);
 int						check_arguments(t_cub3d *t, int ac, char **av);
 int						get_colour(t_cub3d *t, char *file, int *index);
-void					check_tex_path(t_cub3d *t, char *tex_path, int n);
+void					check_tex_path(t_cub3d *t, char *tex_path);
 void					parse_map(t_cub3d *t, char *file);
 void					check_map_horizontally(t_cub3d *t);
 void					check_map_vertically(t_cub3d *t);

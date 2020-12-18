@@ -6,3 +6,5 @@ cub3d*
 *.pdf
 audio
 *.bmp
+leaks*
+native_res.txt

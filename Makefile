@@ -51,7 +51,8 @@ SRC_SHARED =	hooks.c \
 				auxiliary.c \
 				auxiliary_2.c \
 				sprite_control.c \
-				get_bmp.c
+				get_bmp.c \
+				get_bmp_utils.c
 
 OBJDIR = ./obj/
 OBJS = $(addprefix $(OBJDIR), $(OBJ))
@@ -96,7 +97,10 @@ test: all
 	@./$(NAME) ./maps/cubfile_dark_2.cub
 	killall afplay
 # BONUS
-test_bonus: bonus
+RES = native_res.txt
+$(RES): 
+	system_profiler SPDisplaysDataType | grep Resolution | cut -d : -f 2 > native_res.txt
+test_bonus: $(RES) bonus
 	@echo 'EXECUTING: $(NAME)_bonus'
 	@./$(NAME)_bonus ./maps/cubfile_dark_2.cub
 	killall afplay
