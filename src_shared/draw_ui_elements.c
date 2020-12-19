@@ -44,7 +44,7 @@ void	draw_crosshair(t_cub3d *t)
 		while (++x < 32)
 		{
 			texel = ft_getpxl(t, 8, x, y);
-			if (texel != 4278190080)
+			if (texel != INVISIBLE)
 				ft_putpxl(t, ((t->win_w / 2) - 16) + x,
 				((t->win_h / 2) - 16) + y, texel);
 		}
@@ -70,7 +70,7 @@ void	draw_bullets(t_cub3d *t)
 			while (++x < 32)
 			{
 				texel = ft_getpxl(t, 38, x / 2, y / 2);
-				if (texel != 4278190080)
+				if (texel != INVISIBLE)
 					ft_putpxl(t, x_start + x, (t->win_h - 37) + y, texel);
 			}
 		}
@@ -94,7 +94,7 @@ void	draw_torch(t_cub3d *t)
 		while (++x < 256)
 		{
 			texel = ft_getpxl(t, 13 + frame, x / 4, y / 4);
-			if (texel != 4278190080)
+			if (texel != INVISIBLE)
 				ft_putpxl(t, x, y, texel);
 		}
 	}
@@ -122,7 +122,7 @@ void	draw_gun(t_cub3d *t)
 		while (++x < 256)
 		{
 			texel = ft_getpxl(t, 17 + frame, x / 4, y / 4);
-			if (texel != 4278190080)
+			if (texel != INVISIBLE)
 				ft_putpxl(t, (t->win_w - 256) + x, (t->win_h - 256) + y, texel);
 		}
 	}

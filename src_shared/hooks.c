@@ -20,20 +20,20 @@ void	exit_cub3d(t_cub3d *t)
 	ft_printf("freeing\n");
 	i = t->map_h;
 	if (t->malloc_map)
+	{
 		while (i >= 0)
 			free(t->map[i--]);
-	if (t->malloc_map)
 		free(t->map);
+	}
 	i = 5;
 	while (i--)
 		if (t->td[i].malloc == 1)
 			free(t->td[i].tex_path);
-	// if (t->malloc_td)
-		free(t->td);
+	free(t->td);
 	if (t->malloc_spr)
 		free(t->spr);
-	ft_printf("exiting\n");
 	system("leaks cub3d > leaks2.txt");
+	ft_printf("exiting\n");
 	exit(0);
 }
 

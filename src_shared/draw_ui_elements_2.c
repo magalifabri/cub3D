@@ -25,7 +25,7 @@ static int	draw_hearts_part_2(t_cub3d *t, int x_start, int frame)
 		while (++x < 32)
 		{
 			texel = ft_getpxl(t, 34 + frame, x / 2, y / 2);
-			if (texel != 4278190080)
+			if (texel != INVISIBLE)
 				ft_putpxl(t, x_start + x, y, texel);
 		}
 	}

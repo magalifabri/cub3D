@@ -106,7 +106,7 @@ double		draw_walls(t_cub3d *t, int x)
 	while (++y < w.line_height && y < t->win_h)
 	{
 		w.texel = ft_getpxl(t, w.tex_nbr, w.tex_x, w.tex_pos + (w.step * y));
-		if (w.texel != 4278190080)
+		if (w.texel != INVISIBLE)
 		{
 			ft_putpxl(t, x, w.draw_start + y, w.texel);
 		}

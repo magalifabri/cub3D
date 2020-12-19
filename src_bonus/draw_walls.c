@@ -103,7 +103,7 @@ double		draw_walls(t_cub3d *t, int x)
 	{
 		w.texel = ft_getpxl(t, w.tex_nbr, w.tex_x, w.tex_pos + (w.step * y));
 		w.texel = shader(w.texel, w.perp_wall_dist);
-		if (w.texel != 4278190080)
+		if (w.texel != INVISIBLE)
 		{
 			ft_putpxl(t, x, w.draw_start + y, w.texel);
 		}

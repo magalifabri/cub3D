@@ -74,7 +74,7 @@ void			draw_skybox2(t_cub3d *t)
 		while (++y < t->win_h / 2)
 		{
 			texel = ft_getpxl(t, 7, s.tex_x, y * s.tex_y_incr);
-			if (texel != 4278190080)
+			if (texel != INVISIBLE)
 				ft_putpxl(t, x, y, texel);
 		}
 	}

@@ -4,6 +4,7 @@
 # define RD(x) (x * 0.01745329251)
 # define MIN_WINDOW_WIDTH 300
 # define MIN_WINDOW_HEIGHT 250
+# define INVISIBLE 4278190080
 
 #define RED "\033[0;31m"	
 #define B_RED "\033[1;31m"	

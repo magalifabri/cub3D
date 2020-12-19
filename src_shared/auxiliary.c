@@ -37,7 +37,7 @@ unsigned int	shader_red(unsigned int start_colour)
 	int	end_colour_g;
 	int	end_colour_b;
 
-	if (start_colour == 4278190080)
+	if (start_colour == INVISIBLE)
 		return (start_colour);
 	end_colour_r = ((start_colour & 0x00FF0000) >> 16) * 1;
 	end_colour_g = ((start_colour & 0x0000FF00) >> 8) * 0.5;
@@ -54,7 +54,7 @@ unsigned int	shader(unsigned int start_colour, double distance)
 	int		end_colour_b;
 	double	shade;
 
-	if (start_colour == 4278190080 || start_colour == 16711680)
+	if (start_colour == INVISIBLE || start_colour == 16711680)
 		return (start_colour);
 	shade = (10 - distance) / 10.0;
 	shade = (shade < 0) ? (0.01) : (shade);
