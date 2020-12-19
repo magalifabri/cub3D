@@ -1,0 +1,11 @@
+.DS_STORE
+cub3d*
+*.png
+/obj*
+/images
+*.pdf
+audio
+*.bmp
+leaks*
+native_res.txt
+/ft_printf
