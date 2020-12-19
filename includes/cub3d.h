@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
+/*   Updated: 2020/12/19 20:14:02 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define RD(x) (x * 0.01745329251)
+# define RD 0.01745329251
 # define MIN_WINDOW_WIDTH 300
 # define MIN_WINDOW_HEIGHT 250
 # define INVISIBLE 4278190080
@@ -276,7 +288,8 @@ void					check_map_vertically(t_cub3d *t);
 void					find_sprites(t_cub3d *t);
 char					**ft_split_var(char *s, t_cub3d *t);
 void					get_textures(t_cub3d *t);
-void					get_window_resolution(t_cub3d *t, char *file, int *index);
+void					get_window_resolution(t_cub3d *t, char *file,
+						int *index);
 unsigned int			ft_getpxl(t_cub3d *t, int i, int x, int y);
 void					ft_putpxl(t_cub3d *data, int x, int y, int color);
 

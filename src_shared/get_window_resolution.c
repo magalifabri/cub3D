@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 19:51:18 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/19 20:00:16 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/19 20:07:40 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** compare_resolutions(): Compares the desired resolution given in the .cub
-** file to 
+** file to:
 ** - 1. the minimum resolutions set in the header (going below these values
 **      compromises the functionality of the program). If the resolutions from
 **      the .cub are below these minimum values, they are increased to match
@@ -24,7 +24,7 @@
 **      to match them so that the cub3D window fits on the screen.
 */
 
-static void compare_resolutions(t_cub3d *t)
+static void	compare_resolutions(t_cub3d *t)
 {
 	if (t->win_w < MIN_WINDOW_WIDTH)
 	{
@@ -57,11 +57,11 @@ static void compare_resolutions(t_cub3d *t)
 ** horizontal top macOS menu bar into account.
 */
 
-static void get_screen_resolution(t_cub3d *t)
+static void	get_screen_resolution(t_cub3d *t)
 {
-	int fd;
-	char *file;
-	int i;
+	int		fd;
+	char	*file;
+	int		i;
 
 	if ((fd = open("native_res.txt", O_RDONLY)) == -1)
 		error_and_exit(t, "get_screen_resolution: open() returned NULL");

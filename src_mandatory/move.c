@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:25:51 by mfabri            #+#    #+#             */
-/*   Updated: 2020/04/27 16:25:52 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/19 20:14:14 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ static void	strafe_left(t_cub3d *t, double move_spd)
 
 	if (t->d == 0)
 	{
-		new_y = t->p_y + (t->p_dir_y * cos(RD(90))
-		- t->p_dir_x * sin(RD(90))) * move_spd;
+		new_y = t->p_y + (t->p_dir_y * cos(90 * RD)
+		- t->p_dir_x * sin(90 * RD)) * move_spd;
 		t->p_y = new_y;
-		new_x = t->p_x + (t->p_dir_y * sin(RD(90))
-		+ t->p_dir_x * cos(RD(90))) * move_spd;
+		new_x = t->p_x + (t->p_dir_y * sin(90 * RD)
+		+ t->p_dir_x * cos(90 * RD)) * move_spd;
 		t->p_x = new_x;
 	}
 }
@@ -69,11 +69,11 @@ static void	strafe_right(t_cub3d *t, double move_spd)
 
 	if (t->a == 0)
 	{
-		new_y = t->p_y - (t->p_dir_y * cos(RD(90))
-		- t->p_dir_x * sin(RD(90))) * move_spd;
+		new_y = t->p_y - (t->p_dir_y * cos(90 * RD)
+		- t->p_dir_x * sin(90 * RD)) * move_spd;
 		t->p_y = new_y;
-		new_x = t->p_x - (t->p_dir_y * sin(RD(90))
-		+ t->p_dir_x * cos(RD(90))) * move_spd;
+		new_x = t->p_x - (t->p_dir_y * sin(90 * RD)
+		+ t->p_dir_x * cos(90 * RD)) * move_spd;
 		t->p_x = new_x;
 	}
 }
