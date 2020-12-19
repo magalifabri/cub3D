@@ -22,22 +22,22 @@ static void compare_resolutions(t_cub3d *t)
 {
 	if (t->win_w < MIN_WINDOW_WIDTH)
 	{
-		printf("Error: Given width resolution too low. Set to minimum\n");
+		ft_printf("Error: Given width resolution too low. Set to minimum\n");
 		t->win_w = MIN_WINDOW_WIDTH;
 	}
 	else if (t->win_w > t->max_win_w)
 	{
-		printf("Error: Given width resolution too high. Set to max\n");
+		ft_printf("Error: Given width resolution too high. Set to max\n");
 		t->win_w = t->max_win_w;
 	}
 	if (t->win_h < MIN_WINDOW_HEIGHT)
 	{
-		printf("Error: Given height resolution too low. Set to minimum\n");
+		ft_printf("Error: Given height resolution too low. Set to minimum\n");
 		t->win_h = MIN_WINDOW_HEIGHT;
 	}
 	else if (t->win_h > t->max_win_h)
 	{
-		printf("Error: Given height resolution too high. Set to max.\n");
+		ft_printf("Error: Given height resolution too high. Set to max.\n");
 		t->win_h = t->max_win_h;
 	}
 }

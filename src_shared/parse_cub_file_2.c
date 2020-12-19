@@ -6,7 +6,7 @@ void		check_tex_path(t_cub3d *t, char *tex_path)
 
 	if ((fd = open(tex_path, O_RDONLY)) < 0)
 	{
-		printf(B_RED"Error: Failed texture path check: %s"RESET"\n", tex_path);
+		ft_printf(B_RED"Error: Failed texture path check: %s"RESET"\n", tex_path);
 		exit_cub3d(t);
 	}
 	close(fd);
@@ -77,7 +77,7 @@ int			check_arguments(t_cub3d *t, int ac, char **av)
 			i++;
 		if (i == 6)
 		{
-			printf("saving bmp image...\n");
+			ft_printf("saving bmp image...\n");
 			t->save = 1;
 			return (fd);
 		}

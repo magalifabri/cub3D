@@ -75,5 +75,5 @@ void			get_textures(t_cub3d *t)
 		t->td[i].addr = mlx_get_data_addr(t->td[i].texture, &t->td[i].bpp,
 		&t->td[i].line_len, &t->td[i].endian);
 	}
-	printf("loading textures complete\n");
+	ft_printf("loading textures complete\n");
 }

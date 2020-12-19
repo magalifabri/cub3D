@@ -20,6 +20,7 @@
 #define RESET "\033[0m"	
 
 # include "../mlx/mlx.h"
+# include "../ft_printf/ft_printf.h"
 # include <math.h>
 # include <unistd.h>
 # include <stdlib.h>

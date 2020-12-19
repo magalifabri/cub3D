@@ -126,7 +126,7 @@ void					get_bmp(t_cub3d *t)
 		}
 	}
 	create_bmp(t, &b);
-	printf("Image saved!\n");
+	ft_printf("Image saved!\n");
 	free_stuff(&b);
 	exit_cub3d(t);
 }

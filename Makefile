@@ -15,9 +15,10 @@ NAME = cub3d
 RM = /bin/rm -f
 RMDIR = /bin/rm -rf
 CFLAGS = -Wall -Wextra -Werror
-INCLUDES = -I$(MLXDIR) -I$(INCDIR)
+INCLUDES = -I$(MLX_DIR) -I$(INCDIR)
 
-MLXDIR = ./mlx/
+FT_PRINTF_DIR = ./ft_printf/
+MLX_DIR = ./mlx/
 
 # .c files of which there is a mandatory and bonus version
 SRC_NOT_SHARED = start.c \
@@ -69,12 +70,14 @@ INC = cub3d.h
 all: $(NAME)
 
 $(NAME): $(OBJDIR) $(OBJS)
-	$(MAKE) -C $(MLXDIR)
-	gcc $(CFLAGS) $(OBJS) -L$(MLXDIR) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(MAKE) -C $(MLX_DIR)
+	$(MAKE) -C $(FT_PRINTF_DIR)
+	gcc $(CFLAGS) $(OBJS) -L$(FT_PRINTF_DIR) -lftprintf -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 # BONUS
 bonus: $(OBJDIR_BONUS) $(OBJS_BONUS)
-	$(MAKE) -C $(MLXDIR)
-	gcc $(CFLAGS) $(OBJS_BONUS) -L$(MLXDIR) -lmlx -framework OpenGL -framework AppKit -o $(NAME)_bonus
+	$(MAKE) -C $(MLX_DIR)
+	$(MAKE) -C $(FT_PRINTF_DIR)
+	gcc $(CFLAGS) $(OBJS_BONUS) -L$(FT_PRINTF_DIR) -lftprintf -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -o $(NAME)_bonus
 
 $(OBJDIR)%.o: $(SRC_SHARED_DIR)%.c $(INCS)
 	gcc $(CFLAGS) $(INCLUDES) -c -o $@ $<
@@ -110,10 +113,10 @@ clean:
 	$(RM) $(OBJS_BONUS)
 	$(RMDIR) $(OBJDIR)
 	$(RMDIR) $(OBJDIR_BONUS)
-	$(MAKE) -C $(MLXDIR) clean
+	$(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean
-	$(MAKE) -C $(MLXDIR) clean
+	$(MAKE) -C $(MLX_DIR) clean
 
 re: fclean all
 

@@ -105,10 +105,10 @@ void		parse_map(t_cub3d *t, char *file)
 	{
 		while (x <= t->map_w)
 		{
-			printf("%c", t->map[y][x]);
+			ft_printf("%c", t->map[y][x]);
 			x++;
 		}
-		printf("\n");
+		ft_printf("\n");
 		x = 0;
 		y++;
 	}

@@ -14,7 +14,7 @@
 
 void	error_and_exit(t_cub3d *t, char *message)
 {
-	printf(B_RED"Error: %s"RESET"\n", message);
+	ft_printf(B_RED"Error: %s"RESET"\n", message);
 	exit_cub3d(t);
 }
 
@@ -51,10 +51,10 @@ void	print_terminal_map(t_cub3d *t)
 	{
 		while (x <= t->map_w)
 		{
-			printf("%c", t->map[y][x]);
+			ft_printf("%c", t->map[y][x]);
 			x++;
 		}
-		printf("\n");
+		ft_printf("\n");
 		x = 0;
 		y++;
 	}

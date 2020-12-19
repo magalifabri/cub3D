@@ -53,7 +53,7 @@ static int	run_game(t_cub3d *t)
 	t->mouse_move = 0;
 	if (t->p_health == 0)
 	{
-		printf("YOU ARE SPIDER FOOD\n");
+		ft_printf("YOU ARE SPIDER FOOD\n");
 		exit_cub3d(t);
 	}
 	t->fps = 1 / ((double)(t->time_now - time_last_frame)
