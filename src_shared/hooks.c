@@ -16,8 +16,6 @@ void	exit_cub3d(t_cub3d *t)
 {
 	int i;
 
-	system("leaks cub3d > leaks1.txt");
-	system("leaks cub3d_bonus > leaks_bonus1.txt");
 	system("killall afplay");
 	printf("freeing\n");
 	i = t->map_h;
@@ -36,7 +34,6 @@ void	exit_cub3d(t_cub3d *t)
 		free(t->spr);
 	printf("exiting\n");
 	system("leaks cub3d > leaks2.txt");
-	system("leaks cub3d_bonus > leaks_bonus2.txt");
 	exit(0);
 }
 
