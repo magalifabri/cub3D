@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_cub_file_2.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/19 19:44:33 by magali            #+#    #+#             */
+/*   Updated: 2020/12/19 19:47:18 by mfabri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void		check_tex_path(t_cub3d *t, char *tex_path)
@@ -6,7 +18,7 @@ void		check_tex_path(t_cub3d *t, char *tex_path)
 
 	if ((fd = open(tex_path, O_RDONLY)) < 0)
 	{
-		ft_printf(B_RED"Error: Failed texture path check: %s"RESET"\n", tex_path);
+		ft_printf(B_RED"Error: Bad texture path: %s"RESET"\n", tex_path);
 		exit_cub3d(t);
 	}
 	close(fd);

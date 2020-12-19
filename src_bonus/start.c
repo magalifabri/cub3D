@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:02:40 by mfabri            #+#    #+#             */
-/*   Updated: 2020/04/27 18:46:51 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/19 20:05:19 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ static void	initialise_variables(t_cub3d *t)
 	t->l_a = 0;
 	t->r_a = 0;
 	t->mouse_move = 0;
-	// t->map_w = 0;
 	t->p_dir_x = 0;
 	t->p_dir_y = 0;
 	t->plane_x = 0;
@@ -97,7 +96,6 @@ static void	initialise_variables(t_cub3d *t)
 	t->malloc_map = 0;
 	t->malloc_tex_paths = 0;
 	t->malloc_spr = 0;
-	// t->malloc_td = 1;
 	initialise_variables_2(t);
 }
 

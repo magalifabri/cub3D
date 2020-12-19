@@ -12,7 +12,8 @@
 
 #include "cub3d.h"
 
-static unsigned char	*create_bmp_file_h(t_cub3d *t, t_gen_bmp_data *b, int pad_size)
+static unsigned char	*create_bmp_file_h(t_cub3d *t, t_gen_bmp_data *b,
+						int pad_size)
 {
 	int				i;
 	int				file_size;
@@ -79,7 +80,7 @@ static void				create_bmp(t_cub3d *t, t_gen_bmp_data *b)
 	y = -1;
 	while (++y < t->win_h)
 	{
-		if (write(b->fd,b->image + (y * t->win_w * b->bpp), t->win_w * b->bpp)
+		if (write(b->fd, b->image + (y * t->win_w * b->bpp), t->win_w * b->bpp)
 			== -1)
 			bmp_creation_error(t, b);
 		if (write(b->fd, padding, pad_size) == -1)

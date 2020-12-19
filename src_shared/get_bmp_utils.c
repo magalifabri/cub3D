@@ -12,14 +12,14 @@
 
 #include "cub3d.h"
 
-void	free_stuff(t_gen_bmp_data *b)
+void			free_stuff(t_gen_bmp_data *b)
 {
 	free(b->image);
 	free(b->file_h);
 	free(b->info_h);
 }
 
-void	bmp_creation_error(t_cub3d *t, t_gen_bmp_data *b)
+void			bmp_creation_error(t_cub3d *t, t_gen_bmp_data *b)
 {
 	if (b->fd != -1)
 		close(b->fd);

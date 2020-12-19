@@ -6,7 +6,7 @@
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2020/04/27 12:47:44 by mfabri           ###   ########.fr        #
+#    Updated: 2020/12/19 19:58:19 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,8 @@ SRC_SHARED =	hooks.c \
 				auxiliary_2.c \
 				sprite_control.c \
 				get_bmp.c \
-				get_bmp_utils.c
+				get_bmp_utils.c \
+				get_window_resolution.c
 
 OBJDIR = ./obj/
 OBJS = $(addprefix $(OBJDIR), $(OBJ))

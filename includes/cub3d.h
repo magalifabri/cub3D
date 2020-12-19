@@ -6,19 +6,19 @@
 # define MIN_WINDOW_HEIGHT 250
 # define INVISIBLE 4278190080
 
-#define RED "\033[0;31m"	
-#define B_RED "\033[1;31m"	
-#define GREEN "\033[0;32m"	
-#define B_GREEN "\033[1;32m"	
-#define YELLOW "\033[0;33m"	
-#define B_YELLOW "\033[01;33m"	
-#define BLUE "\033[0;34m"	
-#define B_BLUE "\033[1;34m"	
-#define MAGENTA "\033[0;35m"	
-#define B_MAGENTA "\033[1;35m"	
-#define CYAN "\033[0;36m"	
-#define B_CYAN "\033[1;36m"	
-#define RESET "\033[0m"	
+# define RED "\033[0;31m"
+# define B_RED "\033[1;31m"
+# define GREEN "\033[0;32m"
+# define B_GREEN "\033[1;32m"
+# define YELLOW "\033[0;33m"
+# define B_YELLOW "\033[01;33m"
+# define BLUE "\033[0;34m"
+# define B_BLUE "\033[1;34m"
+# define MAGENTA "\033[0;35m"
+# define B_MAGENTA "\033[1;35m"
+# define CYAN "\033[0;36m"
+# define B_CYAN "\033[1;36m"
+# define RESET "\033[0m"
 
 # include "../mlx/mlx.h"
 # include "../ft_printf/ft_printf.h"
@@ -135,11 +135,11 @@ typedef struct			s_check_for_walls_variables
 {
 	double				y_dest;
 	double				x_dest;
-    double				y_dif;
-    double				x_dif;
-    double				step_x;
-    double				step_y;
-    double				tmp;
+	double				y_dif;
+	double				x_dif;
+	double				step_x;
+	double				step_y;
+	double				tmp;
 }						t_cfwv;
 
 typedef struct			s_cast_ray
@@ -263,7 +263,6 @@ void					free_stuff(t_gen_bmp_data *b);
 void					bmp_creation_error(t_cub3d *t, t_gen_bmp_data *b);
 unsigned int			get_pxl_for_bmp(t_cub3d *t, int x, int y);
 
-
 void					print_terminal_map(t_cub3d *t);
 
 void					parse_cub_file(t_cub3d *t, int ac, char **av);
@@ -277,6 +276,7 @@ void					check_map_vertically(t_cub3d *t);
 void					find_sprites(t_cub3d *t);
 char					**ft_split_var(char *s, t_cub3d *t);
 void					get_textures(t_cub3d *t);
+void					get_window_resolution(t_cub3d *t, char *file, int *index);
 unsigned int			ft_getpxl(t_cub3d *t, int i, int x, int y);
 void					ft_putpxl(t_cub3d *data, int x, int y, int color);
 
@@ -311,10 +311,9 @@ void					enemy_pathfinding(t_cub3d *p, int s);
 int						obstacle(char c);
 void					move_enemy(t_cub3d *t, int i);
 
-double					get_distance(int y_dest, int x_dest, int y_src, int x_src);
-
+double					get_distance(int y_dest, int x_dest, int y_src,
+						int x_src);
 
 void					shoot(t_cub3d *t);
-
 
 #endif
