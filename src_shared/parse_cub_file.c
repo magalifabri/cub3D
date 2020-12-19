@@ -70,6 +70,7 @@ static void get_screen_resolution(t_cub3d *t)
 	while (file[i] >= '0' && file[i] <= '9')
 		t->max_win_h = t->max_win_h * 10 + (file[i++] - '0');
 	t->retina = (file[i] == ' ') ? 1 : 0;
+	free(file);
 	(t->retina) && (t->max_win_w /= 2);
 	t->max_win_h = t->retina ? (t->max_win_h / 2) - 100 : t->max_win_h - 50;
 }
