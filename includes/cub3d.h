@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/19 20:14:02 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/20 11:41:36 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,7 @@ typedef struct			s_cub3d
 void					play_music(t_cub3d *t);
 void					*terminate(char **s);
 void					error_and_exit(t_cub3d *t, char *message);
+void					death(t_cub3d *t);
 void					exit_cub3d(t_cub3d *t);
 
 void					get_bmp(t_cub3d *t);

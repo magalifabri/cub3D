@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:25:51 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/19 20:14:14 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/20 11:44:09 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,10 @@ void		move(t_cub3d *t)
 	double	rot_spd;
 	double	mouse_spd;
 
-	move_spd = 3 / t->fps;
-	rot_spd = 2 / t->fps;
+	if (isinf(t->fps))
+		t->fps = 10;
+	move_spd = (t->fps / (t->fps * t->fps)) * 3;
+	rot_spd = (t->fps / (t->fps * t->fps)) * 2;
 	mouse_spd = t->mouse_move * 0.05;
 	if ((t->w && t->a) || (t->w && t->d)
 	|| (t->s && t->a) || (t->s && t->d))

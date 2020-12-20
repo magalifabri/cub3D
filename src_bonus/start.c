@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:02:40 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/19 20:05:19 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/20 12:07:00 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ static int	run_game(t_cub3d *t)
 		sprite_control(t, s);
 	t->mouse_move = 0;
 	if (t->p_health == 0)
-	{
-		ft_printf("YOU ARE SPIDER FOOD\n");
-		exit_cub3d(t);
-	}
+		death(t);
 	t->fps = 1 / ((double)(t->time_now - time_last_frame)
 	/ (double)CLOCKS_PER_SEC);
 	time_last_frame = t->time_now;

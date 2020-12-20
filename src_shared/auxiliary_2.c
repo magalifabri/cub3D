@@ -6,38 +6,24 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:00:14 by mfabri            #+#    #+#             */
-/*   Updated: 2020/04/27 16:02:40 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/20 11:41:16 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	death(t_cub3d *t)
+{
+	system("afplay -v 0.20 audio/scream.mp3 & exit");
+	ft_printf("YOU ARE SPIDER FOOD\n");
+	sleep(1);
+	exit_cub3d(t);
+}
+
 void	error_and_exit(t_cub3d *t, char *message)
 {
 	ft_printf(B_RED"Error: %s"RESET"\n", message);
 	exit_cub3d(t);
-}
-
-void	draw_background(t_cub3d *t, int sky, int floor)
-{
-	int x;
-	int y;
-
-	y = 0;
-	while (y < (t->win_h / 2))
-	{
-		x = 0;
-		while (x < t->win_w)
-			ft_putpxl(t, x++, y, sky);
-		y++;
-	}
-	while (y < t->win_h)
-	{
-		x = 0;
-		while (x < t->win_w)
-			ft_putpxl(t, x++, y, floor);
-		y++;
-	}
 }
 
 void	print_terminal_map(t_cub3d *t)
