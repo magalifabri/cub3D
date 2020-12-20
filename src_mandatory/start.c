@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:02:40 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/19 20:01:46 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/20 12:24:20 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ static void	initialise_variables(t_cub3d *t)
 	t->l_a = 0;
 	t->r_a = 0;
 	t->mouse_move = 0;
+	t->p_x = 0;
+	t->p_y = 0;
 	t->p_dir_x = 0;
 	t->p_dir_y = 0;
 	t->plane_x = 0;

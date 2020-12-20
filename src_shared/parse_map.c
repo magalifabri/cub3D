@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:27:11 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/20 12:08:07 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/20 12:28:37 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	get_map_dimensions(char *map, t_cub3d *t)
 		error_and_exit(t, "Encountered unknown character in map");
 }
 
-static void	find_player_part_2(t_cub3d *t, int y, int x)
+static void	init_variables(t_cub3d *t, int y, int x)
 {
 	if (t->map[y][x] == 'N')
 	{
@@ -78,14 +78,19 @@ static void	find_player(t_cub3d *t)
 			if (t->map[y][x] == 'N' || t->map[y][x] == 'E'
 			|| t->map[y][x] == 'S' || t->map[y][x] == 'W')
 			{
-				t->p_y = y;
-				t->p_x = x;
-				find_player_part_2(t, y, x);
-				return ;
+				if (t->p_x == 0)
+				{
+					t->p_y = y;
+					t->p_x = x;
+					init_variables(t, y, x);
+				}
+				else
+					error_and_exit(t, "Multiple player symbols found on map");
 			}
 		}
 	}
-	error_and_exit(t, "Player not found on map");
+	if (t->p_x == 0.0)
+		error_and_exit(t, "Player not found on map");
 }
 
 void		parse_map(t_cub3d *t, char *file)
