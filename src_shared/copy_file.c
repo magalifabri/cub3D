@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:03:30 by mfabri            #+#    #+#             */
-/*   Updated: 2020/04/27 16:03:35 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/21 18:46:39 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ void			*terminate(char **s)
 	return (NULL);
 }
 
-// static size_t	ft_strlen(const char *s)
-// {
-// 	int	i;
+static size_t	get_str_len(const char *s)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (s[i])
-// 		i++;
-// 	return (i);
-// }
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
 
 static char		*ft_strjoin(char const *s1, char const *s2)
 {
@@ -40,7 +40,7 @@ static char		*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	s1s2_len = ft_strlen(s1) + ft_strlen(s2);
+	s1s2_len = get_str_len(s1) + get_str_len(s2);
 	if (!(s3 = malloc(s1s2_len + 1)))
 		return (terminate((char **)&s1));
 	i = 0;
