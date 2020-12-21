@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:00:20 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/20 11:40:29 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/20 12:36:56 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ unsigned int	shader(unsigned int start_colour, double distance)
 	+ (end_colour_g << 8) + end_colour_b);
 }
 
-void	draw_background(t_cub3d *t, int sky, int floor)
+void			draw_background(t_cub3d *t, int sky, int floor)
 {
 	int x;
 	int y;

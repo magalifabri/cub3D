@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:00:14 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/20 11:41:16 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/20 13:01:28 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	death(t_cub3d *t)
 {
 	system("afplay -v 0.20 audio/scream.mp3 & exit");
-	ft_printf("YOU ARE SPIDER FOOD\n");
+	ft_printf(B_RED"YOU ARE SPIDER FOOD! >:)"RESET"\n");
 	sleep(1);
 	exit_cub3d(t);
 }
