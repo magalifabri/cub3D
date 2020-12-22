@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/21 18:43:20 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/22 13:47:45 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,6 @@ typedef struct			s_texture_data
 	int					bpp;
 	int					line_len;
 	int					endian;
-	int					malloc;
 }						t_texture_data;
 
 typedef struct			s_cub3d
@@ -259,10 +258,10 @@ typedef struct			s_cub3d
 	t_visited_squares	*l;
 	int					path_steps;
 
-	int					malloc_map;
-	int					malloc_tex_paths;
-	int					malloc_td;
-	int					malloc_spr;
+	// int					malloc_map;
+	// int					malloc_tex_paths;
+	// int					malloc_td;
+	// int					malloc_spr;
 }						t_cub3d;
 
 void					play_music(t_cub3d *t);

@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:25:12 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/22 13:36:06 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/22 13:48:42 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exit_cub3d(t_cub3d *t)
 	system("killall afplay");
 	ft_printf("freeing\n");
 	i = t->map_h;
-	if (t->malloc_map)
+	if (t->map != NULL)
 	{
 		while (i >= 0)
 			free(t->map[i--]);
@@ -27,10 +27,10 @@ void	exit_cub3d(t_cub3d *t)
 	}
 	i = 5;
 	while (i--)
-		if (t->td[i].malloc == 1)
+		if (t->td[i].tex_path != NULL)
 			free(t->td[i].tex_path);
 	free(t->td);
-	if (t->malloc_spr)
+	if (t->spr != NULL)
 		free(t->spr);
 	system("leaks cub3d > leaks2.txt");
 	ft_printf("exiting\n");

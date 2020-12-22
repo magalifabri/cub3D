@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:02:40 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/20 12:24:22 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/22 13:52:48 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,13 @@ static int	run_game(t_cub3d *t)
 
 static void	initialise_variables_2(t_cub3d *t)
 {
-	t->td[0].malloc = 0;
-	t->td[1].malloc = 0;
-	t->td[2].malloc = 0;
-	t->td[3].malloc = 0;
-	t->td[4].malloc = 0;
+	t->map = NULL;
+	t->spr = NULL;
+	t->td[0].tex_path = NULL;
+	t->td[1].tex_path = NULL;
+	t->td[2].tex_path = NULL;
+	t->td[3].tex_path = NULL;
+	t->td[4].tex_path = NULL;
 }
 
 static void	initialise_variables(t_cub3d *t)
@@ -92,9 +94,6 @@ static void	initialise_variables(t_cub3d *t)
 	t->p_health = 5;
 	t->p_bullets = 5;
 	t->p_hit = 0;
-	t->malloc_map = 0;
-	t->malloc_tex_paths = 0;
-	t->malloc_spr = 0;
 	initialise_variables_2(t);
 }
 

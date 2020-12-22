@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 13:28:24 by mfabri            #+#    #+#             */
-/*   Updated: 2020/04/28 08:53:14 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/22 13:51:20 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ static void	find_sprites_part_2(t_cub3d *t)
 
 	if (!(t->spr = malloc(sizeof(t_sprite) * t->sprite_n)))
 		exit_cub3d(t);
-	t->malloc_spr = 1;
 	i = 0;
 	y = -1;
 	while (++y < t->map_h)

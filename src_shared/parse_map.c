@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:27:11 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/20 12:28:37 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/22 13:51:14 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void		parse_map(t_cub3d *t, char *file)
 	get_map_dimensions(file, t);
 	if (!(t->map = ft_split_var(file, t)))
 		error_and_exit(t, "parse_map: ft_split_var returned NULL");
-	t->malloc_map = 1;
 	check_map_horizontally(t);
 	check_map_vertically(t);
 	find_player(t);

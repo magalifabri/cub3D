@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:26:20 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/22 13:34:59 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/22 13:51:27 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	get_texture_path(t_cub3d *t, int n, char *file, int *index)
 		i++;
 	if (!(t->td[n].tex_path = malloc(i + 1)))
 		error_and_exit(t, "get_texture_path: malloc error");
-	t->td[n].malloc = 1;
 	i = 0;
 	while (*file > 32 && *file < 127)
 		t->td[n].tex_path[i++] = *file++;
