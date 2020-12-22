@@ -6,16 +6,15 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:26:20 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/19 19:56:03 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/22 13:34:59 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static char	*get_texture_path(t_cub3d *t, int n, char *file, int *index)
+static void	get_texture_path(t_cub3d *t, int n, char *file, int *index)
 {
 	int		i;
-	char	*tex_path;
 
 	i = 0;
 	while (*file == ' ')
@@ -27,16 +26,15 @@ static char	*get_texture_path(t_cub3d *t, int n, char *file, int *index)
 	i = 0;
 	while (file[i] > 32 && file[i] < 127)
 		i++;
-	if (!(tex_path = malloc(i + 1)))
+	if (!(t->td[n].tex_path = malloc(i + 1)))
 		error_and_exit(t, "get_texture_path: malloc error");
 	t->td[n].malloc = 1;
 	i = 0;
 	while (*file > 32 && *file < 127)
-		tex_path[i++] = *file++;
-	tex_path[i] = '\0';
+		t->td[n].tex_path[i++] = *file++;
+	t->td[n].tex_path[i] = '\0';
 	*index = *index + i;
-	check_tex_path(t, tex_path);
-	return (tex_path);
+	check_tex_path(t, t->td[n].tex_path);
 }
 
 static void	get_map_config(t_cub3d *t, char *file)
@@ -49,15 +47,15 @@ static void	get_map_config(t_cub3d *t, char *file)
 		if (file[i] == 'R')
 			get_window_resolution(t, file + (i + 1), &i);
 		else if (file[i] == 'N' && file[i + 1] == 'O')
-			t->td[0].tex_path = get_texture_path(t, 0, file + (i + 2), &i);
+			get_texture_path(t, 0, file + (i + 2), &i);
 		else if (file[i] == 'E' && file[i + 1] == 'A')
-			t->td[1].tex_path = get_texture_path(t, 1, file + (i + 2), &i);
+			get_texture_path(t, 1, file + (i + 2), &i);
 		else if (file[i] == 'S' && file[i + 1] == 'O')
-			t->td[2].tex_path = get_texture_path(t, 2, file + (i + 2), &i);
+			get_texture_path(t, 2, file + (i + 2), &i);
 		else if (file[i] == 'W' && file[i + 1] == 'E')
-			t->td[3].tex_path = get_texture_path(t, 3, file + (i + 2), &i);
+			get_texture_path(t, 3, file + (i + 2), &i);
 		else if (file[i] == 'S')
-			t->td[4].tex_path = get_texture_path(t, 4, file + (i + 1), &i);
+			get_texture_path(t, 4, file + (i + 1), &i);
 		else if (file[i] == 'F')
 			t->colors[0] = get_colour(t, file + (i + 1), &i);
 		else if (file[i] == 'C')
