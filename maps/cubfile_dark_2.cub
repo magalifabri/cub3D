@@ -1,4 +1,4 @@
-R 400 200
+R 600 400
 NO ./textures/surfaces/dispenser_front_horizontal_dark.xpm
 SO ./textures/surfaces/furnace_top_dark.xpm
 WE ./textures/surfaces/furnace_side_dark.xpm

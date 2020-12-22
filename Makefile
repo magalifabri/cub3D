@@ -6,7 +6,7 @@
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2020/12/21 18:43:02 by mfabri           ###   ########.fr        #
+#    Updated: 2020/12/22 12:51:45 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ NAME = cub3d
 
 RM = /bin/rm -f
 RMDIR = /bin/rm -rf
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 INCLUDES = -I$(MLX_DIR) -I$(INCDIR)
+RES = native_res.txt
 
 FT_PRINTF_DIR = ./ft_printf/
 MLX_DIR = ./mlx/
@@ -73,12 +74,14 @@ all: $(NAME)
 $(NAME): $(OBJDIR) $(OBJS)
 	$(MAKE) -C $(MLX_DIR)
 	$(MAKE) -C $(FT_PRINTF_DIR)
-	gcc $(CFLAGS) $(OBJS) -L$(FT_PRINTF_DIR) -lftprintf -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	gcc $(CFLAGS) $(OBJS) -L$(FT_PRINTF_DIR) -lftprintf -L$(MLX_DIR) -lmlx \
+	-framework OpenGL -framework AppKit -o $(NAME)
 # BONUS
 bonus: $(OBJDIR_BONUS) $(OBJS_BONUS)
 	$(MAKE) -C $(MLX_DIR)
 	$(MAKE) -C $(FT_PRINTF_DIR)
-	gcc $(CFLAGS) $(OBJS_BONUS) -L$(FT_PRINTF_DIR) -lftprintf -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -o $(NAME)_bonus
+	gcc $(CFLAGS) $(OBJS_BONUS) -L$(FT_PRINTF_DIR) -lftprintf -L$(MLX_DIR) -lmlx \
+	-framework OpenGL -framework AppKit -o $(NAME)_bonus
 
 $(OBJDIR)%.o: $(SRC_SHARED_DIR)%.c $(INCS)
 	gcc $(CFLAGS) $(INCLUDES) -c -o $@ $<
@@ -96,18 +99,19 @@ $(OBJDIR):
 $(OBJDIR_BONUS):
 	@mkdir -p $(OBJDIR_BONUS)
 
-test: all
+test: $(RES) all
 	@echo 'EXECUTING: $(NAME)'
 	@./$(NAME) ./maps/cubfile_dark_2.cub
 	killall afplay
 # BONUS
-RES = native_res.txt
-$(RES): 
-	system_profiler SPDisplaysDataType | grep Resolution | cut -d : -f 2 > native_res.txt
 test_bonus: $(RES) bonus
 	@echo 'EXECUTING: $(NAME)_bonus'
 	@./$(NAME)_bonus ./maps/cubfile_dark_2.cub
 	killall afplay
+
+$(RES): 
+	system_profiler SPDisplaysDataType | grep Resolution | cut -d : -f 2 \
+	> native_res.txt
 
 clean:
 	$(RM) $(OBJS)
