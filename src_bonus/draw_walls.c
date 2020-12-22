@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:16:22 by mfabri            #+#    #+#             */
-/*   Updated: 2020/04/27 16:17:23 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/22 12:38:28 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 static void	make_calculations_3(t_cub3d *t, t_pwv *w)
 {
+	w->line_height = (int)(t->win_h / w->perp_wall_dist);
+	w->draw_start = -w->line_height / 2 + t->win_h / 2;
+	w->draw_start = (w->draw_start < 0) ? (0) : (w->draw_start);
+	w->draw_end = w->line_height / 2 + t->win_h / 2;
+	w->draw_end = (w->draw_end >= t->win_h) ? (t->win_h - 1) : (w->draw_end);
 	if (w->r_dir_x >= 0 && w->side == 0)
 		w->tex_nbr = 0;
 	else if (w->r_dir_x < 0 && w->side == 0)
@@ -34,7 +39,8 @@ static void	make_calculations_3(t_cub3d *t, t_pwv *w)
 
 static void	make_calculations_2(t_cub3d *t, t_pwv *w)
 {
-	while (t->map[w->map_y][w->map_x] != '1')
+	while (w->map_x < t->map_w && w->map_x > 0 && w->map_y < t->map_h
+	&& w->map_y > 0 && t->map[w->map_y][w->map_x] != '1')
 	{
 		if (w->side_dist_x < w->side_dist_y)
 		{
@@ -49,14 +55,12 @@ static void	make_calculations_2(t_cub3d *t, t_pwv *w)
 			w->side = 1;
 		}
 	}
+	if (w->map_x > t->map_w || w->map_x < 0
+	|| w->map_y > t->map_h || w->map_y < 0)
+		error_and_exit(t, "Out of map");
 	w->perp_wall_dist = (w->side == 0)
 	? (w->map_x - t->p_x + (1 - w->step_x) / 2) / w->r_dir_x
 	: (w->map_y - t->p_y + (1 - w->step_y) / 2) / w->r_dir_y;
-	w->line_height = (int)(t->win_h / w->perp_wall_dist);
-	w->draw_start = -w->line_height / 2 + t->win_h / 2;
-	w->draw_start = (w->draw_start < 0) ? (0) : (w->draw_start);
-	w->draw_end = w->line_height / 2 + t->win_h / 2;
-	w->draw_end = (w->draw_end >= t->win_h) ? (t->win_h - 1) : (w->draw_end);
 }
 
 static void	make_calculations_1(t_cub3d *t, t_pwv *w)
