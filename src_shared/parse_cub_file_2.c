@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 19:44:33 by magali            #+#    #+#             */
-/*   Updated: 2020/12/20 13:00:56 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/23 15:27:47 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int			get_colour(t_cub3d *t, char *file, int *index)
 	b = -1;
 	if (file[i] >= '0' && file[i] <= '9')
 		b = get_value(file, &i, ++b);
+	while (file[i] == ' ')
+		i++;
 	*index = *index + i;
 	return (check_colour(t, r, g, b));
 }

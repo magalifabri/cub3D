@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:02:40 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/22 13:52:48 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/23 15:33:11 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ static void	initialise_variables_2(t_cub3d *t)
 
 static void	initialise_variables(t_cub3d *t)
 {
+	t->win_w = 0;
+	t->win_h = 0;
+	t->colors[0] = -1;
+	t->colors[1] = -1;
 	t->save = 0;
 	t->error = 0;
 	t->spd = 3;

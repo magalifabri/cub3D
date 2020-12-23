@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 19:51:18 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/19 20:07:40 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/23 15:08:55 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,17 @@ void		get_window_resolution(t_cub3d *t, char *file, int *index)
 	i = 0;
 	while (file[i] == ' ')
 		i++;
-	t->win_w = 0;
 	while (file[i] >= '0' && file[i] <= '9')
 		t->win_w = t->win_w * 10 + (file[i++] - '0');
 	while (file[i] == ' ')
 		i++;
-	t->win_h = 0;
 	while (file[i] >= '0' && file[i] <= '9')
 		t->win_h = t->win_h * 10 + (file[i++] - '0');
-	*index = *index + i;
 	if (t->win_w <= 0 || t->win_h <= 0)
 		error_and_exit(t, "get_window_resolution: resolution in .cub wrong");
 	get_screen_resolution(t);
 	compare_resolutions(t);
+	while (file[i] == ' ')
+		i++;
+	*index += i + 1;
 }

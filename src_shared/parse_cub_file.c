@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:26:20 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/22 13:51:27 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/23 15:34:35 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	get_texture_path(t_cub3d *t, int n, char *file, int *index)
 		file++;
 		i++;
 	}
-	*index = *index + i;
+	*index += i;
 	i = 0;
 	while (file[i] > 32 && file[i] < 127)
 		i++;
@@ -32,8 +32,13 @@ static void	get_texture_path(t_cub3d *t, int n, char *file, int *index)
 	while (*file > 32 && *file < 127)
 		t->td[n].tex_path[i++] = *file++;
 	t->td[n].tex_path[i] = '\0';
-	*index = *index + i;
 	check_tex_path(t, t->td[n].tex_path);
+	while (*file == ' ')
+	{
+		file++;
+		i++;
+	}
+	*index += i + 1;
 }
 
 static void	get_map_config(t_cub3d *t, char *file)
@@ -79,5 +84,9 @@ void		parse_cub_file(t_cub3d *t, int ac, char **av)
 	t->map_w = 0;
 	t->map_h = 1;
 	get_map_config(t, file);
+	if (!t->win_w || !t->win_h || t->colors[0] == -1 || t->colors[1] == -1
+	|| !t->td[0].tex_path || !t->td[1].tex_path || !t->td[2].tex_path
+	|| !t->td[3].tex_path || !t->td[4].tex_path)
+		error_and_exit(t, "missing parameters in .cub");
 	free(file);
 }
