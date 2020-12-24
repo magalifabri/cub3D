@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/22 14:09:05 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/23 15:43:30 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,8 +278,7 @@ int						check_arguments(t_cub3d *t, int ac, char **av);
 int						get_colour(t_cub3d *t, char *file, int *index);
 void					check_tex_path(t_cub3d *t, char *tex_path);
 void					parse_map(t_cub3d *t, char *file);
-void					check_map_horizontally(t_cub3d *t);
-void					check_map_vertically(t_cub3d *t);
+void					find_player(t_cub3d *t);
 void					find_sprites(t_cub3d *t);
 char					**ft_split_var(char *s, t_cub3d *t);
 void					get_textures(t_cub3d *t);

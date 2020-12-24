@@ -6,7 +6,7 @@
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2020/12/22 12:51:45 by mfabri           ###   ########.fr        #
+#    Updated: 2020/12/23 15:45:47 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,9 @@ SRC_MANDATORY_DIR = ./src_mandatory/
 # .c files that are used by both the mandatory and bonus version
 SRC_SHARED_DIR = ./src_shared/
 SRC_SHARED =	hooks.c \
-				parse_cub_file.c \
+				parse_cub_file_1.c \
 				parse_cub_file_2.c \
-				parse_map.c \
+				parse_map_1.c \
 				parse_map_2.c \
 				copy_file.c \
 				ft_split_var.c \
@@ -45,12 +45,12 @@ SRC_SHARED =	hooks.c \
 				draw_skybox.c \
 				move_2.c \
 				enemy_pathfinding.c \
-				draw_ui_elements.c \
+				draw_ui_elements_1.c \
 				draw_ui_elements_2.c \
 				shoot.c \
 				get_sprite_frame.c \
 				enemy_pathfinding_utils.c \
-				auxiliary.c \
+				auxiliary_1.c \
 				auxiliary_2.c \
 				sprite_control.c \
 				get_bmp.c \
