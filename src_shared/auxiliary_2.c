@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:00:14 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/20 13:01:28 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/24 06:14:27 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	death(t_cub3d *t)
 
 void	error_and_exit(t_cub3d *t, char *message)
 {
-	ft_printf(B_RED"Error: %s"RESET"\n", message);
+	ft_printf(B_RED"Error\n%s"RESET"\n", message);
 	exit_cub3d(t);
 }
 

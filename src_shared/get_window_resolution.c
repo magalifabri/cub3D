@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 19:51:18 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/23 15:08:55 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/24 06:15:39 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,22 @@ static void	compare_resolutions(t_cub3d *t)
 {
 	if (t->win_w < MIN_WINDOW_WIDTH)
 	{
-		ft_printf("Error: Given width resolution too low. Set to minimum\n");
+		ft_printf("Error\nGiven width resolution too low. Set to minimum\n");
 		t->win_w = MIN_WINDOW_WIDTH;
 	}
 	else if (t->win_w > t->max_win_w)
 	{
-		ft_printf("Error: Given width resolution too high. Set to max\n");
+		ft_printf("Error\nGiven width resolution too high. Set to max\n");
 		t->win_w = t->max_win_w;
 	}
 	if (t->win_h < MIN_WINDOW_HEIGHT)
 	{
-		ft_printf("Error: Given height resolution too low. Set to minimum\n");
+		ft_printf("Error\nGiven height resolution too low. Set to minimum\n");
 		t->win_h = MIN_WINDOW_HEIGHT;
 	}
 	else if (t->win_h > t->max_win_h)
 	{
-		ft_printf("Error: Given height resolution too high. Set to max.\n");
+		ft_printf("Error\nGiven height resolution too high. Set to max.\n");
 		t->win_h = t->max_win_h;
 	}
 }

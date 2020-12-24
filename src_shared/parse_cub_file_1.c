@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_cub_file.c                                   :+:      :+:    :+:   */
+/*   parse_cub_file_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:26:20 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/23 15:34:35 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/23 15:59:01 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		parse_cub_file(t_cub3d *t, int ac, char **av)
 	get_map_config(t, file);
 	if (!t->win_w || !t->win_h || t->colors[0] == -1 || t->colors[1] == -1
 	|| !t->td[0].tex_path || !t->td[1].tex_path || !t->td[2].tex_path
-	|| !t->td[3].tex_path || !t->td[4].tex_path)
+	|| !t->td[3].tex_path || !t->td[4].tex_path || !t->map_w)
 		error_and_exit(t, "missing parameters in .cub");
 	free(file);
 }

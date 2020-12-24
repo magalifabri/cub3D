@@ -6,53 +6,11 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 13:28:24 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/23 11:10:15 by mfabri           ###   ########.fr       */
+/*   Updated: 2020/12/23 15:44:25 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void		check_map_horizontally(t_cub3d *t)
-{
-	int y;
-	int x;
-
-	y = -1;
-	while (++y < t->map_h)
-	{
-		x = -1;
-		while (++x < t->map_w)
-		{
-			if ((t->map[y][x] != '1' && t->map[y][x] != ','
-			&& (t->map[y][x + 1] == '\0' || t->map[y][x + 1] == ','))
-			|| ((t->map[y][x] == ',' && t->map[y][x + 1] != '1'
-			&& t->map[y][x + 1] != ',' && t->map[y][x + 1] != '\0'))
-			|| ((x == 0 && t->map[y][x] != ',' && t->map[y][x] != '1')))
-				error_and_exit(t, "Found a hole in a wall");
-		}
-	}
-}
-
-void		check_map_vertically(t_cub3d *t)
-{
-	int y;
-	int x;
-
-	x = -1;
-	while (++x < t->map_w)
-	{
-		y = -1;
-		while (++y < t->map_h)
-		{
-			if ((t->map[y][x] != '1' && t->map[y][x] != ','
-			&& (t->map[y + 1][x] == '\0' || t->map[y + 1][x] == ','))
-			|| ((t->map[y][x] == ',' && t->map[y + 1][x] != '1'
-			&& t->map[y + 1][x] != ',' && t->map[y + 1][x] != '\0'))
-			|| ((y == 0 && t->map[y][x] != ',' && t->map[y][x] != '1')))
-				error_and_exit(t, "Found a hole in a wall");
-		}
-	}
-}
 
 static void	initialise_sprite(t_cub3d *t, int y, int x, int i)
 {
@@ -118,4 +76,57 @@ void		find_sprites(t_cub3d *t)
 	}
 	if (t->sprite_n != 0)
 		find_sprites_part_2(t);
+}
+
+static void	init_variables(t_cub3d *t, int y, int x)
+{
+	if (t->map[y][x] == 'N')
+	{
+		t->p_dir_y = -1;
+		t->plane_x = (0.6 / ((double)t->win_h / (double)t->win_w));
+	}
+	else if (t->map[y][x] == 'E')
+	{
+		t->p_dir_x = 1;
+		t->plane_y = (0.6 / ((double)t->win_h / (double)t->win_w));
+	}
+	else if (t->map[y][x] == 'S')
+	{
+		t->p_dir_y = 1;
+		t->plane_x = -(0.6 / ((double)t->win_h / (double)t->win_w));
+	}
+	else
+	{
+		t->p_dir_x = -1;
+		t->plane_y = -(0.6 / ((double)t->win_h / (double)t->win_w));
+	}
+}
+
+void		find_player(t_cub3d *t)
+{
+	int y;
+	int x;
+
+	y = -1;
+	while (++y < t->map_h)
+	{
+		x = -1;
+		while (++x < t->map_w)
+		{
+			if (t->map[y][x] == 'N' || t->map[y][x] == 'E'
+			|| t->map[y][x] == 'S' || t->map[y][x] == 'W')
+			{
+				if (t->p_x == 0)
+				{
+					t->p_y = y;
+					t->p_x = x;
+					init_variables(t, y, x);
+				}
+				else
+					error_and_exit(t, "Multiple player symbols found on map");
+			}
+		}
+	}
+	if (t->p_x == 0.0)
+		error_and_exit(t, "Player not found on map");
 }
