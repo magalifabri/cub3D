@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:13:39 by mfabri            #+#    #+#             */
-/*   Updated: 2020/05/01 21:04:31 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/09 20:00:25 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void	make_calculations_1(t_cub3d *t, t_spr *s)
 void		draw_sprites(t_cub3d *t, double *z_buf)
 {
 	t_spr		s;
-	static int	frame[50];
+	static int	frame[SPRITE_MAX];
 
 	sort_sprites(t);
 	s.i = -1;

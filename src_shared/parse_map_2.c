@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 13:28:24 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/23 15:44:25 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/09 19:51:17 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void		find_sprites(t_cub3d *t)
 			|| t->map[y][x] == '5')
 				t->sprite_n++;
 	}
+	if (t->sprite_n > SPRITE_MAX)
+		error_and_exit(t, "Too many sprites on map");
 	if (t->sprite_n != 0)
 		find_sprites_part_2(t);
 }
