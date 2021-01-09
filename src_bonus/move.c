@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:25:51 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/20 11:36:17 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/09 18:58:01 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,12 @@ void		move(t_cub3d *t)
 	if ((t->w && t->a) || (t->w && t->d)
 	|| (t->s && t->a) || (t->s && t->d))
 		move_spd *= 0.75;
-	if (t->w)
-		move_forward(t, move_spd);
-	if (t->s)
-		move_backward(t, move_spd);
-	if (t->l_a || t->mouse_move < 0)
-		turn_left(t, rot_spd);
-	if (t->r_a || t->mouse_move > 0)
-		turn_right(t, rot_spd);
-	if (t->a)
-		strafe_left(t, move_spd);
-	if (t->d)
-		strafe_right(t, move_spd);
+	(t->w) ? move_forward(t, move_spd) : (0);
+	(t->s) ? move_backward(t, move_spd) : (0);
+	(t->l_a || t->mouse_move < 0) ? turn_left(t, rot_spd) : (0);
+	(t->r_a || t->mouse_move > 0) ? turn_right(t, rot_spd) : (0);
+	(t->a) ? strafe_left(t, move_spd) : (0);
+	(t->d) ? strafe_right(t, move_spd) : (0);
+	if (t->p_y < 0 || t->p_x < 0 || t->p_y > t->map_h || t->p_x > t->map_w)
+		error_and_exit(t, "Out of map");
 }

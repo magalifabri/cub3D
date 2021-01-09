@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:16:22 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/22 12:37:13 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/09 18:54:06 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,6 @@ static void	make_calculations_2(t_cub3d *t, t_pwv *w)
 			w->side = 1;
 		}
 	}
-	if (w->map_x > t->map_w || w->map_x < 0
-	|| w->map_y > t->map_h || w->map_y < 0)
-		error_and_exit(t, "Out of map");
 	w->perp_wall_dist = (w->side == 0)
 	? (w->map_x - t->p_x + (1 - w->step_x) / 2) / w->r_dir_x
 	: (w->map_y - t->p_y + (1 - w->step_y) / 2) / w->r_dir_y;
