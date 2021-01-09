@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/09 19:43:24 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/09 19:49:00 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define MIN_WINDOW_WIDTH 300
 # define MIN_WINDOW_HEIGHT 250
 # define INVISIBLE 4278190080
+# define SPRITE_MAX 150
 
 # define RED "\033[0;31m"
 # define B_RED "\033[1;31m"
