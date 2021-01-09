@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:02:40 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/23 15:33:11 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/09 17:41:32 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static int	run_game(t_cub3d *t)
 
 static void	initialise_variables_2(t_cub3d *t)
 {
+	t->music_playing = 0;
 	t->map = NULL;
 	t->spr = NULL;
 	t->td[0].tex_path = NULL;

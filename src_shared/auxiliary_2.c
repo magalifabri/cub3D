@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:00:14 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/24 06:14:27 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/09 18:11:01 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_terminal_map(t_cub3d *t)
 
 	x = 0;
 	y = 0;
-	while (y < t->map_h)
+	while (y <= t->map_h)
 	{
 		while (x <= t->map_w)
 		{
@@ -70,8 +70,10 @@ void	play_music(t_cub3d *t)
 	if (time_start_music == 0 || ((double)(t->time_now - time_start_music)
 	/ (double)CLOCKS_PER_SEC >= 216.0))
 	{
-		system("killall afplay");
+		if (t->music_playing)
+			system("killall afplay");
 		system("afplay -v 0.10 audio/music2.mp3 & exit");
+		t->music_playing = 1;
 		time_start_music = t->time_now;
 	}
 }

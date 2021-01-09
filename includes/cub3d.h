@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/23 15:43:30 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/09 17:41:04 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,8 @@ typedef struct			s_cub3d
 	double				fps;
 	clock_t				time_now;
 	int					error;
-
+	int					music_playing;
+	
 	int					p_dir;
 	double				p_x;
 	double				p_y;

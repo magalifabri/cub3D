@@ -6,18 +6,24 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:25:12 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/22 13:48:42 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/09 18:05:12 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*
+** To test for leaks, put the following line just above "exit(0);":
+** system("leaks cub3d > leaks2.txt");
+*/
+
 void	exit_cub3d(t_cub3d *t)
 {
 	int i;
 
-	system("killall afplay");
-	ft_printf("freeing\n");
+	ft_printf("exiting\n");
+	if (t->music_playing)
+		system("killall afplay");
 	i = t->map_h;
 	if (t->map != NULL)
 	{
@@ -32,8 +38,6 @@ void	exit_cub3d(t_cub3d *t)
 	free(t->td);
 	if (t->spr != NULL)
 		free(t->spr);
-	system("leaks cub3d > leaks2.txt");
-	ft_printf("exiting\n");
 	exit(0);
 }
 
@@ -62,7 +66,7 @@ int		keypress_hook(int keycode, t_cub3d *t)
 		previous_time = t->time_now;
 		t->p_bullets--;
 	}
-	(keycode == 46) ? system("killall afplay") : (0);
+	(keycode == 46 && t->music_playing) ? system("killall afplay") : (0);
 	return (0);
 }
 
