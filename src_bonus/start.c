@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:02:40 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/09 19:48:35 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/12 15:02:35 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int			main(int ac, char **av)
 	mlx_hook(t.win, 2, 1L << 0, keypress_hook, &t);
 	mlx_hook(t.win, 3, 1L << 1, keyrelease_hook, &t);
 	mlx_hook(t.win, 6, 1L << 6, mouse_move_hook, &t);
-	mlx_hook(t.win, 17, 0, exit_hook, &t);
+	mlx_hook(t.win, 17, 0, exit_cub3d, &t);
 	mlx_loop_hook(t.mlx, run_game, &t);
 	mlx_loop(t.mlx);
 	return (0);

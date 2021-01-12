@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/12 14:06:31 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/12 15:07:21 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,7 @@ void					play_music(t_cub3d *t);
 void					*terminate(char **s);
 void					error_and_exit(t_cub3d *t, char *message);
 void					death(t_cub3d *t);
-void					exit_cub3d(t_cub3d *t);
+int						exit_cub3d(t_cub3d *t);
 
 void					get_bmp(t_cub3d *t);
 void					free_stuff(t_gen_bmp_data *b);
@@ -292,7 +292,6 @@ void					ft_putpxl(t_cub3d *data, int x, int y, int color);
 int						keypress_hook(int keycode, t_cub3d *t);
 int						keyrelease_hook(int keycode, t_cub3d *t);
 int						mouse_move_hook(int mouse_x, int mouse_y, t_cub3d *t);
-int						exit_hook(int keycode, t_cub3d *t);
 void					move(t_cub3d *t);
 void					turn_left(t_cub3d *t, double rot_spd);
 void					turn_right(t_cub3d *t, double rot_spd);

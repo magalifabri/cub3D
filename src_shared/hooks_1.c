@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.c                                            :+:      :+:    :+:   */
+/*   hooks_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:25:12 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/12 14:04:41 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/12 15:06:54 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** system("leaks cub3d > leaks2.txt");
 */
 
-void	exit_cub3d(t_cub3d *t)
+int		exit_cub3d(t_cub3d *t)
 {
 	int i;
 
@@ -38,6 +38,7 @@ void	exit_cub3d(t_cub3d *t)
 	free(t->td);
 	if (t->spr != NULL)
 		free(t->spr);
+	system("leaks cub3d > leaks.txt");
 	exit(0);
 }
 
@@ -110,10 +111,4 @@ int		mouse_move_hook(int current_mouse_x, int current_mouse_y, t_cub3d *t)
 	if (current_mouse_y <= 0 || current_mouse_y >= t->win_h)
 		mlx_mouse_move(t->win, current_mouse_x, t->win_h / 2);
 	return (current_mouse_y);
-}
-
-int		exit_hook(int keycode, t_cub3d *t)
-{
-	exit_cub3d(t);
-	return (keycode);
 }
