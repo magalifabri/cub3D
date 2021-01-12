@@ -6,7 +6,7 @@
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2021/01/09 18:51:19 by mfabri           ###   ########.fr        #
+#    Updated: 2021/01/12 13:49:49 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,13 +71,13 @@ INC = cub3d.h
 
 all: $(NAME)
 
-$(NAME): $(OBJDIR) $(OBJS)
+$(NAME): $(RES) $(OBJDIR) $(OBJS)
 	$(MAKE) -C $(MLX_DIR)
 	$(MAKE) -C $(FT_PRINTF_DIR)
 	gcc $(CFLAGS) $(OBJS) -L$(FT_PRINTF_DIR) -lftprintf -L$(MLX_DIR) -lmlx \
 	-framework OpenGL -framework AppKit -o $(NAME)
 # BONUS
-bonus: $(OBJDIR_BONUS) $(OBJS_BONUS)
+bonus: $(RES) $(OBJDIR_BONUS) $(OBJS_BONUS)
 	$(MAKE) -C $(MLX_DIR)
 	$(MAKE) -C $(FT_PRINTF_DIR)
 	gcc $(CFLAGS) $(OBJS_BONUS) -L$(FT_PRINTF_DIR) -lftprintf -L$(MLX_DIR) -lmlx \
@@ -99,16 +99,6 @@ $(OBJDIR):
 $(OBJDIR_BONUS):
 	@mkdir -p $(OBJDIR_BONUS)
 
-test: $(RES) all
-	@echo 'EXECUTING: $(NAME)'
-	@./$(NAME) ./maps/cubfile_dark_2.cub
-	killall afplay
-# BONUS
-test_bonus: $(RES) bonus
-	@echo 'EXECUTING: $(NAME)_bonus'
-	@./$(NAME)_bonus ./maps/cubfile_dark_2.cub
-	killall afplay
-
 $(RES): 
 	system_profiler SPDisplaysDataType | grep Resolution | cut -d : -f 2 \
 	> native_res.txt
@@ -116,6 +106,7 @@ $(RES):
 clean:
 	$(RM) $(OBJS)
 	$(RM) $(OBJS_BONUS)
+	$(RM) $(RES)
 	$(RMDIR) $(OBJDIR)
 	$(RMDIR) $(OBJDIR_BONUS)
 	$(MAKE) -C $(MLX_DIR) clean
@@ -126,3 +117,16 @@ fclean: clean
 re: fclean all
 
 .PHONY: all bonus clean fclean re
+
+
+# EXTRA STUFF
+
+test: $(RES) all
+	@echo 'EXECUTING: $(NAME)'
+	@./$(NAME) ./maps/cubfile_dark_2.cub
+	killall afplay
+# BONUS
+test_bonus: $(RES) bonus
+	@echo 'EXECUTING: $(NAME)_bonus'
+	@./$(NAME)_bonus ./maps/cubfile_dark_2.cub
+	killall afplay
