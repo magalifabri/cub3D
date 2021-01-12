@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:12:12 by mfabri            #+#    #+#             */
-/*   Updated: 2020/10/27 14:33:45 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/12 14:30:35 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static void		make_calculations(t_cub3d *t, t_psv *s, int x)
 	s->r_degree = atan(s->r_dir_y / s->r_dir_x) * 180 / M_PI;
 	if (s->r_dir_x >= 0 && s->r_dir_y <= 0)
 		s->r_degree = s->r_degree + 90;
-	else if (s->r_dir_x > 0 && s->r_dir_y > 0)
+	else if (s->r_dir_x >= 0 && s->r_dir_y >= 0)
 		s->r_degree = s->r_degree + 90;
-	else if (s->r_dir_x < 0 && s->r_dir_y > 270)
+	else if (s->r_dir_x <= 0 && s->r_dir_y >= 270)
 		s->r_degree = s->r_degree + 0;
-	else if (s->r_dir_x < 0 && s->r_dir_y < 270)
+	else if (s->r_dir_x <= 0 && s->r_dir_y <= 270)
 		s->r_degree = s->r_degree + 270;
 }
 
