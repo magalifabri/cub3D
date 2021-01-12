@@ -6,7 +6,7 @@
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2021/01/12 13:49:49 by mfabri           ###   ########.fr        #
+#    Updated: 2021/01/12 14:06:56 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ SRC_MANDATORY_DIR = ./src_mandatory/
 
 # .c files that are used by both the mandatory and bonus version
 SRC_SHARED_DIR = ./src_shared/
-SRC_SHARED =	hooks.c \
+SRC_SHARED =	hooks_1.c \
+				hooks_2.c \
 				parse_cub_file_1.c \
 				parse_cub_file_2.c \
 				parse_map_1.c \

@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:25:12 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/09 18:05:12 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/12 14:04:41 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		keypress_hook(int keycode, t_cub3d *t)
 		previous_time = t->time_now;
 		t->p_bullets--;
 	}
-	(keycode == 46 && t->music_playing) ? system("killall afplay") : (0);
+	(keycode == 46 && t->music_playing) ? stop_music(t) : (0);
 	return (0);
 }
 

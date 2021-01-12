@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/11 10:21:17 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/12 14:06:31 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,6 +296,7 @@ int						exit_hook(int keycode, t_cub3d *t);
 void					move(t_cub3d *t);
 void					turn_left(t_cub3d *t, double rot_spd);
 void					turn_right(t_cub3d *t, double rot_spd);
+void					stop_music(t_cub3d *t);
 
 void					draw_background(t_cub3d *t, int sky, int floor);
 double					draw_walls(t_cub3d *t, int i);
