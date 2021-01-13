@@ -6,83 +6,90 @@
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2021/01/12 14:06:56 by mfabri           ###   ########.fr        #
+#    Updated: 2021/01/13 16:05:23 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub3d
+# V A R I A B L E S ********************************************************** #
 
-RM = /bin/rm -f
-RMDIR = /bin/rm -rf
-CFLAGS = -Wall -Wextra -Werror -g
-INCLUDES = -I$(MLX_DIR) -I$(INCDIR)
-RES = native_res.txt
+NAME				= cub3D
+# BONUS
+NAME_BONUS			= cub3D_bonus
 
-FT_PRINTF_DIR = ./ft_printf/
-MLX_DIR = ./mlx/
+RM					= /bin/rm -f
+RMDIR				= /bin/rm -rf
+CFLAGS				= -Wall -Wextra -Werror -g
+RES					= native_res.txt
+
+INCLUDES			= -I$(MLX_DIR) -I$(INCDIR)
+INCDIR 				= ./includes/
+INCS 				= $(addprefix $(INCDIR), $(INC))
+INC 				= cub3d.h
+
+FT_PRINTF_DIR		= ./ft_printf/
+MLX_DIR				= ./mlx/
 
 # .c files of which there is a mandatory and bonus version
-SRC_NOT_SHARED = start.c \
-				draw_sprites.c \
-				draw_walls.c \
-				move.c
+SRC_NOT_SHARED		= start.c \
+					draw_sprites.c \
+					draw_walls.c \
+					move.c
 
 # The versions of these files are kept in these directories:
-SRC_BONUS_DIR = ./src_bonus/
-SRC_MANDATORY_DIR = ./src_mandatory/
+SRC_BONUS_DIR		= ./src_bonus/
+SRC_MANDATORY_DIR	= ./src_mandatory/
 
 # .c files that are used by both the mandatory and bonus version
-SRC_SHARED_DIR = ./src_shared/
-SRC_SHARED =	hooks_1.c \
-				hooks_2.c \
-				parse_cub_file_1.c \
-				parse_cub_file_2.c \
-				parse_map_1.c \
-				parse_map_2.c \
-				copy_file.c \
-				ft_split_var.c \
-				get_textures.c \
-				draw_floor.c \
-				draw_skybox.c \
-				move_2.c \
-				enemy_pathfinding.c \
-				draw_ui_elements_1.c \
-				draw_ui_elements_2.c \
-				shoot.c \
-				get_sprite_frame.c \
-				enemy_pathfinding_utils.c \
-				auxiliary_1.c \
-				auxiliary_2.c \
-				sprite_control.c \
-				get_bmp.c \
-				get_bmp_utils.c \
-				get_window_resolution.c
+SRC_SHARED_DIR		= ./src_shared/
+SRC_SHARED			= hooks_1.c \
+					hooks_2.c \
+					parse_cub_file_1.c \
+					parse_cub_file_2.c \
+					parse_map_1.c \
+					parse_map_2.c \
+					copy_file.c \
+					ft_split_var.c \
+					get_textures.c \
+					draw_floor.c \
+					draw_skybox.c \
+					move_2.c \
+					enemy_pathfinding.c \
+					draw_ui_elements_1.c \
+					draw_ui_elements_2.c \
+					shoot.c \
+					get_sprite_frame.c \
+					enemy_pathfinding_utils.c \
+					auxiliary_1.c \
+					auxiliary_2.c \
+					sprite_control.c \
+					get_bmp.c \
+					get_bmp_utils.c \
+					get_window_resolution.c
 
-OBJDIR = ./obj/
-OBJS = $(addprefix $(OBJDIR), $(OBJ))
-OBJ = $(SRC_SHARED:.c=.o) $(SRC_NOT_SHARED:.c=.o)
+OBJDIR				= ./obj/
+OBJS				= $(addprefix $(OBJDIR), $(OBJ))
+OBJ					= $(SRC_SHARED:.c=.o) $(SRC_NOT_SHARED:.c=.o)
 # BONUS
-OBJDIR_BONUS = ./obj_bonus/
-OBJS_BONUS = $(addprefix $(OBJDIR_BONUS), $(OBJ_BONUS))
-OBJ_BONUS = $(SRC_SHARED:.c=.o) $(SRC_NOT_SHARED:.c=.o)
+OBJDIR_BONUS		= ./obj_bonus/
+OBJS_BONUS			= $(addprefix $(OBJDIR_BONUS), $(OBJ_BONUS))
+OBJ_BONUS			= $(SRC_SHARED:.c=.o) $(SRC_NOT_SHARED:.c=.o)
 
-INCDIR = ./includes/
-INCS = $(addprefix $(INCDIR), $(INC))
-INC = cub3d.h
+# R U L E S ****************************************************************** #
 
 all: $(NAME)
-
 $(NAME): $(RES) $(OBJDIR) $(OBJS)
 	$(MAKE) -C $(MLX_DIR)
 	$(MAKE) -C $(FT_PRINTF_DIR)
 	gcc $(CFLAGS) $(OBJS) -L$(FT_PRINTF_DIR) -lftprintf -L$(MLX_DIR) -lmlx \
 	-framework OpenGL -framework AppKit -o $(NAME)
 # BONUS
-bonus: $(RES) $(OBJDIR_BONUS) $(OBJS_BONUS)
+bonus: $(OBJDIR_BONUS)$(NAME)
+$(OBJDIR_BONUS)$(NAME): $(RES) $(OBJDIR_BONUS) $(OBJS_BONUS)
 	$(MAKE) -C $(MLX_DIR)
 	$(MAKE) -C $(FT_PRINTF_DIR)
 	gcc $(CFLAGS) $(OBJS_BONUS) -L$(FT_PRINTF_DIR) -lftprintf -L$(MLX_DIR) -lmlx \
-	-framework OpenGL -framework AppKit -o $(NAME)_bonus
+	-framework OpenGL -framework AppKit -o $(OBJDIR_BONUS)$(NAME)
+	cp $(OBJDIR_BONUS)$(NAME) .
 
 $(OBJDIR)%.o: $(SRC_SHARED_DIR)%.c $(INCS)
 	gcc $(CFLAGS) $(INCLUDES) -c -o $@ $<
@@ -113,6 +120,7 @@ clean:
 	$(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean
+	$(RM) $(NAME)
 	$(MAKE) -C $(MLX_DIR) clean
 
 re: fclean all
