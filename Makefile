@@ -6,7 +6,7 @@
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2021/01/13 16:05:23 by mfabri           ###   ########.fr        #
+#    Updated: 2021/01/14 09:44:24 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -136,6 +136,6 @@ test: $(RES) all
 	killall afplay
 # BONUS
 test_bonus: $(RES) bonus
-	@echo 'EXECUTING: $(NAME)_bonus'
-	@./$(NAME)_bonus ./maps/cubfile_dark_2.cub
+	@echo 'EXECUTING: $(NAME)'
+	@./$(NAME) ./maps/cubfile_dark_2.cub
 	killall afplay
