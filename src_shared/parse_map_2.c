@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 13:28:24 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/09 19:51:17 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/14 15:50:21 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ void		find_player(t_cub3d *t)
 			{
 				if (t->p_x == 0)
 				{
-					t->p_y = y;
-					t->p_x = x;
+					t->p_y = y + 0.5;
+					t->p_x = x + 0.5;
 					init_variables(t, y, x);
 				}
 				else

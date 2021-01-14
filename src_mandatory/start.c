@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:02:40 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/14 15:47:22 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/14 15:59:18 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static int	run_game(t_cub3d *t)
 
 static void	initialise_variables_2(t_cub3d *t)
 {
-	// t->music_playing = 0;
 	t->map = NULL;
 	t->spr = NULL;
 	t->td[0].tex_path = NULL;
@@ -85,10 +84,6 @@ static void	initialise_variables(t_cub3d *t)
 	t->p_dir_y = 0;
 	t->plane_x = 0;
 	t->plane_y = 0;
-	// t->shoot = 0;
-	// t->p_health = 5;
-	// t->p_bullets = 5;
-	// t->p_hit = 0;
 	initialise_variables_2(t);
 }
 
