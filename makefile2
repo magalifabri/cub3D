@@ -1,18 +1,20 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    Makefile2                                          :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2021/01/14 13:08:50 by mfabri           ###   ########.fr        #
+#    Updated: 2021/01/14 13:01:49 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # V A R I A B L E S ********************************************************** #
 
 NAME				= cub3D
+# BONUS
+NAME_BONUS			= cub3D_bonus
 
 RM					= /bin/rm -f
 RMDIR				= /bin/rm -rf
@@ -20,6 +22,7 @@ CFLAGS				= -Wall -Wextra -Werror -g
 RES					= native_res.txt
 
 INC_DIR 			= ./includes/
+INC_DIR_BONUS 		= ./includes_bonus/
 INC 				= cub3d.h
 
 FT_PRINTF_DIR		= ./ft_printf/
@@ -30,15 +33,14 @@ SRC_MANDATORY		= start.c \
 					draw_sprites.c \
 					draw_walls.c \
 					move.c
-
 SRC_BONUS			= start.c \
 					draw_sprites.c \
 					draw_walls.c \
 					move.c
 
 # The versions of these files are kept in these directories:
-SRC_BONUS_DIR		= ./src_bonus/
 SRC_MANDATORY_DIR	= ./src_mandatory/
+SRC_BONUS_DIR		= ./src_bonus/
 
 # .c files that are used by both the mandatory and bonus version
 SRC_SHARED_DIR		= ./src_shared/
@@ -54,12 +56,12 @@ SRC_SHARED			= hooks_1.c \
 					draw_floor.c \
 					draw_skybox.c \
 					move_2.c \
+					enemy_pathfinding_utils.c \
 					enemy_pathfinding.c \
 					draw_ui_elements_1.c \
 					draw_ui_elements_2.c \
 					shoot.c \
 					get_sprite_frame.c \
-					enemy_pathfinding_utils.c \
 					auxiliary_1.c \
 					auxiliary_2.c \
 					sprite_control.c \
@@ -97,10 +99,10 @@ $(OBJDIR)%.o: $(SRC_SHARED_DIR)%.c $(INC_DIR)$(INC)
 $(OBJDIR)%.o: $(SRC_MANDATORY_DIR)%.c $(INC_DIR)$(INC)
 	gcc $(CFLAGS) -I$(MLX_DIR) -I$(INC_DIR) -c -o $@ $<
 # BONUS
-$(OBJDIR_BONUS)%.o: $(SRC_SHARED_DIR)%.c $(INC_DIR)$(INC)
-	gcc $(CFLAGS) -I$(MLX_DIR) -I$(INC_DIR) -c -o $@ $<
-$(OBJDIR_BONUS)%.o: $(SRC_BONUS_DIR)%.c $(INC_DIR)$(INC)
-	gcc $(CFLAGS) -I$(MLX_DIR) -I$(INC_DIR) -c -o $@ $<
+$(OBJDIR_BONUS)%.o: $(SRC_SHARED_DIR)%.c $(INC_DIR_BONUS)$(INC)
+	gcc $(CFLAGS) -I$(MLX_DIR) -I$(INC_DIR_BONUS) -c -o $@ $<
+$(OBJDIR_BONUS)%.o: $(SRC_BONUS_DIR)%.c $(INC_DIR_BONUS)$(INC)
+	gcc $(CFLAGS) -I$(MLX_DIR) -I$(INC_DIR_BONUS) -c -o $@ $<
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
