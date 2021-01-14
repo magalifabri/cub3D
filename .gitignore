@@ -1,5 +1,6 @@
 .DS_STORE
 cub3d*
+cub3D*
 *.png
 /obj*
 /images

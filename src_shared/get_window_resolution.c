@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 19:51:18 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/24 06:15:39 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/14 20:41:15 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,26 @@ static void	compare_resolutions(t_cub3d *t)
 	}
 }
 
+static char	*ft_strstr(const char *haystack, const char *needle)
+{
+	unsigned int i;
+	unsigned int j;
+
+	if (!needle[0])
+		return ((char *)haystack);
+	i = 0;
+	while (haystack[i])
+	{
+		j = 0;
+		while (needle[j] && (haystack[i + j] == needle[j]))
+			j++;
+		if (!needle[j])
+			return ((char *)(haystack + i));
+		i++;
+	}
+	return (NULL);
+}
+
 /*
 ** get_screen_resolution(): Gets the resolution of the screen (and whether it's
 ** a retina screen) that the program has been compiled on by interpreting the
@@ -80,7 +100,7 @@ static void	get_screen_resolution(t_cub3d *t)
 	t->max_win_h = 0;
 	while (file[i] >= '0' && file[i] <= '9')
 		t->max_win_h = t->max_win_h * 10 + (file[i++] - '0');
-	t->retina = (file[i] == ' ') ? 1 : 0;
+	t->retina = (ft_strstr(file, "retina")) ? 1 : 0;
 	free(file);
 	(t->retina) && (t->max_win_w /= 2);
 	t->max_win_h = t->retina ? (t->max_win_h / 2) - 100 : t->max_win_h - 50;

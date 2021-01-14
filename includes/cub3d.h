@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/14 15:21:46 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/14 20:40:28 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,6 +288,108 @@ char					*copy_file(int fd);
 */
 void					draw_floor(t_cub3d *t);
 
+
+/*
+** ft_split_var.c
+*/
+char					**ft_split_var(char *s, t_cub3d *t);
+
+/*
+** ft_strstr.c
+*/
+// char					*ft_strstr(const char *haystack, const char *needle);
+
+/*
+** get_bmp.c
+*/
+void					get_bmp(t_cub3d *t);
+
+/*
+** get_bmp_utils.c
+*/
+void					free_stuff(t_gen_bmp_data *b);
+void					bmp_creation_error(t_cub3d *t, t_gen_bmp_data *b);
+unsigned int			get_pxl_for_bmp(t_cub3d *t, int x, int y);
+
+/*
+** get_textures.c
+*/
+void					get_textures(t_cub3d *t);
+
+/*
+** get_window_resolution.c
+*/
+void					get_window_resolution(t_cub3d *t, char *file,
+						int *index);
+
+/*
+** move_2.c
+*/
+void					turn_left(t_cub3d *t, double rot_spd);
+void					turn_right(t_cub3d *t, double rot_spd);
+
+/*
+** parse_cub_file_1.c
+*/
+void					parse_cub_file(t_cub3d *t, int ac, char **av);
+
+/*
+** parse_cub_file_2.c
+*/
+void					check_tex_path(t_cub3d *t, char *tex_path);
+int						get_colour(t_cub3d *t, char *file, int *index);
+int						check_arguments(t_cub3d *t, int ac, char **av);
+
+/*
+** parse_map_1.c
+*/
+void					parse_map(t_cub3d *t, char *file);
+
+/*
+** parse_map_2.c
+*/
+void					find_player(t_cub3d *t);
+void					find_sprites(t_cub3d *t);
+
+/* VERSION SPECIFIC FILES *****************************************************/
+
+/*
+** draw_sprites.c
+*/
+void					draw_sprites(t_cub3d *t, double *z_buf);
+
+/*
+** draw_walls.c
+*/
+double					draw_walls(t_cub3d *t, int i);
+
+/*
+** hooks_1.c
+*/
+int						exit_cub3d(t_cub3d *t);
+int						keypress_hook(int keycode, t_cub3d *t);
+int						keyrelease_hook(int keycode, t_cub3d *t);
+int						mouse_move_hook(int mouse_x, int mouse_y, t_cub3d *t);
+
+/*
+** move.c
+*/
+void					move(t_cub3d *t);
+
+/*
+** char_is_valid.c
+*/
+int						char_is_valid(char c);
+
+/* BONUS-ONLY FILES ***********************************************************/
+
+/*
+** audio.c
+*/
+void					play_music(t_cub3d *t);
+void					death(t_cub3d *t);
+void					stop_music(t_cub3d *t);
+
 /*
 ** draw_skybox.c
 */
@@ -320,112 +422,18 @@ int						obstacle(char c);
 void					move_enemy(t_cub3d *t, int i);
 
 /*
-** ft_split_var.c
-*/
-char					**ft_split_var(char *s, t_cub3d *t);
-
-/*
-** get_bmp.c
-*/
-void					get_bmp(t_cub3d *t);
-
-/*
-** get_bmp_utils.c
-*/
-void					free_stuff(t_gen_bmp_data *b);
-void					bmp_creation_error(t_cub3d *t, t_gen_bmp_data *b);
-unsigned int			get_pxl_for_bmp(t_cub3d *t, int x, int y);
-
-/*
 ** get_sprite_frame.c
 */
 int						get_sprite_frame(t_cub3d *t, int i);
-
-/*
-** get_textures.c
-*/
-void					get_textures(t_cub3d *t);
-
-/*
-** get_window_resolution.c
-*/
-void					get_window_resolution(t_cub3d *t, char *file,
-						int *index);
-
-
-/*
-** move_2.c
-*/
-void					turn_left(t_cub3d *t, double rot_spd);
-void					turn_right(t_cub3d *t, double rot_spd);
-
-/*
-** parse_cub_file_1.c
-*/
-void					parse_cub_file(t_cub3d *t, int ac, char **av);
-
-/*
-** parse_cub_file_2.c
-*/
-void					check_tex_path(t_cub3d *t, char *tex_path);
-int						get_colour(t_cub3d *t, char *file, int *index);
-int						check_arguments(t_cub3d *t, int ac, char **av);
-
-/*
-** parse_map_1.c
-*/
-void					parse_map(t_cub3d *t, char *file);
-
-/*
-** parse_map_2.c
-*/
-void					find_player(t_cub3d *t);
-void					find_sprites(t_cub3d *t);
 
 /*
 ** shoot.c
 */
 void					shoot(t_cub3d *t);
 
-
 /*
 ** sprite_control.c
 */
 void					sprite_control(t_cub3d *t, int s);
-
-/* VERSION SPECIFIC FILES *****************************************************/
-
-/*
-** draw_sprites.c
-*/
-void					draw_sprites(t_cub3d *t, double *z_buf);
-
-/*
-** draw_walls.c
-*/
-double					draw_walls(t_cub3d *t, int i);
-
-/*
-** hooks_1.c
-*/
-int						exit_cub3d(t_cub3d *t);
-int						keypress_hook(int keycode, t_cub3d *t);
-int						keyrelease_hook(int keycode, t_cub3d *t);
-int						mouse_move_hook(int mouse_x, int mouse_y, t_cub3d *t);
-
-/*
-** move.c
-*/
-void					move(t_cub3d *t);
-
-/*
-** audio.c
-*/
-void					play_music(t_cub3d *t);
-void					death(t_cub3d *t);
-void					stop_music(t_cub3d *t);
-
-
-
 
 #endif

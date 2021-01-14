@@ -6,7 +6,7 @@
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2021/01/14 16:35:22 by mfabri           ###   ########.fr        #
+#    Updated: 2021/01/14 20:40:46 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC_SHARED			= \
 SRC_MANDATORY_DIR	= ./src_mandatory/
 # Mandatory-only .c files
 SRC_MANDATORY		= \
+					char_is_valid.c \
 					draw_sprites.c \
 					draw_walls.c \
 					hooks_1.c \
@@ -57,6 +58,7 @@ SRC_MANDATORY		= \
 SRC_BONUS_DIR		= ./src_bonus/
 # Bonus-only .c files
 SRC_BONUS			= \
+					char_is_valid.c \
 					audio.c \
 					draw_floor.c \
 					draw_skybox.c \
@@ -134,15 +136,14 @@ re: fclean all
 
 .PHONY: all bonus clean fclean re
 
+# E X T R A ****************************************************************** #
 
-# EXTRA STUFF
-
-test: $(RES) all
+test: all
 	@echo 'EXECUTING: $(NAME)'
 	@./$(NAME) ./maps/cubfile_dark_2.cub
 	killall afplay
 # BONUS
-test_bonus: $(RES) bonus
+test_bonus: bonus
 	@echo 'EXECUTING: $(NAME)'
 	@./$(NAME) ./maps/cubfile_dark_2.cub
 	killall afplay

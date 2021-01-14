@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:27:11 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/11 10:22:26 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/14 19:08:47 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ static void	get_map_dimensions(char *map, t_cub3d *t)
 	int i;
 
 	i = 0;
-	while (*map && (*map == '0' || *map == '1' || *map == '2' || *map == '3'
-	|| *map == '5' || *map == 'N' || *map == 'S' || *map == 'E' || *map == 'W'
-	|| *map == ' ' || *map == '\n'))
+	while (*map && char_is_valid(*map))
 	{
 		if (*map == '\n')
 		{
