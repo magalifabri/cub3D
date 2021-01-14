@@ -6,14 +6,16 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:13:39 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/09 19:49:17 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/14 15:06:56 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
-** Difference from bonus: no shading.
+** Difference from bonus: 
+**	- no shading.
+** 	- sprite frame is always 4
 */
 
 static void	sort_sprites(t_cub3d *t)
@@ -109,7 +111,7 @@ void		draw_sprites(t_cub3d *t, double *z_buf)
 			s.sprite_x =
 			t->spr[s.i].x + 0.5 + t->spr[s.i].x_draw * t->spr[s.i].mod;
 			make_calculations_1(t, &s);
-			frame[s.i] = get_sprite_frame(t, s.i);
+			frame[s.i] = 4;
 			s.x = s.draw_start_x - 1;
 			while (++s.x < s.draw_end_x)
 			{

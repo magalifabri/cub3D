@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:30:01 by mfabri            #+#    #+#             */
-/*   Updated: 2020/12/20 12:07:56 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/14 15:10:12 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int		in_l_o_s(t_cub3d *t, int s)
 ** "reinitialises" them back to life near a nest's location.
 */
 
-void			spawn_mobs(t_cub3d *t, int nest)
+static void		spawn_mobs(t_cub3d *t, int nest)
 {
 	int sprite;
 

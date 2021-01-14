@@ -6,7 +6,7 @@
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2021/01/14 13:08:50 by mfabri           ###   ########.fr        #
+#    Updated: 2021/01/14 15:22:50 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,24 +26,42 @@ FT_PRINTF_DIR		= ./ft_printf/
 MLX_DIR				= ./mlx/
 
 # .c files of which there is a mandatory and bonus version
-SRC_MANDATORY		= start.c \
+SRC_MANDATORY_DIR	= ./src_mandatory/
+SRC_MANDATORY_2		= \
 					draw_sprites.c \
 					draw_walls.c \
-					move.c
+					hooks_1.c \
+					move.c \
+					start.c
 
-SRC_BONUS			= start.c \
+SRC_BONUS_DIR		= ./src_bonus/
+SRC_BONUS_2			= \
+					audio.c \
 					draw_sprites.c \
 					draw_walls.c \
-					move.c
+					hooks_1.c \
+					move.c \
+					start.c
 
 # The versions of these files are kept in these directories:
-SRC_BONUS_DIR		= ./src_bonus/
-SRC_MANDATORY_DIR	= ./src_mandatory/
 
 # .c files that are used by both the mandatory and bonus version
 SRC_SHARED_DIR		= ./src_shared/
-SRC_SHARED			= hooks_1.c \
-					hooks_2.c \
+SRC_MANDATORY_1		= \
+					parse_cub_file_1.c \
+					parse_cub_file_2.c \
+					parse_map_1.c \
+					parse_map_2.c \
+					copy_file.c \
+					ft_split_var.c \
+					get_textures.c \
+					move_2.c \
+					auxiliary_1.c \
+					auxiliary_2.c \
+					get_bmp.c \
+					get_bmp_utils.c \
+					get_window_resolution.c
+SRC_BONUS_1			= \
 					parse_cub_file_1.c \
 					parse_cub_file_2.c \
 					parse_map_1.c \
@@ -69,11 +87,11 @@ SRC_SHARED			= hooks_1.c \
 
 OBJDIR				= ./obj/
 OBJS				= $(addprefix $(OBJDIR), $(OBJ))
-OBJ					= $(SRC_SHARED:.c=.o) $(SRC_MANDATORY:.c=.o)
+OBJ					= $(SRC_MANDATORY_1:.c=.o) $(SRC_MANDATORY_2:.c=.o)
 # BONUS
 OBJDIR_BONUS		= ./obj_bonus/
 OBJS_BONUS			= $(addprefix $(OBJDIR_BONUS), $(OBJ_BONUS))
-OBJ_BONUS			= $(SRC_SHARED:.c=.o) $(SRC_BONUS:.c=.o)
+OBJ_BONUS			= $(SRC_BONUS_1:.c=.o) $(SRC_BONUS_2:.c=.o)
 
 # R U L E S ****************************************************************** #
 
