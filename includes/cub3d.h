@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/14 20:40:28 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/15 08:59:45 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,10 @@ typedef struct			s_cub3d
 }						t_cub3d;
 
 /*
+** FILES & FUNCTION USED BY BOTH MANDATORY & BONUS ****************************
+*/
+
+/*
 ** auxiliary_1.c
 */
 void					ft_putpxl(t_cub3d *data, int x, int y, int color);
@@ -284,25 +288,9 @@ double					get_distance(int y_dest, int x_dest, int y_src,
 char					*copy_file(int fd);
 
 /*
-** draw_floor.c
-*/
-void					draw_floor(t_cub3d *t);
-
-
-/*
 ** ft_split_var.c
 */
 char					**ft_split_var(char *s, t_cub3d *t);
-
-/*
-** ft_strstr.c
-*/
-// char					*ft_strstr(const char *haystack, const char *needle);
-
-/*
-** get_bmp.c
-*/
-void					get_bmp(t_cub3d *t);
 
 /*
 ** get_bmp_utils.c
@@ -310,6 +298,11 @@ void					get_bmp(t_cub3d *t);
 void					free_stuff(t_gen_bmp_data *b);
 void					bmp_creation_error(t_cub3d *t, t_gen_bmp_data *b);
 unsigned int			get_pxl_for_bmp(t_cub3d *t, int x, int y);
+
+/*
+** get_bmp.c
+*/
+void					get_bmp(t_cub3d *t);
 
 /*
 ** get_textures.c
@@ -351,7 +344,14 @@ void					parse_map(t_cub3d *t, char *file);
 void					find_player(t_cub3d *t);
 void					find_sprites(t_cub3d *t);
 
-/* VERSION SPECIFIC FILES *****************************************************/
+/*
+** FILES & FUNCTIONS WITH A SEPARATE VERSION FOR MANDATORY & BONUS ************
+*/
+
+/*
+** char_is_valid.c
+*/
+int						char_is_valid(char c);
 
 /*
 ** draw_sprites.c
@@ -377,11 +377,8 @@ int						mouse_move_hook(int mouse_x, int mouse_y, t_cub3d *t);
 void					move(t_cub3d *t);
 
 /*
-** char_is_valid.c
+** BONUS-ONLY FILES & FUNCTIONS ***********************************************
 */
-int						char_is_valid(char c);
-
-/* BONUS-ONLY FILES ***********************************************************/
 
 /*
 ** audio.c
@@ -389,6 +386,11 @@ int						char_is_valid(char c);
 void					play_music(t_cub3d *t);
 void					death(t_cub3d *t);
 void					stop_music(t_cub3d *t);
+
+/*
+** draw_floor.c
+*/
+void					draw_floor(t_cub3d *t);
 
 /*
 ** draw_skybox.c
@@ -411,15 +413,15 @@ void					draw_gun(t_cub3d *t);
 void					draw_hearts(t_cub3d *t);
 
 /*
-** enemy_pathfinding.c
-*/
-void					enemy_pathfinding(t_cub3d *p, int s);
-
-/*
 ** enemy_pathfinding_utils.c
 */
 int						obstacle(char c);
 void					move_enemy(t_cub3d *t, int i);
+
+/*
+** enemy_pathfinding.c
+*/
+void					enemy_pathfinding(t_cub3d *p, int s);
 
 /*
 ** get_sprite_frame.c
