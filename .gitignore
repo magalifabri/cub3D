@@ -9,4 +9,3 @@ audio
 *.bmp
 leaks*
 native_res.txt
-/ft_printf

@@ -1,0 +1,17 @@
+.DS_STORE
+en.subject.pdf
+# *.o
+obj
+a.out
+.vscode
+libftprintf.a
+pft-master
+pft2
+printf-unit-test-master
+leaks_test.txt
+a.out.dSYM
+test.mine
+test.libc
+results.txt
+pft
+*.csv
