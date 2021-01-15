@@ -5,7 +5,6 @@ cub3D*
 /obj*
 /images
 *.pdf
-audio
 *.bmp
 leaks*
 native_res.txt
