@@ -6,14 +6,14 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:13:39 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/14 15:06:56 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/15 09:10:58 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
-** Difference from bonus: 
+** Difference from bonus:
 **	- no shading.
 ** 	- sprite frame is always 4
 */
