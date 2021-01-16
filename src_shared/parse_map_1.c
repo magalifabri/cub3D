@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:27:11 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/14 19:08:47 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/16 15:33:13 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static void	get_map_dimensions(char *map, t_cub3d *t)
 		i++;
 		(*map) && (map++);
 	}
+	t->map_w = (i > t->map_w) ? (i) : (t->map_w);
 	(i == 1) && (t->map_h--);
 	if (*map != '\0' && *map != '\n')
 		error_and_exit(t, "encountered unknown character in map");
