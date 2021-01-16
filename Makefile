@@ -6,7 +6,7 @@
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2021/01/14 20:40:46 by mfabri           ###   ########.fr        #
+#    Updated: 2021/01/16 15:38:14 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,16 +121,17 @@ $(RES):
 	> native_res.txt
 
 clean:
+	$(RM) $(RES)
 	$(RM) $(OBJS)
 	$(RM) $(OBJS_BONUS)
-	$(RM) $(RES)
 	$(RMDIR) $(OBJ_DIR)
 	$(RMDIR) $(OBJ_DIR_BONUS)
 	$(MAKE) -C $(MLX_DIR) clean
+	$(MAKE) -C $(FT_PRINTF_DIR) clean
 
 fclean: clean
 	$(RM) $(NAME)
-	$(MAKE) -C $(MLX_DIR) clean
+	$(MAKE) -C $(FT_PRINTF_DIR) fclean
 
 re: fclean all
 

@@ -1,10 +1,12 @@
 .DS_STORE
-cub3d*
-cub3D*
 *.png
-/obj*
+obj*
 /images
 *.pdf
 *.bmp
 leaks*
+cub3d*
+cub3D*
 native_res.txt
+libftprintf.a
+libmlx.a
