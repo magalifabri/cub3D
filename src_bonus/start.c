@@ -31,7 +31,8 @@ static void	draw_stuff(t_cub3d *t)
 	draw_gun(t);
 	draw_hearts(t);
 	draw_bullets(t);
-	if ((double)(t->time_now - t->p_hit) / (double)CLOCKS_PER_SEC < 0.1)
+	if (t->p_hit
+	&& (double)(t->time_now - t->p_hit) / (double)CLOCKS_PER_SEC < 0.1)
 		draw_red_border(t);
 }
 
