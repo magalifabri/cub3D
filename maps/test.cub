@@ -1,11 +1,13 @@
 R 600 400
-NO ./textures/surfaces/dispenser_front_horizontal_dark.xpm
-SO ./textures/surfaces/furnace_top_dark.xpm
-WE ./textures/surfaces/furnace_side_dark.xpm
-EA ./textures/surfaces/furnace_front_off_dark.xpm
+NO ./textures/surfaces/Sprite-0004.3.xpm
+EA ./textures/surfaces/Sprite-0004.3.xpm
+SO ./textures/surfaces/Sprite-0004.3.xpm
+WE ./textures/surfaces/Sprite-0004.3.xpm
 S ./textures/sprite_dead_tree.xpm
-F 235,232,210
-C 166,229,255
-111
-1N1
-111 1
+F 255,255,255
+C 0,0,0
+11111
+10001
+10N01
+10001
+11111
