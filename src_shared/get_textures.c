@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:23:55 by mfabri            #+#    #+#             */
-/*   Updated: 2020/04/27 16:24:52 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/19 18:44:42 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void		get_extra_texture_paths2(t_cub3d *t)
 	t->td[35].tex_path = "./textures/heart/sprite_heart2.xpm";
 	t->td[36].tex_path = "./textures/heart/sprite_heart3.xpm";
 	t->td[37].tex_path = "./textures/heart/sprite_heart4.xpm";
-	t->td[38].tex_path = "./textures/sprite_bullet2.xpm";
+	t->td[38].tex_path = "./textures/sprite_bullet.xpm";
 	t->td[39].tex_path = "./textures/sprite_bullets/sprite_bullets1.xpm";
 	t->td[40].tex_path = "./textures/sprite_bullets/sprite_bullets2.xpm";
 	t->td[41].tex_path = "./textures/sprite_bullets/sprite_bullets3.xpm";
