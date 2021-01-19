@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:16:22 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/09 18:57:08 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/19 14:55:15 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ static void	make_calculations_3(t_cub3d *t, t_pwv *w)
 	w->draw_end = w->line_height / 2 + t->win_h / 2;
 	w->draw_end = (w->draw_end >= t->win_h) ? (t->win_h - 1) : (w->draw_end);
 	if (w->r_dir_x >= 0 && w->side == 0)
-		w->tex_nbr = 0;
-	else if (w->r_dir_x < 0 && w->side == 0)
 		w->tex_nbr = 1;
+	else if (w->r_dir_x < 0 && w->side == 0)
+		w->tex_nbr = 3;
 	else if (w->r_dir_y >= 0 && w->side == 1)
 		w->tex_nbr = 2;
 	else if (w->r_dir_y < 0 && w->side == 1)
-		w->tex_nbr = 3;
+		w->tex_nbr = 0;
 	w->wall_x = (w->side == 0) ? (t->p_y + w->perp_wall_dist * w->r_dir_y)
 	: (t->p_x + w->perp_wall_dist * w->r_dir_x);
 	w->wall_x -= floor((w->wall_x));
-	w->tex_x = (int)(w->wall_x * (double)64);
+	w->tex_x = 63 - (int)(w->wall_x * (double)64);
 	if ((w->side == 0 && w->r_dir_x > 0) || (w->side == 1 && w->r_dir_y < 0))
-		w->tex_x = 64 - w->tex_x - 1;
+		w->tex_x = 63 - w->tex_x;
 	w->step = 1.0 * 64 / w->line_height;
 	w->tex_pos = (w->draw_start - t->win_h / 2 + w->line_height / 2) * w->step;
 }
