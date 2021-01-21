@@ -1,4 +1,4 @@
-R 1600 1400
+R 600 400
 NO ./textures/surfaces/texture1.xpm
 EA ./textures/surfaces/texture2.xpm
 SO ./textures/surfaces/texture3.xpm
