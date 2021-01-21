@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:23:55 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/21 19:34:30 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/21 19:57:24 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void			get_textures(t_cub3d *t)
 	{
 		if (!(t->td[i].texture = mlx_xpm_file_to_image(t->mlx,
 		t->td[i].tex_path, &img_width, &img_height)))
-			error_and_exit(	t, "problem encountered in get_textures()");
+			error_and_exit(t, "problem encountered in get_textures()");
 		if (!(t->td[i].addr = mlx_get_data_addr(t->td[i].texture,
 		&t->td[i].bpp, &t->td[i].line_len, &t->td[i].endian)))
 			error_and_exit(t, "problem encountered in get_textures()");
