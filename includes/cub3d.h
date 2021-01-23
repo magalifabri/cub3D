@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/15 08:59:45 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/23 15:08:21 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define CUB3D_H
 
 # define RD 0.01745329251
-# define MIN_WINDOW_WIDTH 300
-# define MIN_WINDOW_HEIGHT 250
+# define MIN_WINDOW_WIDTH 600
+# define MIN_WINDOW_HEIGHT 400
 # define INVISIBLE 4278190080
 # define SPRITE_MAX 150
 
