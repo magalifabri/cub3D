@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:27:11 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/23 14:50:17 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/23 15:31:14 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ static void	check_map_horizontally(t_cub3d *t)
 	}
 }
 
-static void check_for_more(char *map, t_cub3d *t)
+static void	check_for_more(char *map, t_cub3d *t)
 {
 	while (*map)
 		if (*map++ != '\n')
 			error_and_exit(t, "characters encountered after map");
 }
 
-static void get_map_dimensions(char *map, t_cub3d *t)
+static void	get_map_dimensions(char *map, t_cub3d *t)
 {
 	int i;
 
