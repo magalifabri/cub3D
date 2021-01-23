@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:27:11 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/16 15:33:13 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/23 14:50:17 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,14 @@ static void	check_map_horizontally(t_cub3d *t)
 	}
 }
 
-static void	get_map_dimensions(char *map, t_cub3d *t)
+static void check_for_more(char *map, t_cub3d *t)
+{
+	while (*map)
+		if (*map++ != '\n')
+			error_and_exit(t, "characters encountered after map");
+}
+
+static void get_map_dimensions(char *map, t_cub3d *t)
 {
 	int i;
 
@@ -71,12 +78,13 @@ static void	get_map_dimensions(char *map, t_cub3d *t)
 			t->map_h++;
 		}
 		i++;
-		(*map) && (map++);
+		(*map && char_is_valid(*map)) && (map++);
 	}
 	t->map_w = (i > t->map_w) ? (i) : (t->map_w);
 	(i == 1) && (t->map_h--);
 	if (*map != '\0' && *map != '\n')
-		error_and_exit(t, "encountered unknown character in map");
+		error_and_exit(t, "encountered invalid character in (or after) map");
+	check_for_more(map, t);
 }
 
 void		parse_map(t_cub3d *t, char *file)
