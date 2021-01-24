@@ -22,8 +22,8 @@ printf "executing map: error_double_char.cub\n"
 cat leaks.txt | grep '0 leaks'
 
 printf '\n'
-printf "executing map: error_double_texture.cub\n"
-./cub3D maps/test_cubs/error_double_texture.cub
+printf "executing map: error_duplicate_texture.cub\n"
+./cub3D maps/test_cubs/error_duplicate_texture.cub
 cat leaks.txt | grep '0 leaks'
 
 printf '\n'
@@ -90,6 +90,16 @@ printf '\n'
 
 printf "\033[1;32mTESTING MAPS THAT SHOULD PASS\033[0m\n\n"
 
+printf "executing map: pass_duplicate_colours.cub\n"
+./cub3D maps/test_cubs/pass_duplicate_colours.cub
+cat leaks.txt | grep '0 leaks'
+
+printf '\n'
+printf "executing map: pass_duplicate_resolution.cub\n"
+./cub3D maps/test_cubs/pass_duplicate_resolution.cub
+cat leaks.txt | grep '0 leaks'
+
+printf '\n'
 printf "executing map: pass_res_high.cub\n"
 ./cub3D maps/test_cubs/pass_res_high.cub
 cat leaks.txt | grep '0 leaks'
