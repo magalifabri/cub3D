@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 19:51:18 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/14 20:41:15 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/24 08:14:39 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,22 @@ static void	compare_resolutions(t_cub3d *t)
 {
 	if (t->win_w < MIN_WINDOW_WIDTH)
 	{
-		ft_printf("Error\nGiven width resolution too low. Set to minimum\n");
+		ft_printf("Given width resolution too low. Set to minimum\n");
 		t->win_w = MIN_WINDOW_WIDTH;
 	}
 	else if (t->win_w > t->max_win_w)
 	{
-		ft_printf("Error\nGiven width resolution too high. Set to max\n");
+		ft_printf("Given width resolution too high. Set to max\n");
 		t->win_w = t->max_win_w;
 	}
 	if (t->win_h < MIN_WINDOW_HEIGHT)
 	{
-		ft_printf("Error\nGiven height resolution too low. Set to minimum\n");
+		ft_printf("Given height resolution too low. Set to minimum\n");
 		t->win_h = MIN_WINDOW_HEIGHT;
 	}
 	else if (t->win_h > t->max_win_h)
 	{
-		ft_printf("Error\nGiven height resolution too high. Set to max.\n");
+		ft_printf("Given height resolution too high. Set to max.\n");
 		t->win_h = t->max_win_h;
 	}
 }
@@ -110,6 +110,8 @@ void		get_window_resolution(t_cub3d *t, char *file, int *index)
 {
 	int i;
 
+	t->win_w = 0;
+	t->win_h = 0;
 	i = 0;
 	while (file[i] == ' ')
 		i++;
@@ -120,7 +122,7 @@ void		get_window_resolution(t_cub3d *t, char *file, int *index)
 	while (file[i] >= '0' && file[i] <= '9')
 		t->win_h = t->win_h * 10 + (file[i++] - '0');
 	if (t->win_w <= 0 || t->win_h <= 0)
-		error_and_exit(t, "get_window_resolution: resolution in .cub wrong");
+		error_and_exit(t, "problem with resolution in .cub");
 	get_screen_resolution(t);
 	compare_resolutions(t);
 	while (file[i] == ' ')

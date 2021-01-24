@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 13:28:24 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/14 15:50:21 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/23 20:34:43 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void		find_sprites(t_cub3d *t)
 				t->sprite_n++;
 	}
 	if (t->sprite_n > SPRITE_MAX)
-		error_and_exit(t, "Too many sprites on map");
+		error_and_exit(t, "too many sprites on map");
 	if (t->sprite_n != 0)
 		find_sprites_part_2(t);
 }
@@ -125,10 +125,10 @@ void		find_player(t_cub3d *t)
 					init_variables(t, y, x);
 				}
 				else
-					error_and_exit(t, "Multiple player symbols found on map");
+					error_and_exit(t, "multiple player symbols found on map");
 			}
 		}
 	}
 	if (t->p_x == 0.0)
-		error_and_exit(t, "Player not found on map");
+		error_and_exit(t, "player not found on map");
 }

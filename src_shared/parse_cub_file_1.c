@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:26:20 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/23 14:36:44 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/24 08:06:00 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	get_texture_path(t_cub3d *t, int n, char *file, int *index)
 	int	i;
 
 	if (t->td[n].tex_path)
-		error_and_exit(t, "duplicate textures");
+		error_and_exit(t, "duplicate texture assignment in .cub");
 	i = 0;
 	while (file[i] == ' ')
 		i++;

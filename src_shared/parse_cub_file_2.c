@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 19:44:33 by magali            #+#    #+#             */
-/*   Updated: 2020/12/24 06:15:47 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/23 20:10:48 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			check_colour(t_cub3d *t, int r, int g, int b)
 
 	if (r < 0 || g < 0 || b < 0
 	|| r > 255 || g > 255 || b > 255)
-		error_and_exit(t, "check_colour: Failed colour check");
+		error_and_exit(t, "problem with ceiling and/or floor colour in .cub");
 	colour = (r * 65536) + (g * 256) + b;
 	return (colour);
 }
@@ -91,7 +91,7 @@ int			check_arguments(t_cub3d *t, int ac, char **av)
 			i++;
 		if (i == 6)
 		{
-			ft_printf("saving bmp image...\n");
+			ft_printf("saving bmp image\n");
 			t->save = 1;
 			return (fd);
 		}

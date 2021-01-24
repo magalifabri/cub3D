@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:25:12 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/23 15:14:03 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/24 07:40:17 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int		exit_cub3d(t_cub3d *t)
 	free(t->td);
 	if (t->spr != NULL)
 		free(t->spr);
+	system("leaks cub3D > leaks.txt");
 	exit(0);
 }
 

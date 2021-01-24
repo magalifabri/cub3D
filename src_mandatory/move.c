@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:25:51 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/14 15:47:47 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/23 20:04:42 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,5 @@ void		move(t_cub3d *t)
 	(t->a) ? strafe_left(t, move_spd) : (0);
 	(t->d) ? strafe_right(t, move_spd) : (0);
 	if (t->p_y < 0 || t->p_x < 0 || t->p_y > t->map_h || t->p_x > t->map_w)
-		error_and_exit(t, "Out of map");
+		error_and_exit(t, "out of map");
 }
