@@ -3,15 +3,16 @@ NO ./textures/surfaces/dispenser_front_horizontal_dark.xpm
 SO ./textures/surfaces/furnace_top_dark.xpm
 WE ./textures/surfaces/furnace_side_dark.xpm
 EA ./textures/surfaces/furnace_front_off_dark.xpm
-EA ./textures/surfaces/dispenser_front_horizontal_dark.xpm
 S ./textures/sprite_dead_tree.xpm
 F 235,232,210
+F 235,232,210
+C 166,229,255
 C 166,229,255
 111111111
 100000001
 100000001
 100000001
-100000001
+1000N0001
 100000001
 100000001
 100000001

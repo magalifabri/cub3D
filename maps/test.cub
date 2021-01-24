@@ -6,8 +6,10 @@ WE ./textures/surfaces/texture4.xpm
 S ./textures/sprite_dead_tree.xpm
 F 255,255,255
 C 0,0,0
-11111
-10001
-10N01
-10001
-11111
+1111111
+10N0001
+1010101
+1000001
+1010101
+1000001
+1111111
