@@ -5,6 +5,19 @@
 was the first FPS ever. It will enable you to explore ray-casting. Your goal will be to
 make a dynamic view inside a maze, in which you’ll have to find your way."***
 
+## Instructions
+- To compile the basic version of cub3D with only the manditory elements, run `make`.
+- To compile the extended version, run `make bonus`.
+- After compiling with `make bonus`, to compile the base version again, run `make re`.
+- If you change the screen resolution after compiling, compile it again. This is because the maximum size of the cub3D window is set during compilation, based on the screen resolution at that time.
+
+## Controls
+- Move with `wasd`
+- Rotate with left and right directional arrows & mouse in bonus mode
+- Shoot with `spacebar`
+- Turn off music with `m`
+- Quit the game with `esc`
+
 ## Bonuses
 - Wall collisions.
 - A skybox.
@@ -22,19 +35,6 @@ make a dynamic view inside a maze, in which you’ll have to find your way."***
 - Unmentioned bonus: moving skybox
 - Unmentioned bonus: actual functional combat
 - Unmentioned bonus: pathing
-
-## Controls
-- Move with `wasd`
-- Rotate with left and right directional arrows & mouse in bonus mode
-- Shoot with `spacebar`
-- Turn off music with `m`
-- Quit the game with `esc`
-
-## Instructions
-- To compile the basic version of cub3D with only the manditory elements, run `make`.
-- To compile the extended version, run `make bonus`.
-- After compiling with `make bonus`, to compile the base version again, run `make re`.
-- If you change the screen resolution after compiling, compile it again. This is because the maximum size of the cub3D window is set during compilation, based on the screen resolution at that time.
 
 ## Sources
 - [video: Wolfenstein 3D's map renderer](https://www.youtube.com/watch?v=eOCQfxRQ2pY)

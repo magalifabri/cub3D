@@ -10,3 +10,4 @@ cub3D*
 native_res.txt
 libftprintf.a
 libmlx.a
+/mlx/*.o

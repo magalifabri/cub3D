@@ -1,5 +1,5 @@
-R 600 400
-R 600 400
+R 600000 400000
+R 1 1
 NO ./textures/surfaces/dispenser_front_horizontal_dark.xpm
 SO ./textures/surfaces/furnace_top_dark.xpm
 WE ./textures/surfaces/furnace_side_dark.xpm
