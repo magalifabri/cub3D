@@ -329,8 +329,7 @@ void					parse_cub_file(t_cub3d *t, int ac, char **av);
 /*
 ** parse_cub_file_2.c
 */
-void					check_tex_path(t_cub3d *t, char *tex_path);
-int						get_colour(t_cub3d *t, char *file, int *index);
+int						get_colour(t_cub3d *t, char *file, int *index, int fc);
 int						check_arguments(t_cub3d *t, int ac, char **av);
 
 /*

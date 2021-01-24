@@ -12,19 +12,7 @@
 
 #include "cub3d.h"
 
-void		check_tex_path(t_cub3d *t, char *tex_path)
-{
-	int fd;
-
-	if ((fd = open(tex_path, O_RDONLY)) < 0)
-	{
-		ft_printf(B_RED"Error\nBad texture path: %s"RESET"\n", tex_path);
-		exit_cub3d(t);
-	}
-	close(fd);
-}
-
-int			check_colour(t_cub3d *t, int r, int g, int b)
+static int	check_colour(t_cub3d *t, int r, int g, int b)
 {
 	int colour;
 
@@ -45,27 +33,34 @@ static int	get_value(char *file, int *i, int value)
 	return (value);
 }
 
-int			get_colour(t_cub3d *t, char *file, int *index)
+static void	initialise(int *r, int *g, int *b, int *i)
+{
+	*r = -1;
+	*g = -1;
+	*b = -1;
+	*i = 0;
+}
+
+int			get_colour(t_cub3d *t, char *file, int *index, int fc)
 {
 	int r;
 	int g;
 	int b;
 	int i;
 
-	i = 0;
+	initialise(&r, &g, &b, &i);
+	if (t->colors[fc] != -1)
+		error_and_exit(t, "duplicate colour assignment in .cub");
 	while (file[i] == ' ')
 		i++;
-	r = -1;
 	if (file[i] >= '0' && file[i] <= '9')
 		r = get_value(file, &i, ++r);
 	while (file[i] == ' ' || file[i] == ',')
 		i++;
-	g = -1;
 	if (file[i] >= '0' && file[i] <= '9')
 		g = get_value(file, &i, ++g);
 	while (file[i] == ' ' || file[i] == ',')
 		i++;
-	b = -1;
 	if (file[i] >= '0' && file[i] <= '9')
 		b = get_value(file, &i, ++b);
 	while (file[i] == ' ')

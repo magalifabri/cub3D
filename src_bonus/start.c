@@ -76,6 +76,8 @@ static void	initialise_variables_2(t_cub3d *t)
 
 static void	initialise_variables(t_cub3d *t)
 {
+	t->win_w = 0;
+	t->win_h = 0;
 	t->colors[0] = -1;
 	t->colors[1] = -1;
 	t->save = 0;

@@ -12,6 +12,18 @@
 
 #include "cub3d.h"
 
+static void	check_tex_path(t_cub3d *t, char *tex_path)
+{
+	int fd;
+
+	if ((fd = open(tex_path, O_RDONLY)) < 0)
+	{
+		ft_printf(B_RED"Error\nBad texture path: %s"RESET"\n", tex_path);
+		exit_cub3d(t);
+	}
+	close(fd);
+}
+
 static void	get_texture_path(t_cub3d *t, int n, char *file, int *index)
 {
 	int	i;
@@ -61,9 +73,9 @@ static void	get_map_config(t_cub3d *t, char *file)
 		else if (file[i] == 'S')
 			get_texture_path(t, 4, file + (i + 1), &i);
 		else if (file[i] == 'F')
-			t->colors[0] = get_colour(t, file + (i + 1), &i);
+			t->colors[0] = get_colour(t, file + (i + 1), &i, 0);
 		else if (file[i] == 'C')
-			t->colors[1] = get_colour(t, file + (i + 1), &i);
+			t->colors[1] = get_colour(t, file + (i + 1), &i, 1);
 		else if (file[i] == ' ' || file[i] == '1')
 			parse_map(t, file + i);
 	}

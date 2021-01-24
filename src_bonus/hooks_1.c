@@ -38,6 +38,7 @@ int		exit_cub3d(t_cub3d *t)
 	free(t->td);
 	if (t->spr != NULL)
 		free(t->spr);
+	system("leaks cub3D > leaks.txt");
 	exit(0);
 }
 

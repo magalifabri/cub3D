@@ -110,8 +110,8 @@ void		get_window_resolution(t_cub3d *t, char *file, int *index)
 {
 	int i;
 
-	t->win_w = 0;
-	t->win_h = 0;
+	if (t->win_w != 0 || t->win_h != 0)
+		error_and_exit(t, "duplicate resolution assigment in .cub");
 	i = 0;
 	while (file[i] == ' ')
 		i++;
