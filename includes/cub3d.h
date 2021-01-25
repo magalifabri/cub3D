@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/23 15:08:21 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/25 19:04:28 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,7 +330,7 @@ void					parse_cub_file(t_cub3d *t, int ac, char **av);
 ** parse_cub_file_2.c
 */
 int						get_colour(t_cub3d *t, char *file, int *index, int fc);
-int						check_arguments(t_cub3d *t, int ac, char **av);
+int						strings_are_equal(const char *s1, const char *s2);
 
 /*
 ** parse_map_1.c

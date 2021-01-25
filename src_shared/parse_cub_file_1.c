@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:26:20 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/24 21:53:35 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/25 19:04:48 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,27 @@ static void	get_map_config(t_cub3d *t, char *file, int i)
 		else if (file[i] != '\n')
 			error_and_exit(t, "unexpected character encountered in .cub");
 	}
+}
+
+static int	check_arguments(t_cub3d *t, int ac, char **av)
+{
+	int fd;
+	int len;
+
+	if (ac != 2 && ac != 3)
+		error_and_exit(t, "not 2 or 3 arguments");
+	len = 0;
+	while(av[1][len])
+		len++;
+	if (!strings_are_equal(av[1] + (len - 4), ".cub"))
+		error_and_exit(t, "2nd argument isn't a .cub file");
+	if (ac == 3 && strings_are_equal(av[2], "--save"))
+		t->save = 1;
+	else if (ac == 3)
+		error_and_exit(t, "3rd argument isn't '--save'");
+	if ((fd = open(av[1], O_RDONLY)) == -1)
+		error_and_exit(t, "check_arguments: open() returned -1");
+	return (fd);
 }
 
 void		parse_cub_file(t_cub3d *t, int ac, char **av)

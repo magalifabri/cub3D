@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 19:44:33 by magali            #+#    #+#             */
-/*   Updated: 2021/01/24 22:25:20 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/25 19:03:27 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			get_colour(t_cub3d *t, char *file, int *index, int fc)
 	return (check_colour(t, r, g, b));
 }
 
-static int	strings_are_equal(const char *s1, const char *s2)
+int			strings_are_equal(const char *s1, const char *s2)
 {
 	int i;
 
@@ -77,23 +77,4 @@ static int	strings_are_equal(const char *s1, const char *s2)
 	while (s1[i] && s2[i] && (s1[i] == s2[i]))
 		i++;
 	return (s1[i] == s2[i]);
-	// return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-int			check_arguments(t_cub3d *t, int ac, char **av)
-{
-	int		fd;
-
-	if ((fd = open(av[1], O_RDONLY)) == -1)
-		error_and_exit(t, "check_arguments: open() returned -1");
-	if (ac == 2)
-		return (fd);
-	if (ac == 3 && strings_are_equal(av[2], "--save"))
-	{
-		ft_printf("saving bmp image\n");
-		t->save = 1;
-		return (fd);
-	}
-	error_and_exit(t, "bad arguments");
-	return (fd);
 }
