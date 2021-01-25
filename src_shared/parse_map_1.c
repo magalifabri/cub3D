@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:27:11 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/23 20:11:25 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/24 20:05:18 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ void		parse_map(t_cub3d *t, char *file)
 	if (!t->win_w || !t->win_h || t->colors[0] == -1 || t->colors[1] == -1
 	|| !t->td[0].tex_path || !t->td[1].tex_path || !t->td[2].tex_path
 	|| !t->td[3].tex_path || !t->td[4].tex_path)
-		error_and_exit(t, "map not at end or parameter error(s) in .cub");
+		error_and_exit(t, "formatting or parameter error(s) in .cub");
 	get_map_dimensions(file, t);
 	if (t->map_w == 0)
-		error_and_exit(t, "problem with finding map in .cub");
+		error_and_exit(t, "problem finding map in .cub");
 	if (!(t->map = ft_split_var(file, t)))
 		error_and_exit(t, "parse_map: ft_split_var returned NULL");
 	check_map_horizontally(t);

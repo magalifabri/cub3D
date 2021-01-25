@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 19:51:18 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/24 08:14:39 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/24 21:39:50 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,5 @@ void		get_window_resolution(t_cub3d *t, char *file, int *index)
 	compare_resolutions(t);
 	while (file[i] == ' ')
 		i++;
-	*index += i + 1;
+	*index += i;
 }
