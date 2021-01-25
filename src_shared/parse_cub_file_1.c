@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 16:26:20 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/25 19:04:48 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/25 19:08:56 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	check_arguments(t_cub3d *t, int ac, char **av)
 	if (ac != 2 && ac != 3)
 		error_and_exit(t, "not 2 or 3 arguments");
 	len = 0;
-	while(av[1][len])
+	while (av[1][len])
 		len++;
 	if (!strings_are_equal(av[1] + (len - 4), ".cub"))
 		error_and_exit(t, "2nd argument isn't a .cub file");
