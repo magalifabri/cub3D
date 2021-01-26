@@ -39,8 +39,23 @@ printf "executing map: error_duplicate_texture.cub\n"
 cat leaks.txt | grep '0 leaks'
 
 printf '\n'
-printf "executing map: error_hole_in_wall.cub\n"
-./cub3D maps/test_cubs/error_hole_in_wall.cub
+printf "executing map: error_hole_in_wall_1.cub\n"
+./cub3D maps/test_cubs/error_hole_in_wall_1.cub
+cat leaks.txt | grep '0 leaks'
+
+printf '\n'
+printf "executing map: error_hole_in_wall_2.cub\n"
+./cub3D maps/test_cubs/error_hole_in_wall_2.cub
+cat leaks.txt | grep '0 leaks'
+
+printf '\n'
+printf "executing map: error_hole_in_wall_3.cub\n"
+./cub3D maps/test_cubs/error_hole_in_wall_3.cub
+cat leaks.txt | grep '0 leaks'
+
+printf '\n'
+printf "executing map: error_hole_in_wall_4.cub\n"
+./cub3D maps/test_cubs/error_hole_in_wall_4.cub
 cat leaks.txt | grep '0 leaks'
 
 printf '\n'
@@ -194,6 +209,11 @@ printf 'executing command: ./cub3D maps/test_cubs/template.cub --save\n'
 cat leaks.txt | grep '0 leaks'
 
 printf '\n'
+printf "executing map: pass_big.cub\n"
+./cub3D maps/test_cubs/pass_big.cub
+cat leaks.txt | grep '0 leaks'
+
+printf '\n'
 printf "executing map: pass_res_high.cub\n"
 ./cub3D maps/test_cubs/pass_res_high.cub
 cat leaks.txt | grep '0 leaks'
@@ -201,6 +221,11 @@ cat leaks.txt | grep '0 leaks'
 printf '\n'
 printf "executing map: pass_res_low.cub\n"
 ./cub3D maps/test_cubs/pass_res_low.cub
+cat leaks.txt | grep '0 leaks'
+
+printf '\n'
+printf "executing map: pass_smallest.cub\n"
+./cub3D maps/test_cubs/pass_smallest.cub
 cat leaks.txt | grep '0 leaks'
 
 printf '\n'

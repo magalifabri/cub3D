@@ -6,7 +6,7 @@
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2021/01/16 15:38:14 by mfabri           ###   ########.fr        #
+#    Updated: 2021/01/26 13:33:13 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -148,3 +148,7 @@ test_bonus: bonus
 	@echo 'EXECUTING: $(NAME)'
 	@./$(NAME) ./maps/cubfile_dark_2.cub
 	killall afplay
+
+git_vog_rm:
+	@echo 'removing to-add files for vog repo push'
+	git rm map_tester.sh README.md maps/test_cubs
