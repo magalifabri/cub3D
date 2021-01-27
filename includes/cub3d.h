@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/25 19:04:28 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:42:30 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define RD 0.01745329251
 # define MIN_WINDOW_WIDTH 600
 # define MIN_WINDOW_HEIGHT 400
+# define MAX_WINDOW_WIDTH 1920
+# define MAX_WINDOW_HEIGHT 1040
 # define INVISIBLE 4278190080
 # define SPRITE_MAX 150
 
@@ -142,6 +144,7 @@ typedef struct			s_gen_bitmap_data
 	int					malloc_image;
 	int					malloc_file_h;
 	int					malloc_info_h;
+	int					y_bmp;
 }						t_gen_bmp_data;
 
 typedef struct			s_check_for_walls_variables
@@ -217,8 +220,8 @@ typedef struct			s_cub3d
 
 	int					win_w;
 	int					win_h;
-	int					max_win_w;
-	int					max_win_h;
+	// int					max_win_w;
+	// int					max_win_h;
 	int					retina;
 	char				**map;
 	int					map_w;

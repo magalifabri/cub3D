@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:02:40 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/24 08:14:16 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:44:13 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static int	run_game(t_cub3d *t)
 	t->time_now = clock();
 	play_music(t);
 	draw_stuff(t);
+	if (t->save == 1)
+		get_bmp(t);
 	mlx_put_image_to_window(t->mlx, t->win, t->img, 0, 0);
 	move(t);
 	if (t->shoot == 1)
@@ -57,8 +59,6 @@ static int	run_game(t_cub3d *t)
 	t->fps = 1 / ((double)(t->time_now - time_last_frame)
 	/ (double)CLOCKS_PER_SEC);
 	time_last_frame = t->time_now;
-	if (t->save == 1)
-		get_bmp(t);
 	return (0);
 }
 

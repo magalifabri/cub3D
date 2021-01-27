@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 10:33:37 by Magali            #+#    #+#             */
-/*   Updated: 2020/04/27 16:22:38 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:42:53 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ static void				initialise(t_cub3d *t, t_gen_bmp_data *b)
 	if (!(b->image = malloc(t->win_h * t->win_w * b->bpp)))
 		bmp_creation_error(t, b);
 	b->malloc_image = 1;
+	b->y_bmp = 0;
 }
 
 void					get_bmp(t_cub3d *t)
@@ -113,18 +114,19 @@ void					get_bmp(t_cub3d *t)
 	unsigned int	texel;
 
 	initialise(t, &b);
-	y = -1;
-	while (++y < t->win_h)
+	y = t->win_h;
+	while (--y > 0)
 	{
 		x = -1;
 		while (++x < t->win_w)
 		{
 			i = (y * t->win_w * 3) + (x * 3);
-			texel = get_pxl_for_bmp(t, x, t->win_h - y);
+			texel = get_pxl_for_bmp(t, x, b.y_bmp);
 			b.image[i + 2] = (texel & 0x00FF0000) >> 16;
 			b.image[i + 1] = (texel & 0x0000FF00) >> 8;
 			b.image[i] = texel & 0x000000FF;
 		}
+		b.y_bmp++;
 	}
 	create_bmp(t, &b);
 	ft_printf("Image saved!\n");

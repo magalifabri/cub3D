@@ -6,7 +6,7 @@
 #    By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/27 11:02:22 by mfabri            #+#    #+#              #
-#    Updated: 2021/01/26 13:33:13 by mfabri           ###   ########.fr        #
+#    Updated: 2021/01/27 13:11:50 by mfabri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ NAME				= cub3D
 RM					= /bin/rm -f
 RMDIR				= /bin/rm -rf
 CFLAGS				= -Wall -Wextra -Werror -g
-RES					= native_res.txt
 
 INC_DIR 			= ./includes/
 INC 				= cub3d.h
@@ -86,14 +85,14 @@ OBJ_BONUS			= $(SRC_SHARED:.c=.o) $(SRC_BONUS:.c=.o)
 # R U L E S ****************************************************************** #
 
 all: $(NAME)
-$(NAME): $(RES) $(OBJ_DIR) $(OBJS)
+$(NAME): $(OBJ_DIR) $(OBJS)
 	$(MAKE) -C $(MLX_DIR)
 	$(MAKE) -C $(FT_PRINTF_DIR)
 	gcc $(CFLAGS) $(OBJS) -L$(FT_PRINTF_DIR) -lftprintf -L$(MLX_DIR) -lmlx \
 	-framework OpenGL -framework AppKit -o $(NAME)
 # BONUS
 bonus: $(OBJ_DIR_BONUS)$(NAME)
-$(OBJ_DIR_BONUS)$(NAME): $(RES) $(OBJ_DIR_BONUS) $(OBJS_BONUS)
+$(OBJ_DIR_BONUS)$(NAME): $(OBJ_DIR_BONUS) $(OBJS_BONUS)
 	$(MAKE) -C $(MLX_DIR)
 	$(MAKE) -C $(FT_PRINTF_DIR)
 	gcc $(CFLAGS) $(OBJS_BONUS) -L$(FT_PRINTF_DIR) -lftprintf -L$(MLX_DIR) -lmlx \
@@ -116,12 +115,7 @@ $(OBJ_DIR):
 $(OBJ_DIR_BONUS):
 	@mkdir -p $(OBJ_DIR_BONUS)
 
-$(RES): 
-	system_profiler SPDisplaysDataType | grep Resolution | cut -d : -f 2 \
-	> native_res.txt
-
 clean:
-	$(RM) $(RES)
 	$(RM) $(OBJS)
 	$(RM) $(OBJS_BONUS)
 	$(RMDIR) $(OBJ_DIR)
