@@ -6,7 +6,7 @@
 /*   By: mfabri <mfabri@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 20:08:09 by mfabri            #+#    #+#             */
-/*   Updated: 2021/01/27 15:42:30 by mfabri           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:56:12 by mfabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,8 +220,6 @@ typedef struct			s_cub3d
 
 	int					win_w;
 	int					win_h;
-	// int					max_win_w;
-	// int					max_win_h;
 	int					retina;
 	char				**map;
 	int					map_w;
