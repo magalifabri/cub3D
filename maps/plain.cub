@@ -1,0 +1,21 @@
+R 600 400
+
+NO ./textures/surfaces/bluestone.xpm
+EA ./textures/surfaces/colorstone.xpm
+SO ./textures/surfaces/eagle.xpm
+WE ./textures/surfaces/mossy.xpm
+
+S ./textures/barrel.xpm
+
+F 201, 183, 127
+C 166, 204, 247
+
+11111111111
+10001010001
+10102020101
+10202020201
+10000000001
+10000000001
+10000000001
+11000N00011
+11111111111
